@@ -1,2 +1,2 @@
 # stanford-stats
-My notes from class
+This repository contains my notes from classes taken for my Stanford PhD in Statistics.
