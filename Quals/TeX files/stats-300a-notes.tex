@@ -1,0 +1,643 @@
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,amssymb,graphicx,mathtools,flexisym, float, enumitem}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+%
+% Macros for shortcuts
+%
+\newcommand{\dis}{\displaystyle}
+\def\lc{\left\lceil}   
+\def\rc{\right\rceil}
+\def\lf{\left\lfloor}   
+\def\rf{\right\rfloor}
+\newcommand\bbC{\mathbb{C}}
+\newcommand\bbE{\mathbb{E}}
+\newcommand\bbN{\mathbb{N}}
+\newcommand\bbP{\mathbb{P}}
+\newcommand\bbQ{\mathbb{Q}}
+\newcommand\bbR{\mathbb{R}}
+\newcommand\bbZ{\mathbb{Z}}
+\newcommand\calA{\mathcal{A}}
+\newcommand\calB{\mathcal{B}}
+\newcommand\calF{\mathcal{F}}
+\newcommand\calG{\mathcal{G}}
+\newcommand\calL{\mathcal{L}}
+\newcommand\calM{\mathcal{M}}
+\newcommand\calN{\mathcal{N}}
+\newcommand\calP{\mathcal{P}}
+\newcommand\calU{\mathcal{U}}
+\newcommand\dlt{\delta}
+\newcommand\Dlt{\Delta}
+\def\eps{\varepsilon}
+\newcommand\lmb{\lambda}
+\newcommand\Lmb{\Lambda}
+\newcommand\om{\omega}
+\newcommand\Om{\Omega}
+\newcommand\sg{\sigma}
+\newcommand\Sg{\Sigma}
+\def\t{\theta}
+\newcommand\T{\Theta}
+\newcommand\vt{\vartheta}
+\newcommand\equivto{\Leftrightarrow}
+\newcommand\goesto{\rightarrow}
+\newcommand\var{\text{Var }}
+
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+\begin{document}
+\title{STATS 300A Notes}
+\author{Kenneth Tay}
+\date{\vspace{-3ex}}
+\maketitle
+
+% Set-up
+\section*{Set-up (Lec 1)}
+\begin{itemize}
+\item \textbf{Risk function} $R(g(\t), \dlt) = \bbE_\t [L(g(\t), \dlt(X))]$. Expectation is taken over all $X$, NOT all $\t$.
+\end{itemize}
+
+% Exponential families
+\section*{Exponential families (Lec 1-2)}
+\begin{itemize}
+\item Family of probability distributions $\{P_\t \}$ is an \textbf{$s$-parameter exponential family} if all the $P_\t$'s have densities of the form 
+\begin{equation*}
+p_\t(x) = \exp \left[ \sum_{i=1}^s \eta_i(\t)T_i (x) - B(\t) \right] h(x)
+\end{equation*}
+w.r.t. some dominating measure $\mu$.
+
+\item Canonical form uses $\eta_1, \dots, \eta_s$ as parameters:
+\begin{equation*}
+p(x, \eta) = \exp \left[ \sum_{i=1}^s \eta_i T_i (x) - A(\eta) \right] h(x).
+\end{equation*}
+
+\item \textbf{Natural parameter space} is the set of values $\eta$ for which the density makes sense, i.e.
+\begin{equation*}
+\left\{ \eta = (\eta_1, \dots, \eta_s): \int \exp \left[ \eta_i T_i(x) \right]h(x) \mu(dx) < \infty \right\}.
+\end{equation*}
+
+\item Natural parameter space is convex.
+
+\item $s$-dimensional exponential family has \textbf{full rank} if the natural parameter space contains an $s$-dimensional rectangle.
+
+\item (300B Lec 5) $A(\eta)$ is known as the \textbf{cumulant function}. $A(\eta)$ is convex and infinitely differentiable.
+
+\item For any integrable function $f$ and any $\eta$ in the natural parameter space,
+\begin{equation*}
+\int f(x) \exp \left[ \sum \eta_i T_i(x) - A(\eta) \right] h(x) \mu(dx)
+\end{equation*}
+is infinitely differentiable w.r.t. $\eta_i$'s, and the derivatives can be obtained by differentiating inside the integral. As a consequence of this,
+\begin{align*}
+\bbE_\eta T_j (x) &= \frac{\partial}{\partial \eta_j} A(\eta), \\ 
+\text{Cov}(T_i, T_j) &= \frac{\partial}{\partial \eta_i} \frac{\partial}{\partial \eta_j} A(\eta).
+\end{align*}
+
+In 300B notation (Lec 5), we write the above as $\bbE[T(X)] = \dis\frac{\partial A}{\partial \t^T}$, $\var[T(X)] = \dis\frac{\partial^2 A}{\partial \t \partial \t^T}$.
+
+\item (Lec 9) Exponential families have continuous risk functions.
+
+\item (Lec 14) Exponential families have continuous power functions for any test.
+
+\item (Lec 13-14) 1-parameter exponential families have monotone likelihood ratio.
+
+\end{itemize}
+
+% Sufficient, ancillary and complete statistics
+\section*{Sufficient, ancillary and complete statistics (Lec 2-4)}
+\begin{itemize}
+\item Examples of sufficiency:
+\begin{itemize}
+\item (Lec 2) $X_1, \dots, X_n$ iid, $X_i \sim \text{Unif}[0, \t]$. $\max (X_1, \dots, X_n)$ is sufficient.
+\item (Lec 2) $X_1, \dots, X_n$ i.i.d., then the order statistics are sufficient.
+\end{itemize}
+
+\item \textbf{Fisher-Neyman Factorization Theorem}: Main tool to determine sufficiency. $T = T(X)$ sufficient iff there exist non-negative functions $g_\t$ and $h$ such that $p_\t(x) = g_\t(T(x)) \cdot h(x)$ with probability 1. (Intuitively, the part which depends on $\t$ only depends on $X$ through $T(X)$.)
+
+\item \textbf{Minimal Sufficiency}: $T$ minimal sufficient for $X$ if for any other sufficient statistic $T'$, $T$ is a function of $T'$. Lecture 3 has a theorem to determine whether a statistic is minimal sufficient.
+
+\item A statistic $V$ is \textbf{ancillary} if its distribution does not depend on $\t$. It is \textbf{first-order ancillary} if $\bbE_\t V(X)$ does not depend on $\t$.
+
+\item Examples of ancillary statistics:
+\begin{itemize}
+\item (Lec 4) When in a location family model, the statistics $X_i - \bar{X}$ are ancillary, so are the statistics $X_i - X_j$.
+\end{itemize}
+
+\item A statistic $T$ is \textbf{complete} if $\bbE_\t f(T) = 0$ for all $\t$ implies that $f = 0$ with probability 1.
+
+\item Let $\calP_0 \subseteq \calP_1$ such that every null set of $\calP_0$ is a null set of $\calP_1$. Then if $T$ is complete sufficient for $\calP_0$, it is also complete sufficient for $\calP_1$.
+
+\item \textbf{Basu's Theorem}: If $T$ is complete sufficient and $V$ is ancillary, then $T$ and $V$ are independent.
+
+\item \textbf{Rao-Blackwell Theorem}: A theorem that tells us how we can, from an existing estimator $\dlt$, construct another estimator which has better risk than $\dlt$. (From existing estimator $\dlt(X)$ and sufficient statistic $T$, use $\bbE [\dlt(X) \mid T(X) = t]$).
+
+\end{itemize}
+
+% UMVU estimation
+\section*{UMVU estimation (Lec 4-6)}
+\begin{itemize}
+\item $g(\t)$ is \textbf{U-estimable} if it has an unbiased estimator.
+
+\item \textbf{Lehmann-Scheff\'{e} Theorem}: Suppose that there exists only one unbiased estimator of $g(\t)$ based on sufficient statistic $T$. Then it must be UMVU.
+
+If we have an unbiased estimator of $g(\t)$ based on a complete sufficient statistic, it must be UMVU.
+
+\item To show no UMVU for a family of distributions $\calF$, try to find 2 different subfamilies of $\calF$ with different UMVUs.
+
+\item UMVU can be inadmissible. E.g. $X \sim \text{Pois}(\lmb)$, estimating $e^{-a\lmb}$.
+
+\item Let $\calU$ be the set of unbiased estimators for zero, $\dlt_0$ an unbiased estimator for $g(\t)$. Then $\dlt_0$ is UMVU iff $\bbE [\dlt_0 U] = \text{Cov}(\dlt_0, U) = 0$ for all $U \in \calU$.
+
+\item IF a UMVU exists, it is unique.
+
+\end{itemize}
+
+% Estimation for location families
+\section*{Estimation for location families (Lec 6-7)}
+\begin{itemize}
+\item The bias, variance and risk functions of any location equivariant estimator are constant (do not depend on $\t$).
+
+\item Any location equivariant estimator is the sum of some (fixed) location equivariant estimator and a location invariant estimator.
+
+\item For $n > 1$, $u$ is location invariant iff it is a function of the differences $Y_i = X_i - X_n$, $i = 1, \dots, n-1$. For $n = 1$, $u$ is location invariant iff it is a constant.
+
+\item In location families, the differences $X_i - X_j$ ($i \neq j$) are ancillary.
+
+\item (TPE Thm 3.1.10, Cor 3.1.11 p151) Let $Y = (X_1 - X_n, \dots, X_{n-1} - X_n)$. Suppose there exists an equivariant $\dlt_0$ with finite risk. Assume that for each $y = (y_1, \dots, y_{n-1})$, there exists a number $v(y) = v^*(y)$ which minimizes $\bbE_0 \left\{ \rho[\dlt_0(X) - v(y)] \mid Y = y \right\}$. Then the estimator $\dlt_0(X) - v^*(Y)$ is minimium risk equivariant (MRE).
+\begin{itemize}
+\item If $\rho$ convex and not monotone, then the MRE exists.
+\item If $\rho$ strictly convex, the MRE is unique.
+\item Under squared error loss, $v^*(Y) = \bbE_0 [\dlt_0(X) \mid Y]$.
+\item Under absolute error loss, $v^*(Y) = \text{ any median of the conditional distribution } \dlt_0(X) \mid Y$.
+\end{itemize}
+Often, we will have $X$ being complete sufficient, so by Basu's Theorem the conditional expectation is the same as the unconditional expectation.
+
+\item \textbf{Pitman estimator}: Under squared error loss, MRE estimator is given by
+\begin{equation*}
+\dlt^* = \frac{\int_{-\infty}^\infty u f(x_1 - u, \dots, x_n - u) du}{\int_{-\infty}^\infty f(x_1 - u, \dots, x_n - u) du}.
+\end{equation*}
+
+\item For squared error loss:
+\begin{itemize}
+\item If $\dlt$ is location equivariant with constant bias $b = \bbE_\t \dlt - \t$, then $\dlt - b$ is unbiased, location equivariant and has smaller risk than $\dlt$ (unless $b = 0$).
+\item The unique MRE is unbiased.
+\item If UMVU exists and is location equivariant, it must be MRE as well.
+\item If UMVU exists, then it is the Pitman estimator (except in exceptional settings).
+\end{itemize}
+
+\end{itemize}
+
+% Bayes estimators
+\section*{Bayes estimators (Lec 8-9)}
+\begin{itemize}
+\item In this setting, the quantity to be minimized is
+\begin{equation*}
+\int_\t \int_x L(\t, \dlt(x)) dP_\t(x) d\Lmb(\t) = \bbE [L(\T, \dlt(X))],
+\end{equation*}
+where the expectation is taken over the joint distribution of $(x, \t)$, i.e. $\T \sim \Lmb$, and given $\T = \t$, $X \sim P_\t$.
+
+\item Under \textbf{squared error loss}, $\dlt_\Lmb (X) = \bbE [\T \mid X]$, i.e. the mean of the posterior distribution. Under \textbf{absolute error loss}, the Bayes estimator would be the median of the posterior distribution.
+
+\item (TPE Cor 4.1.2 p228) Under \textbf{0-1 loss}
+\[ L(\t, d) = \begin{cases} 0 \text{if } |d-\t| \leq c, \\ 1 \text{if } |d - \t| > c, \end{cases} \]
+then $\dlt_\Lmb(X)$ is the midpoint of the interval $I$ of length $2c$ which maximizes $\bbP (\T \in I \mid x)$.
+
+\item \textbf{Weighted squared loss:} $L(\t, d) = w(\t) (d-\t)^2$ for some weight function $w$. Under weighted squared loss, we have Bayes estimator $d^* = \displaystyle\frac{\bbE [\T w(\T)]}{\bbE [w(\T)]}$, where $\T \sim \Lmb$. (If data is observed, use the posterior distribution of $\T$ instead.)
+
+\item \textbf{Uniqueness of Bayes estimators}: Let $Q$ be the marginal distribution of $X$. $\dlt_\Lmb$ is unique if (i) its average risk w.r.t. $\Lmb$ is finite, and (ii) $Q(N) = 0 \implies P_\t(N) = 0$ for all $\t$. (Condition (ii) is satisfied if the parameter space $\Om$ is an open set and equal to the support of $\Lmb$, and $P_\t(E)$ is continuous in $\t$ for every $E$.)
+
+\item If $\dlt_\Lmb (X)$ is a unique Bayes estimator, then it is admissible.
+
+\item \textbf{Bayes estimators are biased}: Under squared error loss, no unbiased estimator $\dlt(X)$ is Bayes unless its average risk is 0, i.e. $\bbE [(\dlt(X) - g(\T))^2] = 0$.
+
+\end{itemize}
+
+% Minimax estimation
+\section*{Minimax estimation (Lec 9-11)}
+\begin{itemize}
+\item If a Bayes estimator has constant risk, it is minimax.
+
+\item For a prior distribution $\Lmb$, let $r_\Lmb$ be the Bayes risk of the Bayes estimator $\dlt_\Lmb$. If $r_\Lmb = \displaystyle\sup_\t R(\t, \dlt_\Lmb)$, then
+\begin{itemize}
+\item $\dlt_\Lmb$ is minimax.
+\item If $\dlt_\Lmb$ is uniquely Bayes, it is uniquely minimax as well.
+\item $r_\Lmb$ is least favorable, i.e. $r_\Lmb \geq r_{\Lmb'}$ for any $\Lmb'$.
+\end{itemize}
+(The assumption in the theorem holds if the risk of the estimator is constant. It can also hold if $\Lmb$ puts all its mass on $\t$ values where the risk function is worst.)
+
+\item Suppose we have an estimator $\dlt$ and a sequence of priors $\{ \Lmb_m \}$ such that $\displaystyle\sup_\t R(\t, \dlt) = r$ and $r_{\Lmb_m} \goesto r$. Then $\dlt$ is minimax and $\{ \Lmb_m \}$ is least favorable.
+
+\item Suppose $X$ has unknown distribution $F$ from family $\calF$. Suppose $\dlt$ is minimax when estimating $g(F)$ for $F \in \calF_0$, where $\calF_0 \subseteq \calF$. If $\displaystyle\sup_{F \in \calF_0} R(\dlt, F) = \displaystyle\sup_{F \in \calF} R(\dlt, F)$, then $\dlt$ is minimax for $\calF$ as well.
+
+\item If an estimator has constant risk and is admissible, then it is minimax. (A minimax estimator with constant risk need not be admissible.)
+
+\item (TPE Prob 5.1.17 p392, HW5 Qn4) Let $r_\Lmb$ denote the Bayes risk w.r.t. prior $\Lmb$. If $r_\Lmb = \infty$ for some $\Lmb$, then any estimator $\dlt$ has unbounded risk.
+\end{itemize}
+
+\section*{UMP tests (Lec 12-14)}
+\begin{itemize}
+\item The \textbf{size} of a test $\varphi$ is $\displaystyle\sup_{\t \in \Om_0} \bbE_\t \varphi(X)$.
+
+\item We can always restrict attention to tests based on sufficient statistics.
+
+\item \textbf{Monotone Likelihood Ratio (MLR)}: A family of densities $p_\t$ with $\t \in \bbR$ has MLR in $T(x)$ if for all $\t < \t'$, $\displaystyle\frac{p_{\t'}(x)}{p_{\t}(x)}$ is a non-decreasing function of $T(x)$.
+
+\item (TSH Thm 3.4.1 p65) For families with MLR, rejecting for large values of likelihood ratio is equivalent to rejecting for large values of $T$. Hence, for testing $\t = \t_0$ vs. $\t > \t_0$, there exists a UMP level $\alpha$ test of the form
+\begin{equation*} \varphi(X) = \begin{cases} 1 &\text{if } T(X) > c, \\ 
+\gamma &\text{if } T(X) = c, \\
+0 &\text{if } T(X) < c,
+\end{cases}  \end{equation*}
+
+where $c$ and $\gamma$ are determined by $\bbE_{\t_0} \varphi(X) = \alpha$.
+
+\item (TSH Thm 3.4.1 p65) Families with MLR have a power function $\beta(\t) = \bbE_\t \varphi(X)$ that is strictly increasing for all points $\t$ such that $0 < \beta(\t) < 1$. This allows us to extend UMP tests for $\t = \t_0$ vs. $\t > \t_0$ to $\t \leq \t_0$ vs. $\t > \t_0$.
+
+Also, for any $\t < \t_0$, this test minimizes $\beta(\t)$ (the probability of Type 1 error) among all tests satisfying $\bbE_{\t_0} \varphi(X) = \alpha$.
+
+\item Examples of MLR families:
+\begin{itemize}
+\item (TSH Cor 3.4.1 p67) 1-parameter exponential families.
+\item Double exponential distribution with $\t \geq 0$.
+\item (Lec 16) Non-central chi-squared $\chi_n^2(\t)$ for $\t \geq 0$.
+\item (TSH Eg 3.4.1 p66) Hypergeometric distribution.
+\end{itemize}
+
+\item (TSH Thm 3.2.1 p60) \textbf{Neyman-Pearson Lemma} for Simple vs. Simple: \begin{enumerate}[label=(\roman*)]
+\item For testing $P_0$ vs. $P_1$, there exists a (possibly randomized) test $\varphi$ and a constant $k$ such that:
+\begin{enumerate}
+\item $\bbE_0 \varphi(X) = \alpha$, and
+\item $\varphi(X) = 1$ if $p_1(X) > k p_0(X)$, and $\varphi(X) = 0$ if $p_1(X) < k p_0(X)$.
+\end{enumerate}
+
+\item (Sufficiency to get a MP level $\alpha$ test) A sufficient condition for a test $\varphi$ to be MP level $\alpha$ is it satisfies (a) and (b) in (i). 
+
+\item (Necessity) If $\varphi$ is MP level $\alpha$, then for some $k$, it satisfies (b), and it also satisfies (a) unless there exists a test $\varphi'$ whose size is $< \alpha$ with power = 1.
+\end{enumerate}
+
+\item For Simple vs. Simple, the power of a MP level $\alpha$ test is $> \alpha$.
+
+\item \textbf{How to find a UMP test}:
+\begin{itemize}
+\item \textbf{Simple $H_0$ vs. simple $H_1$.}
+
+This case is completely solved using the Neyman-Pearson Lemma.
+
+\item \textbf{Simple $H_0$ vs. composite $H_1$.}
+
+Say we have $H_0: \t = \t_0$ vs. $H_1: \t \in \om$, where $\om$ is some subset of the parameter space $\Om$ not containing $\t_0$.
+
+Fix $\t' \in \om$ and use the Neyman-Pearson Lemma to determine what a MP level $\alpha$ test for $H_0: \t = \t_0$ vs. $H_1: \t = \t'$ looks like. If there exists such a test that does not depend on $\t'$, then it is UMP.
+
+\item \textbf{Composite $H_0$ vs. simple $H_1$.} 
+Say $H_0: X \sim f_\t, \t \in \om$, $H_1: X \sim g$.
+
+Reduce the problem to Simple vs. Simple by introducing a mixture density: $h_\Lmb(x) = \displaystyle\int_{\t \in \om} f_\t(x) d\Lmb(\t)$ for some prior $\Lmb$ of $\t$. 
+
+Let $\varphi_\Lmb$ be the MP level $\alpha$ test for $H_\Lmb$ vs. $H_1$. Suppose $\varphi_\Lmb$ is level $\alpha$ for the composite $H_0$, i.e. $\displaystyle\sup_{\t \in \om} \bbE_\t \varphi_\Lmb (X) \leq \alpha$. Then $\phi_\Lmb$ is MP for testing $H_0$ vs. $H_1$, and $\Lmb$ is least favorable.
+
+\item \textbf{Composite $H_0$ vs. composite $H_1$.}
+
+Say we have $H_0: \t \in \om_0$ vs. $H_1: \t \in \om_1$.
+
+Fix $\t' \in \om_1$ and determine the UMP test for $H_0: \t \in \om_0$ vs. $H_1: \t = \t'$. If this test does not depend on $\t'$, then it is UMP for the original setting.
+\end{itemize} 
+
+\item (TSH Thm 3.7.1 p81) \textbf{UMP 2-sided test for 1-parameter exponential family:} For testing $H: \t \leq \t_1 \text{ or } \t \geq \t_2$ vs. $K: \t_1 < \t < \t_2$ in the one-parameter exponential family, there exists a UMP test given by
+\begin{equation*} \varphi(x) = \begin{cases} 1 &\text{if } C_1 < T(x) < C_2, \\ 
+\gamma_i &\text{if } T(x) = C_i, i = 1,2 \\
+0 &\text{if } T(x) < C_1 \text{ or } T(x) > C_2,
+\end{cases}  \end{equation*}
+where the $C$'s and $\gamma$'s are determined by $\bbE_{\t_1}\phi(X) = \bbE_{\t_2}\phi(X) = \alpha$.
+
+For $0 < \alpha < 1$, the power function of this test has a maximum at a point $\t_0 \in (\t_1, \t_2)$, and decreases strictly as $\t$ tends away from $\t$ in either direction, unless there exist $t_1$ and $t_2$ such that $P_\t \{ T(X) = t_1 \} + P_\t \{ T(X) = t_2 \} = 1$ for all $\t$.
+
+\end{itemize}
+
+\section*{Uniformly most accurate (UMA) bounds (TSH Sec 3.5.1)}
+\begin{itemize}
+\item The theory of UMP 1-sided tests can be applied to the problem of obtaining a lower or upper bound for a real-valued parameter $\t$.
+
+\item $\underline{\t} = \underline{\t}(X)$ is a \textbf{lower confidence bound} for $\t$ at confidence level $1 - \alpha$ if $\bbP_\t \{ \underline{\t}(X) \leq \t \} \geq 1 - \alpha$ for all $\t$.
+
+\item We want $\underline{\t}$ to underestimate $\t$ by as little as possible. A lower confidence bound $\underline{\t}$ for which $\bbP_\t \{ \underline{\t}(X) \leq \t' \} = \text{minimum}$ for all $\t' < \t$ is called a \textbf{uniformly most accurate lower confidence bound} for $\t$ and confidence level $1 - \alpha$.
+
+\item (TSH Cor 3.5.1 p73) Let family of densities $\{ p_\t(x) \}$ have MLR in $T(x)$, and suppose that the CDF $F_\t(t)$ of $T = T(X)$ is a continuous function in both $t$ and $\t$ when the other is fixed.
+\begin{enumerate}
+\item There exists a UMA confidence bound $\underline{\t}$ for $\t$ at each confidence level $1 - \alpha$.
+\item If $x$ denotes the observed values of $X$ and $t = T(x)$, and if the equation $F_\t (t) = 1 - \alpha$ has a solution in $\t = \hat{\t}$, then this solution is unique and $\underline{\t}(x) = \hat{\t}$.
+\end{enumerate}
+
+\item Finding a UMA upper bound for $\t$ corresponds to inverting the UMP test for $\t = \t_0$ vs. $\t < \t_0$.
+
+Finding a UMA lower bound for $\t$ corresponds to inverting the UMP test for $\t = \t_0$ vs. $\t > \t_0$.
+\end{itemize}
+
+\section*{UMPU tests (Lec 14-16)}
+\begin{itemize}
+\item \textbf{Definition of unbiased test}: Say we are testing $\t \in \Om_0$ vs. $\t \in \Om_1$. A test $\varphi$ is unbiased at level $\alpha$ if (i) $\displaystyle\sup_{\t \in \Om_0} \bbE_\t \varphi \leq \alpha$, and (ii) $\displaystyle\inf_{\t \in \Om_1} \bbE_\t \varphi \geq \alpha$.
+
+\item \textbf{Definition of similar test}: Say we are testing $\t \in \Om_0$ vs. $\t \in \Om_1$. Let $\om := \bar{\Om}_0 \cap \bar{\Om}_1$. A test $\varphi$ is similar if it satisfies $\bbE_\t \varphi = \alpha$ for all $\t \in \om$.
+
+\item \textbf{Neyman structure}: A test has Neyman structure w.r.t. $T$ if $\bbE_{\t_0} [\varphi(X) \mid T(X) = t] = \alpha$ for all $t$.
+
+\item If $T$ is complete sufficient for $\om$, then every similar test has Neyman structure.
+
+\item To find UMPU test, one approach is to find UMP tests among all similar tests. If the UMP test we found is unbiased as well, then it will be UMPU.
+
+\item Assume that we are in an exponential family model, i.e. 
+\begin{equation*} p_{\t, \vt}(x) \propto \exp \left[ \t U(x) + \sum_{i=1}^d \vt_i T_i(x) \right]h(x). \end{equation*}
+Then:
+\begin{enumerate}
+\item With $\t = \t_0$ fixed, $(T_1, \dots, T_d)$ is sufficient, and also complete if $\{ \vt_1, \dots, \vt_d \}$ contains a $d$-dimensional rectangle.
+\item $T = (T_1, \dots, T_d)$ has an exponential family of distributions.
+\item The conditional distribution of $U \mid T = t$ is a 1-parameter exponential family. (By sufficiency, this exponential family does not depend on $\vt$.)
+\end{enumerate}
+
+\item In the above $(d+1)$-parameter exponential family, assume that for fixed $\t = \t_0$, the family is of full-rank (i.e. $(T_1, \dots, T_d)$ complete for $\om$).
+
+For testing $H_0: \t \leq \t_0$ vs. $H_1: \t > \t_0$, there exists  UMPU level $\alpha$ test of the form
+\begin{equation*} \varphi(u, t) = \begin{cases} 1 &\text{if } u > c(t), \\ \gamma(t) &\text{if } u = c(t), \\ 0 &\text{if } u < c(t),  \end{cases}  \end{equation*}
+where $u = U(x)$, $t = T(x)$, $c(t)$ and $\gamma(t)$ are determined such that $\bbE_{\t_0} [\varphi(U, T) \mid T] = \alpha$.
+
+\item To find UMPU test in multi-parameter exponential family, condition on the nuisance parameters.
+
+\item (TSH Prob 4.1 p139, HW7 Qn1) Any UMPU test is admissible (i.e. no other test is at least as powerful against all alternatives and more powerful against some).
+
+\item (TSH Thm 4.4.1 p121) Let $X$ be distributed according to $dP_{\t, \vt}^X (x) = C(\t, \vt) \exp \left[\t U(X) + \dis\sum_{i=1}^k \vt_i T_i(x) \right] d\mu(x)$. Let $\vt = (\vt_1, \dots, \vt_k)$ and $T = (T_1, \dots, T_k)$. Write the above as a function of the sufficient statistics $(U, T)$:
+\[ dP_{\t, \vt}^{U, T} (u,t) = C(\t, \vt) \exp \left[\t u + \dis\sum_{i=1}^k \vt_i t_i \right] d\nu(u, t). \]
+
+When $T = t$ is given, $U$ is the only remaining variable, and the conditional distribution of $U$ given $t$ is an exponential family:
+\[ dP_\t^{U \mid t}(u) = C_t(\t) e^{\t u } d\nu_t(u). \]
+
+\begin{enumerate}[label=(\roman*)]
+\item For testing $\t \leq \t_0$ vs. $\t > \t_0$, there is a UMPU level $\alpha$ test $\phi_1$ defined by
+\begin{equation*} \phi_1(u,t) = \begin{cases} 1 &\text{if } u > C_0(t), \\ 
+\gamma_0(t) &\text{if } u = C_0(t), \\
+0 &\text{if } u < C_0(t),
+\end{cases}  \end{equation*}
+where functions $C_0$ and $\gamma_0$ are determined by $\bbE_{\t_0}[\phi_1(U,T)\mid t] = \alpha$ for all $t$.
+
+\item For testing $\t \leq \t_1$ or $\t \geq \t_2$ vs. $\t_1 < \t < \t_2$, there is a UMPU level $\alpha$ test $\phi_2$ defined by
+\begin{equation*} \phi_2(u,t) = \begin{cases} 1 &\text{if } C_1(t) < u < C_2(t), \\ 
+\gamma_i(t) &\text{if } u = C_i(t), \quad i = 1,2, \\
+0 &\text{if } u < C_1(t) \text{ or } u > C_2(t),
+\end{cases}  \end{equation*}
+where functions $C$'s and $\gamma$'s are determined by $\bbE_{\t_1}[\phi_2(U,T)\mid t] = \bbE_{\t_2}[\phi_2(U,T)\mid t] = \alpha$ for all $t$.
+
+\item For testing $\t_1 \leq \t \leq \t_2$ vs. $\t < \t_1$ or $\t > \t_2$, there is a UMPU level $\alpha$ test $\phi_3$ defined by
+\begin{equation*} \phi_3(u,t) = \begin{cases} 1 &\text{if } u < C_1(t) \text{ or } u > C_2(t), \\ 
+\gamma_i(t) &\text{if } u = C_i(t), \quad i = 1,2, \\
+0 &\text{if } C_1(t) < u < C_2(t),
+\end{cases}  \end{equation*}
+where functions $C$'s and $\gamma$'s are determined by $\bbE_{\t_1}[\phi_3(U,T)\mid t] = \bbE_{\t_2}[\phi_3(U,T)\mid t] = \alpha$ for all $t$.
+
+\item For testing $\t = \t_0$ vs. $\t \neq \t_0$, there is a UMPU level $\alpha$ test $\phi_4$ defined by $\bbE_{\t_0}[\phi_4(U,T) \mid t] = \alpha$ and $\bbE_{\t_0}[U \phi_4 (U,T) \mid t] = \alpha \bbE_{\t_0}[U \mid t]$.
+
+\end{enumerate}
+
+\end{itemize}
+
+\section*{Invariant and UMPI tests (Lec 16-18)}
+Set-up: We have data $X \sim P_\t$, $\t \in \Om$. Let $\mathcal{S}$ be the sample space for $X$. Testing $H_0: \t \in \Om_0$ vs. $H_1: \t \in \Om_1$.
+
+Assume that there is a group of 1-to-1 transformations $G$ which act on the data such that for any $g \in G$, 
+\begin{equation*} X \sim P_\t \quad \Rightarrow \quad gX \sim P_{\t'} \end{equation*}
+
+for some $\t' \in \Om$. If this is the case, we write $\t' = \bar{g}\t$, and we say that $g$ induces a transformation on the parameter space.
+
+We also assume that $\Om_0$ and $\Om_1$ are \textit{preserved} in the sense that $\bar{g}\t \in \Om_i \text{ iff } \t \in \Om_i$ for $i = 0,1$.
+
+\begin{itemize}
+\item A test $\varphi$ is \textbf{invariant} if $\varphi(x) = \varphi(gx)$ for all $g \in G$.
+
+\item A transformation group $G$ is \textbf{transitive} if for any $x_1, x_2 \in X$, there is a $g \in G$ such that $g(x_1) = x_2$.
+
+\item (TSH Thm 6.3.1 p219) \textbf{UMPI test for finite $G$:} Suppose testing $\Om_0$ vs. $\Om_1$ remains invariant under a finite group $G = \{ g_1, \dots, g_N\}$ and that $\bar{G}$ is transitive over $\Om_0$ and over $\Om_1$. Then there exists a UMPI test, and it rejects $\Om_0$ when
+\[ \frac{\sum_{i=1}^N p_{\bar{g}_i \t_1}(x) / N}{\sum_{i=1}^N p_{\bar{g}_i \t_0}(x) / N} \]
+is large, where $\t_0$ and $\t_1$ are any elements of $\Om_0$ and $\Om_1$ respectively.
+
+\item A statistic $T = T(X)$ is \textbf{maximal invariant} if (i) $T$ is invariant (i.e. $T(x) = T(gx)$ for all $x$, $g$), and (ii) if $T(x_1) = T(x_2)$, then there exists some $g \in G$ such that $x_2 = gx_1$.
+
+\item A test is invariant iff it is a function of a maximal invariant statistic.
+
+\item Examples of maximal invariant statistics:
+\begin{itemize}
+\item Family of transformations $X_i' = X_i + a$, where $a$ is a real constant: $(X_1 - X_n, \dots, X_{n-1} - X_n)$ is maximal invariant.
+
+\item Family of transformations $X_i' = cX_i$, where $c$ is a non-zero real constant, and $X_i$'s assumed to be non-zero: $\left(\displaystyle\frac{X_1}{X_n}, \dots, \frac{X_{n-1}}{X_n} \right)$ is maximal invariant.
+
+\item $G = n! \text{ permutations of } X_1, \dots, X_n$: $(X_{(1)}, \dots, X_{(n)})$ order statistics is maximal invariant.
+
+\item Family of transformations $X_i' = f(X_i)$, where $f$ is a continuous, strictly increasing function: The ranks of the data are maximal invariant.
+\end{itemize}
+
+\item A test $\varphi$ is \textbf{almost invariant} w.r.t. group $G$ if for all $g \in G$, 
+$\varphi(x) = \varphi(g(x))$ a.e. Here, the null set $N_g$ can depend on $g$.
+
+\item Assume that there exists a unique (a.e.) UMPU test $\varphi^*$ and also a UMPaI test w.r.t. group $G$. Then the latter test is unique (a.e.) and equal to $\varphi^*$ (a.e.).
+
+\end{itemize}
+
+\section*{Examples of complete sufficient statistics}
+\begin{itemize}
+\item (Lec 4) $X_1, \dots, X_n$ iid, $X_i \sim \text{Bernoulli}(p)$. $\sum X_i$ is complete sufficient.
+
+\item (Lec 7) $X_1, \dots, X_n \stackrel{iid}{\sim} E(\t,b)$, with $\t$ unknown $b$ known. $X_{(1)}$ is complete sufficient.
+
+\item (TPE Eg 1.6.24 p43) $X_1, \dots, X_n \stackrel{iid}{\sim} E(\t,b)$, with both $\t$ and $b$ unknown. $\left(X_{(1)}, \sum [X_i - X_{(1)}] \right)$ are complete sufficient. See Eg 2.2.5 p98 for more details on distribution.
+
+\item (Lec 3) $X_1, \dots, X_n$ iid, $X_i \sim \text{Unif}(0, \t)$. $T = \max (X_1, \dots, X_n)$ is complete sufficient.
+\item (Lec 5) $X_1, \dots, X_n \stackrel{iid}{\sim} \text{Unif}(\t - \sg, \t + \sg)$, both $\t$ and $\sg$ unknown. $(X_{(1)}, X_{(n)})$ is complete sufficient.
+\item (Lec 3) For exponential family model of full rank, the $T_i$'s (all together as a vector) are complete sufficient.
+
+\item (TPE Prob 1.6.33 p72, HW2 Qn 2) $X_1, \dots, X_n$ i.i.d. with unknown density $f$ (w.r.t. Lebesgue measure). The order statistics are complete.
+\end{itemize}
+
+\section*{Examples of UMVU estimators}
+\begin{itemize}
+\item (Lec 4) $X_1, \dots X_n$ iid, $X_i \sim \text{Bernoulli}(p)$. Let $T = \sum X_i$. $\displaystyle\frac{T}{n}$ is UMVU for $p$. Can also get UMVU for $p(1-p)$.
+
+\item (TPE Eg 2.1.13 p88) $T \sim \text{Binom}(n,p)$. UMVU estimator for $p(1-p)$ is $\dfrac{T(n-T)}{n(n-1)}$.
+
+\item (TPE Eg 2.2.5 p98) $X_1, \dots, X_n \sim E(\xi, b)$, $b$ known. UMVU estimator for $\xi$ is $X_{(1)} - \dis\frac{b}{n}$.
+
+\item (Lec 4) $X_1, \dots X_n$ iid, $X_i \sim \calN(\mu, \sg^2)$. Sample mean is UMVU for $\mu$, whether $\sg^2$ is known or unknown. Sample variance is UMVU for $\sg^2$.
+
+\item (TPE Prob 2.2.1 p132, HW2 Qn6) $X_1, \dots X_n$ iid, $X_i \sim \calN(\mu, \sg^2)$, with $\sg^2$ known. Can find UMVU estimators for $\mu^2$, $\mu^3$ and $\mu^4$.
+
+\item (Lec 4) $X_1, \dots X_n$ iid, $X_i \sim \text{Pois}(\lmb)$. Can get UMVU estimator for $e^{-\lmb}$.
+
+\item (TPE Prob 2.1.15 p131, HW2 Qn5) $X_1, \dots X_n$ iid, $X_i \sim \text{Pois}(\lmb)$. $\bar{X}$ is UMVU for $\lmb$.
+
+\item (Lec 4) $X_1, \dots X_n$ iid, $X_i \sim \text{Unif}(0, \t)$. $\displaystyle\frac{n+1}{n} \max(X_1, \dots, X_n)$ is UMVU for $\t$.
+
+\item (TPE Prob 2.2.24 p134, HW3 Qn4) $X_1, \dots X_n$ iid, $X_i \sim \text{Unif}(\xi - b, \xi + b)$, both unknown. Can find UMVU estimators for $\xi$, $b$ and $\xi/b$.
+
+\item (TPE Prob 2.4.6 p137, HW3 Qn7) $X_1, \dots X_m$ i.i.d. according to $F$, $Y_1, \dots, Y_n$ i.i.d. according to $G$. Can find UMVU estimator for $\bbP(X_i < Y_j)$.
+\end{itemize}
+
+\section*{Examples of MRE estimators}
+\begin{itemize}
+\item (Lec 7, TPE Prob 3.1.5 p207, HW4 Qn3) $X_1, \dots, X_n \stackrel{iid}{\sim} E(\t,b)$, with $\t$ unknown $b$ known. Under squared error loss, MRE is $X_{(1)} - \displaystyle\frac{b}{n}$. Under absolute error loss, it is $X_{(1)} - \displaystyle\frac{b \log 2}{n}$. Under 0-1 loss (1 if our guess is distance $k$ away from the actual), MRE is $X_{(1)} - k$.
+\end{itemize}
+
+\section*{Examples of Bayes estimators}
+\begin{itemize}
+\item (Lec 8) $X \sim \text{Binom}(n, \t)$, $\Lmb = \text{Beta}(a,b)$, squared error loss. Posterior distribution of $\T$ is $\text{Beta}(x+a, n-x+b)$, so Bayes estimator of $\t$ is $\displaystyle\frac{x+a}{n + a + b}$.
+
+\item (Lec 8) $X_1, \dots, X_n \stackrel{iid}{\sim} \calN (\t, \sg^2)$, $\sg^2$ fixed and known. $\Lmb = \calN(\mu, b^2)$. Posterior distribution of $\t$ is
+\begin{equation*}
+\calN \left( \frac{\frac{n\bar{x}}{\sg^2} + \frac{\mu}{b^2}}{\frac{n}{\sg^2} + \frac{1}{b^2}}, \left( \frac{n}{\sg^2} + \frac{1}{b^2} \right)^{-1} \right).
+\end{equation*}
+\end{itemize}
+
+\section*{Examples of minimax estimators}
+\begin{itemize}
+\item (Lec 10) $X \sim \text{Binom}(n, p)$, squared error loss. $\displaystyle\frac{X + \sqrt{n}/2}{n + \sqrt{n}}$ is minimax.
+
+\item (Lec 10) $X_1, \dots, X_n \stackrel{iid}{\sim} \calN (\t,1)$. Under squared error loss, $\bar{X}$ is minimax.
+
+\item (Lec 11) $X_1, \dots, X_n \stackrel{iid}{\sim} \calN (\t,\sg^2)$, squared error loss. If $\sg^2$ known, $\bar{X}$ is minimax. If $\sg^2$ unknown, every estimator has sup risk $= \infty$. If $\sg^2$ unknown but bounded by known $M$, then $\bar{X}$ is minimax.
+
+\item (TPE Prob 5.1.26 p392, HW5 Qn7) Let $X_1, \dots, X_m \stackrel{iid}{\sim} \calN(\xi, \sg^2)$, $Y_1, \dots, Y_n \stackrel{iid}{\sim} \calN(\eta, \tau^2)$, with variances known. Under squared error loss, $\bar{Y} - \bar{X}$ is minimax for $\eta - \xi$.
+
+\item (Stated in Lec 11) If $X_i$'s iid supported on $\{ 0,1\}$, then the minimax estimator for the mean under squared error loss is $\displaystyle\frac{\sqrt{n}}{1+\sqrt{n}}\bar{X} + \displaystyle\frac{1}{2(1+\sqrt{n})}$.
+
+\item (TPE Prob 5.1.25 p392, HW5 Qn6) If $X_1, \dots, X_n \stackrel{iid}{\sim} F$, $F$ unknown, then a minimax estimator for $F(0) = \bbP(X_i \leq 0)$ under squared error loss is $\dis\frac{\text{No. of } X_i \leq 0}{\sqrt{n}}\frac{1}{1+\sqrt{n}}\bar{X} + \displaystyle\frac{1}{2(1+\sqrt{n})}$.
+\end{itemize}
+
+\section*{Examples of UMP tests}
+\begin{itemize}
+\item (TSH Prob 3.32 p99, HW6 Qn4) Let $X \sim$ Cauchy with scale parameter $1$ and location parameter $\t$. Then there is no UMP test for $\t = 0$ vs. $\t > 0$.
+
+\item (TSH Prob 3.34 p99, HW6 Qn5) Let $X_1, \dots, X_n \stackrel{iid}{\sim} \text{Gamma}(g, b)$ (shape-scale).
+\begin{itemize}
+\item When $g$ is known, there is a UMP test for $b \leq b_0$ vs. $b > b_0$.
+\item When $b$ is known, there is a UMP test for $g \leq g_0$ vs. $g > g_0$.
+\end{itemize}
+
+\item (Lec 12) Testing mean in normal model with $\sg^2$ known. There is a UMP test for $\t = 0$ vs. $\t > 0$ or $\t < 0$. Testing $\t = 0$ vs. $\t \neq 0$ has no UMP test.
+
+\item (Lec 13) 1-sided normal variance, where both mean and variance unknown.
+
+\item (Lec 14) $X \sim \calN(\mu_x, \sg^2)$, $Y \sim \calN(\mu_y, \sg^2)$ with $\sg^2$ known. Testing $\mu_y \leq \mu_x$ vs. $\mu_y > \mu_x$.
+
+\item (TSH Eg 3.9.2 p90) Multivariate normal, testing $\dis\sum_{i=1}^k a_i \mu_i \leq \dlt$ vs. $\dis\sum_{i=1}^k a_i \mu_i > \dlt$
+
+\item (TSH Prob 3.2 p92, HW6 Qn1) $X_1, \dots, X_n \stackrel{iid}{\sim}\text{Unif}(0, \t)$. There are UMP tests for testing $\t \leq \t_0$ vs. $\t > \t_0$. There is a unique UMP test for testing $\t = \t_0$ vs. $\t \neq \t_0$.
+
+\item (Lec 14) Testing $\bbP(X_i \leq u) \geq p_0$ vs. $\bbP(X_i \leq u) < p_0$, where $u$ and $p_0$ fixed. Results in sign test.
+\end{itemize} 
+
+\section*{Examples of UMPU tests}
+\begin{itemize}
+\item (TSH Prob 4.25 p144, HW7 Qn5) $X \sim \text{NegBin}(p_1,m)$ and $Y \sim \text{NegBin}(p_2,n)$ independent. Let $q_i = 1-p_i$. There is a UMPU test for $q_2/q_1 \leq \t_0$, hence there is a UMPU test for $p_1 \leq p_2$.
+
+\item (Lec 15) Normal setting, testing mean \& variance.
+
+\item (Lec 16) Testing independence in bivariate normal family.
+
+\item (TSH Prob 5.21 p197, HW7 Qn6) $X \sim \calN(\xi, 1)$ and $Y \sim \calN(\eta, 1)$ independent. There is no UMPU test for $\xi = \eta = 0$ vs. $\xi > 0, \eta > 0$.
+
+\item (Lec 15) Testing 2 Poisson means, testing 2 Binomial probabilities.
+
+\item (Lec 14) 1-parameter exponential family, testing $\t = \t_0$ vs. $\t \neq \t_0$.
+
+\item (Lec 16) One-sample randomization tests.
+\end{itemize}
+
+
+\section*{Examples of UMPI tests}
+\begin{itemize}
+\item (Lec 16) $X_i \sim \calN(\t_i, 1)$, $X_i$'s mutually independent. Testing $H_0: \t_1 = \dots = \t_n = 0$ vs. $H_1:$ not all 0.
+
+\item (Lec 17) $X_1, \dots, X_n$ iid, $X_i \sim \calN(\xi, \sg^2)$ with both parameters unknown. Testing $H_0: \sg = \sg_0$ vs. $H_1: \sg < \sg_0$.
+
+\item (Lec 17) $X_1, \dots, X_n$ iid, $X_i \sim \calN(\xi, \sg^2)$ with both parameters unknown. Testing $H_0: \xi = 0$ vs. $H_1: \xi > 0$.
+
+\item (Lec 17): $X_1, \dots, X_m$ iid, $X_i \sim \calN(\xi, \sg^2)$, $Y_1, \dots, Y_n$ iid, $Y_j \sim \calN(\eta, \tau^2)$, all 4 parameters unknown. Testing $H_0: \sg^2 = \tau^2$ vs. $H_1: \sg^2 < \tau^2$.
+
+\item (Lec 16) $X_1, \dots, X_n$ i.i.d. on $(0,1)$. Testing $H_0: X_i \sim \text{Unif}(0,1)$, vs. $H_1: X_i$'s have density $f(x)$ or $f(1-x)$, where $f$ is fixed.
+
+\item (Lec 17) $X = (X_1, \dots, X_n)$ real-valued with joint density $f_i(x_1 - \t, \dots, x_n - \t)$, $i = 0$ or 1 with $\t$ unknown. Testing $H_0: f_0$ is true with unknown $\t$ vs. $H_1: f_1$ is true with unknown $\t$.
+\end{itemize}
+
+\section*{Other Facts}
+\begin{itemize}
+\item \textbf{Generalized Likelihood Ratio (GLR) test:} Say we have $X \sim P_\t$, and we are testing $H_0: \t \in \Om_0$ vs. $H_1: \t \in \Om_1$. The GLR test statistic is
+\begin{equation*}
+T' = \frac{\dis\sup_{\t \in \Om_0 \cup \Om_1} p_\t(x)}{\dis\sup_{\t \in \Om_0} p_\t(x)}.
+\end{equation*}
+We reject for large values of $T'$.
+
+\item Order statistics $\begin{pmatrix} X_{(1)}, \dots, X_{(n)} \end{pmatrix}$ are equivalent to $\begin{pmatrix} \sum X_i, \sum X_i^2, \dots, \sum X_i^n \end{pmatrix}$.
+
+\item (TPE Eg 1.6.10 p36, HW1 Qn7) Let $U_1 = \sum X_i, U_2 = \sum X_iX_j \; (i \neq j), \dots, U_n = X_1 \dots X_n$, and let $V_k = \sum X_i^k$. Then the order statistics are equivalent to $(U_1, \dots, U_n)$, which in turn (by Newton's identities) is equivalent to $(V_1, \dots, V_n)$.
+
+\item (Lec 9) $X_1, \dots, X_n \stackrel{iid}{\sim} \calN(\t, \sg^2)$, $\sg^2$ known, squared error loss. Then risk of $a \bar{X} + b$ is $\displaystyle\frac{a^2 \sg^2}{n} + (a\t + b - \t)^2$.
+
+\item (Lec 13) $X_1, \dots, X_n \stackrel{iid}{\sim} \calN(\mu, \sg^2)$, $\mu$ and $\sg$ unknown. Then $\bar{X}$ and $S^2 = \displaystyle\frac{1}{n-1}\sum (X_i - \bar{X})^2$ are independent, and $\displaystyle\frac{(n-1)S^2}{\sg^2} \sim \chi_{n-1}^2$.
+
+(TPE p92) If $\mu$ is known, then $\dfrac{\sum (X_i - \mu)^2}{\sg^2} \sim \chi_n^2$.
+
+\item (TSH Thm 11.28) \textbf{Normality of sample median:} Suppose $X_1, \dots, X_n$ i.i.d. with cdf $F$. Assume $F(\t) = 1/2$, and that $F$ is differentiable at $\t$ with $F' = f$ and $f(\t) > 0$. Let $\tilde{X}_n$ be the sample median. Then
+\begin{equation*}
+\sqrt{n} (\tilde{X}_n - \t) \goesto \calN \left( 0, \frac{1}{4f^2(\t)}\right).
+\end{equation*}
+\end{itemize}
+
+
+
+
+\end{document}

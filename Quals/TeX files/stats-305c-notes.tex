@@ -1,0 +1,503 @@
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,amssymb,graphicx,mathtools,flexisym, float, enumitem}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+%
+% Macros for shortcuts
+%
+\newcommand{\dis}{\displaystyle}
+\def\lc{\left\lceil}   
+\def\rc{\right\rceil}
+\def\lf{\left\lfloor}   
+\def\rf{\right\rfloor}
+\newcommand\bbC{\mathbb{C}}
+\newcommand\bbE{\mathbb{E}}
+\newcommand\bbN{\mathbb{N}}
+\newcommand\bbP{\mathbb{P}}
+\newcommand\bbQ{\mathbb{Q}}
+\newcommand\bbR{\mathbb{R}}
+\newcommand\bbZ{\mathbb{Z}}
+\newcommand\calA{\mathcal{A}}
+\newcommand\calB{\mathcal{B}}
+\newcommand\calF{\mathcal{F}}
+\newcommand\calG{\mathcal{G}}
+\newcommand\calI{\mathcal{I}}
+\newcommand\calL{\mathcal{L}}
+\newcommand\calM{\mathcal{M}}
+\newcommand\calN{\mathcal{N}}
+\newcommand\calP{\mathcal{P}}
+\newcommand\calU{\mathcal{U}}
+\newcommand\dlt{\delta}
+\newcommand\Dlt{\Delta}
+\def\eps{\varepsilon}
+\newcommand\lmb{\lambda}
+\newcommand\Lmb{\Lambda}
+\newcommand\om{\omega}
+\newcommand\Om{\Omega}
+\newcommand\sg{\sigma}
+\newcommand\Sg{\Sigma}
+\def\t{\theta}
+\newcommand\T{\Theta}
+\newcommand\vt{\vartheta}
+\newcommand\equivto{\Leftrightarrow}
+\newcommand\goesto{\rightarrow}
+\newcommand\var{\text{Var }}
+
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+\begin{document}
+\title{STATS 305C Notes}
+\author{Kenneth Tay}
+\date{\vspace{-3ex}}
+\maketitle
+
+% Basic Bayes
+\section{Basic Bayes}
+\begin{itemize}
+\item \textbf{Exchangeability:} An exchange sequence of random variables is a finite or infinite sequence $X_1, X_2, \dots$ such that for any finite permutation $\sg$ of the indices $1, 2, \dots$ (i.e. permutation only acts on finitely many indices, rest fixed), the joint probability distribution of $X_{\sg(1)}, X_{\sg(2)}, \dots$ is the same as that of $X_1, X_2, \dots$.
+
+\item \textbf{de Finetti's Theorem:} Suppose $X_1, X_2, \dots$ is an infinite exchangeable sequence of Bernoulli random variables. Then there is some probability distribution $m$ on $[0,1]$ and some random variable $Y$ such that (i) the probability distribution of $Y$ is $m$, (ii) $X_1, X_2, \dots$ are conditionally independent given $Y$, and (iii) for any $i$, $\bbP (X_i = 1 \mid Y) = Y$.
+
+\item Let $\tilde{y}$ denote future data, $y$ current data, and assume that $\tilde{y}$ and $y$ are conditionally independent given $\t$. Then $p(\tilde{y} \mid y) = \dis\int p(\tilde{y} \mid \t) p (\t \mid y) d\t$.
+
+\item \textbf{Marginalization:} Say we have 2 parameters $\t_1$ and $\t_2$. We have $p(\t_1, \t_2 \mid y) \propto p(y \mid \t_1, \t_2) \cdot p(\t_1, \t_2)$, and
+\begin{equation*}
+p(\t_1 \mid y) = \int p(\t_1, \t_2 \mid y) d\t_2 = \int p(\t_1 \mid \t_2, y) p(\t_2 \mid y) dy.
+\end{equation*}
+
+\item \textbf{Odds ratios:}
+\begin{equation*}
+\underbrace{\frac{p(\t_1 \mid y)}{p(\t_2 \mid y)}}_{\text{posterior odds}} = \underbrace{\frac{p(\t_1)}{p(\t_2)}}_{\text{prior odds}} \cdot \underbrace{\frac{p(y \mid \t_1)}{p(y \mid \t_2)}}_{\text{likelihood ratio}}.
+\end{equation*}
+
+\item \textbf{Bayesian CLT:} Let $\ell(\t) = \log p(y_i \mid \t)$ be the log-likehood. For large $n$, $p(\t \mid y)$ is approximately Gaussian: $p(\t \mid y) \dot{\propto} \exp \left[\dis\frac{1}{2}\ell''(\hat{\t})(\t - \hat{\t})^2 \right]$, where $\hat{\t}$ is the posterior mode. In the multivariate case, we have $\t \mid y \dot{\sim} \calN\left( \hat{\t}, (\ell'')^{-1}_{\t = \hat{\t}} \right)$. Note that $-\ell''$ is the observed Fisher information.
+
+Possible exceptions:
+\begin{itemize}
+\item Prior $p(\t)$ has finite support.
+\item Model is unidentifiable.
+\item Label switching. (E.g. model $p(y \mid \t) = \lmb_1 q(y \mid \beta_1) + \lmb_2 q(y \mid \beta_2)$, where $\lmb_1 = 1 - \lmb_2$. Then $\t = (\lmb_1, \beta_1, \beta_2)$ gives the same model as $\t = (\lmb_2, \beta_2, \beta_1)$. Will end up with 2 posterior modes. Possible fix: Restrict support of prior.)
+\item Unbounded likelihood. This can give an unbounded posterior distribution.
+\item Bounded likelihood with a mode at $\infty$. (This could happen in logistic regression with separation in the data.) If we use a flat prior with this, we will get an improper posterior.
+\end{itemize}
+
+\item \textbf{Hierarchical model:} Likelihood $p(y_j \mid \t_j)$, prior $p(\t_j \mid \phi)$, hyperprior $p(\phi)$.
+\begin{itemize}
+\item $p(\t, \phi \mid y) \propto p(\t, \phi) p(y \mid \t, \phi) = p(\t) p(\t \mid \phi) p(y \mid \t)$. To simplify computations, we can make $p(y \mid \t)$ conjugate to $p(\t \mid \phi)$.
+
+\item Posterior $p(\phi \mid y) = \dis\frac{p(\t, \phi \mid y)}{p(\t \mid \phi, y)}$.
+
+\item For new samples: simulate $\phi \sim p(\phi \mid y)$, then $\t \mid \phi \sim p(\t \mid \phi)$, then $y \mid \t \sim p(y \mid \t)$.
+
+\item Example: $y_j \sim \text{Binom}(n_j, \t_j)$, $\t_j \sim \text{Beta}(\alpha, \beta)$. BDA chooses hyperprior $\dis\frac{\alpha}{\alpha + \beta} \sim \text{Unif}(0,1)$, $(\alpha + \beta)^{-1/2} \sim \text{Unif}(0,1)$. (This ends up giving $p(\alpha + \beta) \propto (\alpha + \beta)^{-5/2}$.)
+
+\item Example: $Y_{ij} \mid \t_j \sim \calN(\t_j, \sg^2)$, $\t_j \mid \mu, \tau \sim \calN(\mu, \tau^2)$. We can take $p(\mu \mid \tau) \propto 1$. For $p(\tau)$, we could take $p(\tau) \propto 1$, or $p(\log \tau) \propto 1$, which is equivalent to $p(\tau) \propto \dis\frac{1}{\tau}$.
+\end{itemize}
+
+\end{itemize}
+
+% Picking priors
+\section{Picking priors}
+\begin{itemize}
+\item Picking \textbf{conjugate priors} can be a good idea; it'll simplify the posterior calculation. (We can always do this for exponential families.)
+
+\item Can try to match the moments of the prior to the empirical moments from the data.
+
+\item Can try to pick \textbf{non-informative/flat priors}. (In some cases, these priors might be improper.) Problem with uniform priors: this uniformity might not be preserved under transformations.
+
+\item \textbf{Jeffreys prior:} $p(\t) \propto \sqrt{\text{Fisher information of } \t}$. For any transformation $\phi$ of $\t$, we will still have $p(\phi) \propto \sqrt{\text{Fisher information of } \phi(\t)}$.
+\begin{itemize}
+
+\item For $y \sim \text{Binom}(n, \t)$, $\sqrt{\calI(\t)} \propto \sqrt{\t(1-\t)}$, so the Jeffreys prior is $\text{Beta}(1/2, 1/2)$.
+\item For $y \sim \calN(0, \sg^2)$ (with $\t = \sg$), we get $\sqrt{\calI(\t)} \propto \sg^{-1}$. This is a popular prior for scale parameters. (It is an improper prior.)
+
+\item Multivariate version: $p(\t) \propto \sqrt{\text{det} (\calI(\t))}$. This is not really used anymore. (E.g. for $\calN(\mu, \sg^2)$ both unknown, we get $p(\sg) \propto \sg^{-2}$ and $p(\mu) \propto 1$.)
+\end{itemize}
+
+\item \textbf{Reference priors:} For high dimensional $\t$. Group the components $\t_j$ into sets $\t_{(1)}, \dots, \t_{(m)}$ from most to least important, then work with $p(\t_{(k)} \mid \t_{(1)}, \dots, \t_{(k)})$. (BDA3 believes this is too much work for too little gain.)
+
+\item \textbf{Weakly informative priors:} Idea: A proper prior will always give a proper posterior. Limit the range to what is plausible, then try to be flat on that range.
+\begin{itemize}
+\item For logistic regression $Y$ on $X_1, \dots, X_d$, could take a flat prior with $|\beta_j| \leq 10$.
+\end{itemize}
+
+\end{itemize}
+
+% Conjugate distributions
+\section{Conjugate distributions}
+\begin{itemize}
+\item Likelihood $p(y \mid \t) \sim \text{Binom}(n, \t)$. If prior $p(\t) \sim \text{Beta}(\alpha, \beta)$, then posterior $p(\t \mid y) \sim \text{Beta}(\alpha + y, \beta + n - y)$.
+
+(Can imagine $\alpha$ and $\beta$ to be the number of ``prior'' successes and failures respectively.
+
+\item Likelihood $p(y \mid \t) \sim \text{Multinom}(n, \t)$ (say $\t$ has $k$ components). If prior $p(\t) \sim \text{Dirichlet}(\alpha)$, then posterior $p(\t \mid y) \sim \text{Dirichlet}(\alpha_1 + y_1, \dots, \alpha_k + y_k)$.
+
+\item Likelihood $p(y_i \mid \t) \stackrel{iid}{\sim}\text{Pois}(\t)$. If prior $p(\t) \sim \text{Gam}(\alpha, \beta)$, then posterior $p(\sg^2 \mid y) \sim \text{Gam}\left(\alpha + \sum_{i=1}^n y_i, \beta + n \right)$.
+
+(Can think of the prior as observing a total of $\alpha$ counts in $\beta$ samples.)
+
+\item Likelihood $p(y_i \mid \mu) \stackrel{iid}{\sim} \calN(\mu, \sg^2)$, where $\sg^2$ is known. If prior $p(\mu) \sim \calN(\mu_0, \tau_0^2)$, then posterior $p(\mu \mid y_1, \dots, y_n) \sim \calN(\mu_n, \tau_n^2)$, where
+\[ \mu_n = \frac{\frac{1}{\tau_0^2}\mu_0 + \frac{n}{\sg^2}\bar{y}}{\frac{1}{\tau_0^2} + \frac{n}{\sg^2}}, \qquad \frac{1}{\tau_n^2} = \frac{1}{\tau_0^2} + \frac{n}{\sg^2}. \]
+
+\item Likelihood $p(y_i \mid \mu) \stackrel{iid}{\sim} \calN(\mu, \sg^2)$, where $\mu$ is known. If prior $p(\sg^2) \sim \text{InvGam}(\alpha, \beta)$ (i.e. $\dfrac{1}{\sg^2} \sim \dfrac{\text{Gam}(\alpha)}{\beta}$), then posterior $p(\sg^2 \mid y) \sim \text{InvGam}\left(\alpha + \dfrac{n}{2}, \beta + \dfrac{1}{2}\dis\sum_{i=1}^n (y_i - \mu)^2 \right)$.
+
+\item Likelihood $p(y_i \mid \mu) \stackrel{iid}{\sim} \calN(\mu, \sg^2)$, where $\mu$ is known. If prior $p(\sg^2) \sim \text{Inv-}\chi^2(\nu_0, \sg_0^2)$, (i.e. $\dfrac{1}{\sg^2} \sim \dfrac{\chi_{\nu_0}^2 / \nu_0}{\sg_0^2}$), then posterior $p(\sg^2 \mid y) \sim \text{Inv-}\chi^2\left(\nu_0 + n, \dfrac{\nu_0 \sg_0^2 + \sum_{i=1}^n (y_i - \mu)^2}{\nu_0 + n} \right)$.
+
+(Can think of $\sg_0^2$ as the initial guess for the variance. Also, $\text{Inv-}\chi^2(\nu_0, \sg_0^2) \stackrel{d}{=} \text{InvGam}\left( \dfrac{\nu_0}{2}, \dfrac{\nu_0 \sg_0^2}{2} \right)$.)
+
+\item Likelihood $p(y_i \mid \mu) \stackrel{iid}{\sim} \calN(\mu, \sg^2)$, where both $\mu$ and $\sg^2$ are unknown. If the prior is $p(\sg^2) \sim \text{Inv-}\chi^2(\nu_0, \sg_0^2)$ and $p(\mu \mid \sg^2) \sim \calN(\mu_0, \sg^2 / \kappa_0)$, i.e. the $\calN\text{-Inv-}\chi^2 \left(\mu_0, \dfrac{\sg_0^2}{\kappa_0}; \nu_0, \sg_0^2 \right)$ distribution, then the posterior has $\calN\text{-Inv-}\chi^2 \left(\mu_n, \dfrac{\sg_n^2}{\kappa_n}; \nu_n, \sg_n^2 \right)$ distribution, where
+\begin{align*} \mu_n &= \frac{\kappa_0 \mu_0 + n \bar{y}}{\kappa_0 + n}, &\kappa_n &= \kappa_0 + n, \\ 
+\nu_n &= \nu_0 + n, &\nu_n \sg_n^2 &= \nu_0 \sg_0^2 + \sum_{i=1}^n (y_i - \bar{y})^2 + \frac{\kappa_0 n(\bar{y} - \mu_0)^2}{\kappa_0 + n}. \end{align*}
+
+\item Likelihood $p(y_i \mid \mu) \sim MVN(\mu, \Sg)$, where $\Sg$ is known. If prior $p(\mu) \sim MVN(\mu_0, \Lmb_0)$, then posterior $p(\mu \mid y) \sim MVN(\mu_n, \Lmb_n)$, where
+\[ \mu_n = (\Lmb_0^{-1} + n\Sg^{-1})^{-1}(\Lmb_0^{-1}\mu_0 + n\Sg^{-1}\bar{y}), \qquad \Lmb_n^{-1} = \Lmb_0^{-1} + n\Sg^{-1}. \]
+
+\item Likelihood $p(y_i \mid \mu) \sim MVN(\mu, \Sg)$, where both $\mu$ and $\Sg$ are unknown. If prior is $\calN\text{-Inv-Wishart}\left(\mu_0, \dfrac{\Lmb_0}{\kappa_0}; \nu_0, \Lmb_0 \right)$, i.e. $\Sg \sim \text{Inv-Wishart}_{\nu_0}(\Lmb_0^{-1})$ and $\mu \mid \Sg \sim \calN(\mu_0, \Sg/\kappa_0)$, then the posterior is $\calN\text{-Inv-Wishart}\left(\mu_n, \dfrac{\Lmb_n}{\kappa_n}; \nu_n, \Lmb_n \right)$, where
+\begin{align*} \mu_n &= \frac{\kappa_0 \mu_0 + n \bar{y}}{\kappa_0 + n}, &\kappa_n &= \kappa_0 + n, \\ 
+\nu_n &= \nu_0 + n, &\Lmb_n &= \Lmb_0 + \sum_{i=1}^n (y_i - \bar{y})(y_i - \bar{y})^T + \frac{\kappa_0 n}{\kappa_0 + n}(\bar{y} - \mu_0)(\bar{y} - \mu_0)^T. \end{align*}
+
+\end{itemize}
+
+% Bayesian Computation
+\section{Bayesian Computation}
+For Bayesian computation, often we may not have the posterior $p(\t \mid y)$. Instead, we might have $q(\t \mid y) = p(y \mid \t) p(\t)$, which is an un-normalized version of the posterior. With just $q$, we can get $\dis\frac{p(\t' \mid y)}{p(\t \mid y)} = \dis\frac{q(\t' \mid y)}{q(\t \mid y)}$.
+
+\begin{itemize}
+\item If we can get $S$ samples $\t^s \sim p(\t \mid y)$, then $\bbE [h(\t) \mid Y = y] = \dis\int h(\t) p(\t \mid y) d\t \approx \dis\frac{1}{S}\sum_{s=1}^S h(\t^s)$.
+
+\item $\t \in \T \subseteq \bbR^d$ for small $d$, we can use a grid. Then $\bbE [h(\t) \mid Y] \approx \dis\sum_{s \in \text{ grid}} p(\t^s \mid y)h(\t^s)$. If we just have un-normalized density $q$, we can do
+\begin{equation*}
+\bbE [h(\t) \mid Y] \approx \frac{\dis\sum_{s \in \text{ grid}} q(\t^s \mid y)h(\t^s)}{\dis\sum_{s \in \text{ grid}} q(\t^s \mid y)}.
+\end{equation*}
+
+\item Often computing the posterior directly by multiplying the prior and likelihood is numerically unstable. If this is the case, it is easier to work with the logarithms of these objects.
+
+\end{itemize}
+
+\subsection*{Acceptance-rejection sampling (version 1)}
+Choose distribution $g$ with $\dis\frac{p(\t \mid y)}{g(\t)} \leq M$ for all $\t$. ($M$ can just be $\sup_\t \dis\frac{p(\t \mid y)}{g(\t)}$.)
+\begin{enumerate}
+\item Sample $\t_i$ from $g(\t)$. Draw $y_i \sim Mg(\t) \cdot \text{Unif}(0,1)$. Plot the points $(t_i, y_i)$.
+\item Keep the points which lie under the curve $y = p(\t \mid y)$.
+\item Use the $x$-coordinates of the points kept.
+\end{enumerate}
+
+\begin{itemize}
+\item The algorithm above can be run with $q$ instead of $p$.
+
+\item $\bbP (\text{Acceptance}) = \dis\frac{\text{area under } q(\t \mid y)}{\text{area under } Mg(\t)}$. Hence, for this algorithm to work well, we need a tight fit enclosing $q(\t \mid y)$. (This is hard to do in high dimensions.)
+\end{itemize}
+
+\subsection*{Acceptance-rejection sampling (version 2)}
+Choose distribution $g$ with $\dis\frac{p(\t \mid y)}{g(\t)} \leq M$ for all $\t$. ($M$ can just be $\sup_\t \dis\frac{p(\t \mid y)}{g(\t)}$.)
+\begin{enumerate}
+\item Sample $\t_i$ from $g(\t)$.
+\item Independently generate $U \sim \text{Unif}(0,1)$.
+\item If $U < \dis\frac{p(\t \mid y)}{Mg(\t)} \dis$, accept sample. If not, reject.
+\end{enumerate}
+
+It'll take on average $M$ iterations to get one sample.
+
+\subsection*{Importance sampling}
+Choose distribution $g$ such that $g(\t) > 0$ whenever $p(\t \mid y)h(\t) \neq 0$. Take $S$ samples $\t^s \sim g$. Since $\dis\int h(\t) p(\t \mid y) d\t = \dis\int \frac{h(\t)p(\t \mid y)}{g(\t)} g(\t) d\t$, we can approximate $\bbE [h(\t) \mid y] \approx \dis\frac{1}{S}\sum_{s=1}^S \frac{h(\t^s)p(\t^s \mid y)}{g(\t^s)}$.
+
+\begin{itemize}
+\item If we only have $q$, we can still do \textbf{self-normalized importance sampling}:
+\begin{equation*}
+\bbE [h(\t) \mid y] \approx \frac{\dis\frac{1}{S}\sum_{s=1}^S \frac{h(\t^s)q(\t^s \mid y)}{g(\t^s)}}{\dis\frac{1}{S}\sum_{s=1}^S \frac{q(\t^s \mid y)}{g(\t^s)}}.
+\end{equation*}
+
+\item Advantage over acceptance-rejection sampling: don't need $\dis\sup_\t\frac{q(\t \mid y)}{g(\t)} < \infty$.
+
+\item Good choices of $g$: $g \,\dot{\propto}\, p$. Better: $g \,\dot{\propto} \, ph$.
+
+\item Importance sampling has a problem with light-tailed $g$ (get enormous ratios because $g(\t^s)$ is in the denominator. (For $p$ approximately normal, can use $g \sim t_\nu$.)
+
+\item We can write the self-normalized importance sampling formula as $\bbE [h(\t) \mid y] \approx \dis\sum_s w_s h(\t^s)$, where
+\begin{equation*}
+w_s = \frac{q(\t^s \mid y)/g(\t^s)}{\sum_{t=1}^S q(\t^t \mid y)/g(\t^t)}.
+\end{equation*}
+
+\item Importance sampling doesn't work well if there is a large $q(\t^s \mid y)/g(\t^s)$ relative to the rest.
+
+\item \textbf{Effective sample size} $n_{eff} := \dis\frac{(\sum w_s)^2}{\sum w_s^2}$.
+
+\end{itemize}
+
+\subsection*{Defensive sampling}
+If we can compute $p(\t \mid y)$ and sample $p(\t \mid y)$, then we can sample $\alpha p(\t \mid y) + (1-\alpha) g(\t)$.
+
+In this case $\dis\frac{p(\t \mid y)}{\alpha p(\t \mid y) + (1-\alpha) g(\t)} \leq \frac{1}{\alpha}$, so we won't have a problem of large $q/g$.
+
+\subsection*{Markov chains}
+\begin{itemize}
+\item \textbf{Stationarity:} $\dis\sum_{x \in \Om} \pi(x) P(x \goesto y) = \pi_y$ for all $y$.
+
+\item \textbf{Balance:} ``probability flowing into $y$'' = ``probability flowing out of $y$'' for all $y$.
+\item \textbf{Detailed balance:} $\pi(x) P(x \goesto y) = \pi(y) P(y \goesto x)$ for all $x, y$.
+\begin{itemize}
+\item Detailed balance implies balance.
+
+\item A doubly stochastic matrix satisfies detailed balance with the uniform distribution on the state space.
+
+\item If $P$ and $Q$ both have detailed balance, then $PQP$ does as well.
+\end{itemize}
+
+\end{itemize}
+
+\subsection*{Metropolis-Hastings}
+We want to sample according to distribution $\pi$ (possibly un-normalized). \textbf{Idea:} Try to construct a Markov chain with stationary distribution $\pi$. We do this by constructing a transition probability matrix which satisfies the detailed balance condition.
+
+Say we have a proposal: Given that we are at $x_i$, we move to $y$ with probability $Q (x_i \goesto y)$. The algorithm is as follows:
+\begin{enumerate}
+\item Say we are at $x_i$. Generate a proposal $y$ according to distribution $Q(x_i \goesto y)$.
+\item Accept with probability $A(x \goesto y)$ (in which case $x_{i+1} = y$, else reject (in which case $x_{i+1} = x_i$).
+\end{enumerate}
+
+\begin{itemize}
+\item From the above, we have $p(x \goesto y) = Q(x \goesto y) A(x \goesto y)$. In order to achieve detailed balance, we need $\pi(x) Q(x \goesto y) A(x \goesto y) = \pi(y) Q(y \goesto x) A(y \goesto x)$.
+
+\item \textbf{Metropolis-Hastings acceptance probability:} $A(x \goesto y) = \min \left(1, \dis\frac{\pi(y)Q(y \goesto x)}{\pi(x) Q(x \goesto y)} \right)$.
+
+\item Metropolis-Hastings works for un-normalized $\pi$.
+
+\item \textbf{Theorem (Peskun):} Let $P$ and $\tilde{P}$ are 2 irreducible chains with detailed balance for $\pi$ such that $\tilde{P}(x \goesto y) \leq P(x \goesto y)$ for all $x \neq y$. Let $X_i \sim P$ starting at $x_0$ and let $\tilde{X}_i \sim \tilde{P}$ starting at $\tilde{x}_0$. Then $\dis\lim_{n \goesto \infty} n \var \left(\frac{1}{n} \sum f(X_i) \right) \leq \dis\lim_{n \goesto \infty} n \var \left(\frac{1}{n} \sum f(\tilde{X}_i) \right)$.
+
+\item \textbf{Random Walk Metropolis:} Propose $y_i = x_i + Z_i$, where $Z_i \sim \calN(0, \sg^2 I_d)$ or $Z_i \sim \text{Unif}[-\Dlt, \Dlt]^d$, or some other distribution (usually symmetric).
+\begin{itemize}
+\item For symmetric distributions, the acceptance probability becomes $A(x \goesto y) = \min \left(1, \dis\frac{\pi(y)}{\pi(x)} \right)$.
+
+\item In the normal case, what is a good $\sg$ to use? If $\sg$ too small, we'll almost always accept, and will not move around the space much. If $\sg$ too large, we'll almost always reject, and will end up with a small number of potentially large jumps.
+
+\item Good $\sg$ maximizes mean squared jumping distance.
+
+\item If $\pi \sim \calN(\mu, \Sg)$ and $y \sim \calN(x, \lmb\Sg)$, take $\lmb \approx \dis\frac{2.38}{\sqrt{d}}$ to maximize mean squared jumping distance. For $d \geq 5$, acceptance probability is around 0.234. For $d=1$, it is around 0.44. Efficiency vs. i.i.d. sampling is $\approx \dis\frac{0.33}{d}$.
+\end{itemize}
+
+\item \textbf{Independence Sampler:} Propose $y_i \sim Q$, i.e. ignore $x_i$. Acceptance probability is $A(x \goesto y) = \min \left(1, \dis\frac{w(y)}{w(x)} \right)$, where $w = \dis\frac{\pi}{Q}$.
+\begin{itemize}
+\item $w$ is called the \textbf{importance ratio}, telling us how under-represented a value is. (If it is more unrepresented, the sampler is more likely to take it.)
+
+\item Both $\pi$ and $Q$ can be unnormalized.
+
+\item $Q$ must sample any region that $\pi$ does (if not bias is introduced). $Q$ should have heavier tails than $\pi$, although the closer $Q$ is to $\pi$, the better.
+
+\end{itemize}
+
+\end{itemize}
+
+\subsection*{Gibbs sampling}
+Let $x_i = \begin{pmatrix} x_{i,1}, \dots, x_{i, d} \end{pmatrix} \in \bbR^d$. Suppose we can sample from the \textbf{full conditional}, i.e. $x_{i,j} \mid x_{i, -j}$.
+
+\begin{itemize}
+\item \textbf{Random scan:} Pick $x_0$. For $i = 1, \dots, N$ (no. of samples), pick $j \sim \text{Unif}\{ 1, 2, \dots, d\}$, then pick $z \sim \pi_{j \mid -j} (\cdot \mid x_{i, -j})$. Set $x_{i, -j} \leftarrow x_{i-1, -j}$, and $x_{i,j} \leftarrow z$.
+
+\item \textbf{Systematic/Fixed scan:} Pick $x_0$. For $i = 1, \dots, N$ (no. of samples), let $\ell = i - 1 \mod d$, let $j = \ell + 1$. Pick $z \sim \pi_{j \mid -j} (\cdot \mid x_{i, -j})$. Set $x_{i, -j} \leftarrow x_{i-1, -j}$, and $x_{i,j} \leftarrow z$.
+
+\item We can view the conditional distribution for $x_j$ as a transition matrix $P_j$. Each $P_j$ is a Metropolis Hastings which accepts.
+
+\item \textbf{Examples of Gibbs sampling:} Truncated normal, mixture of binomials, hierarchical normal.
+
+\item \textbf{Sampling from a truncated distribution:} Sampling from $F \mid [a,b]$ (i.e. $F$ truncated for the interval $[a,b]$) is easy: $F^{-1}[F(a) + \text{Unif}(0,1) \cdot [F(b) - F(a)]] \sim F \mid [a,b]$.
+
+\item \textbf{Metropolis within Gibbs:} If we can't sample $x_j \mid x_{-j}$ for some $j$, take a Metropolis step instead: propose value $y$ and accept/reject it by Metropolis Hastings.
+
+\end{itemize}
+
+\subsection*{Other MCMC}
+\begin{itemize}
+\item \textbf{Hit and run algorithm:} For sampling points within a convex $\Om$ uniformly. Pick a random direction, draw line to hit edges of $\Om$, then sample uniformly from that line.
+
+To compute $P(A)$ for $A \subseteq \Om$, can perform the hit and run algorithm and get $\hat{P}(A) = \dis\frac{\# \text{ pts in } A}{\# \text{ pts in } \Om}$.
+
+\item \textbf{CLT for Markov chains:} Say our Markov chain gives values $x_1, x_2, \dots$, and we want to evaluate some function $f$. If the chain is stationary, irreducible, has detailed balance and $\dis\int f^2(x) \pi(x) dx < \infty$, then
+\begin{equation*}
+\frac{\frac{1}{n}\sum_{i=1}^n f(x_i) - \int f(x) \pi(x) dx }{\sqrt{\sg_f^2 / n}} \stackrel{d}{\goesto} \calN(0,1),
+\end{equation*}
+where $\sg_f^2 = \text{Var}_\pi (f) + 2 \dis\sum_{\ell=1}^\infty \text{Cov}_\pi \left(f(X_0), f(X_\ell) \right)$.
+
+\item \textbf{Effective sample size} $n_{eff} = \dis\frac{n}{1 + 2\sum_{\ell = 1}^\infty \rho_\ell}$, where $\rho_\ell = \text{Corr}\left(f(X_0), f(X_\ell) \right)$.
+
+\item \textbf{Confidence interval for $\dis\int f(x) \pi(x) dx$:} Could do $\dis\frac{1}{n}\sum f(x_i) \pm \frac{1.96}{\sqrt{n}} \hat{\sg}_f$. (Problem: Could be hard to estimate $\hat{\sg}_f$.)
+
+Alternative: Split the data into $k$ blocks and assume that the blocks are essentially independent. Then if we let the means of the $k$ blocks be $\bar{Y}_1, \dots, \bar{Y}_k$ and the grand mean be $\bar{Y}$, we can take as CI $\bar{Y} \pm \dis\frac{1.96s}{\sqrt{k}}$, where $s^2 = \dis\frac{1}{k-1}\sum_{r=1}^k (\bar{Y}_r - \bar{Y})^2$.
+
+\item One way to avoid MCMC bias is to introduce \textbf{burn-in}, i.e. throw away the first $x$\% of data. We could also run the chain until it looks like it has achieved stationarity, then throw away existing data and restart the chain there.
+
+\item If we know where the high posterior probability region is, we could start there.
+
+\item \textbf{Diagnostics:} Assume samples $\t_1, \t_2, \dots \in \bbR^d$.
+\begin{itemize}
+\item For each $j$, plot $\t_{ij}$ against $i$. Hope to see numerous transitions over its range.
+
+\item \textbf{Autocorrelation function (ACF):} Autocorrelation at lag $k$ is defined by $\hat{\rho}_k = \dis\frac{\frac{1}{n}\sum_{i=1}^{n-k}(\t_i - \bar{\t})(\t_{i+k}-\bar{\t})}{\frac{1}{n}\sum_{i=1}^n (\t_i - \bar{\t})^2}$. Plot $\hat{\rho}_k$ against $k$. Hope to see $\hat{\rho}_k$ decay rapidly to 0.
+
+Common ACF pattern: $\rho_k \approx \rho^k$ (called AR(1) model). For this model, we can compute $n_{eff} = \dis\frac{n(1-\rho)}{1+\rho}$.
+
+\item Do multiple starts and plot $\t_{ij}$ against $i$ on the same graph. Hope to see the graphs mix.
+
+\item \textbf{Gelman-Rubin diagnostic:} Run $m$ chains for $n$ steps ($j = 1, \dots, m$, $i = 1, \dots, n$). Let $\psi_{ij} = \psi(\t_{ij}) \in \bbR$ for some function $\psi$. Do ANOVA for groups $j = 1, 2, \dots, m$.
+\begin{align*}
+\text{Within sum of squares } W &= \frac{1}{n}\sum_{j=1}^m s_j^2, \qquad s_j^2 = \frac{1}{n}\sum_{i=1}^n (\psi_{ij} - \bar{\psi}_{\cdot j})^2, \\ 
+\text{Between sum of squares } B &= \frac{n}{m-1}\sum_{j=1}^m (\bar{\psi}_{\cdot j} - \bar{\psi}_{\cdot \cdot})^2, \\ 
+\widehat{\text{Var}}^+(\psi \mid y) &= \frac{n-1}{n}W + \frac{1}{n}B.
+\end{align*}
+If the chains don't mix, then $B$ will be large but $W$ will be small. For good mixing, $\hat{R} := \sqrt{\dis\frac{\widehat{\text{Var}}^+(\psi \mid y)}{W}}$ should be close to 1.
+\end{itemize}
+
+\item \textbf{Hamiltonian MCMC:} Write $p(\t \mid y) = e^{-H(\t)}$ or $p(\t \mid y) = e^{-H(\t)/T}$. $H$ called the \textbf{Hamiltonian}, $T$ called the temperature. Introduce a momentum parameter $\phi$ independent of $\t$ and look at $p(\t \mid y) p(\phi)$.
+\end{itemize}
+
+% Bayesian Regression
+\section{Bayesian Regression}
+\begin{itemize}
+\item Model: $Y_i = \beta^T x_i + \eps_i$, with $\eps_i \stackrel{iid}{\sim} \calN(0, \sg^2)$. Likelihood is 
+\begin{align*} p(y_1, \dots y_n \mid x_1, \dots x_n, \beta, \sg^2) &= (2\pi \sg^2)^{-n/2} \exp \left[ -\dis\frac{1}{2\sg^2}\sum_{i=1}^n (y_i - \beta^T x_i)^2 \right] \\ 
+&= (2\pi \sg^2)^{-n/2} \exp \left[ -\dis\frac{1}{2\sg^2} \underbrace{SSR(\beta)}_{\text{sum of square residuals}} \right].
+\end{align*}
+In matrix notation, $y \mid X, \beta, \sg^2 \sim \text{MVN}(X\beta, \sg^2 I)$.
+
+\item Prior specification: $\beta \sim MVN(\beta_0, \Sg_0)$. Then posterior is also multivariate normal, with
+\begin{equation*}
+\bbE [\beta \mid y, X, \sg^2] = \left(\Sg_0^{-1} + \frac{X^T X}{\sg^2} \right)^{-1} \left(\Sg_0^{-1}\beta_0 + \frac{X^T y}{\sg^2} \right), \qquad 
+\var [\beta \mid y, X, \sg^2] = \left(\Sg_0^{-1} + \frac{X^T X}{\sg^2} \right)^{-1}.
+\end{equation*}
+
+Let $\gamma = \sg^{-2}$, and take prior $\gamma \sim \dis\frac{\text{Gam}(\nu_0/2)}{\nu_0 \sg_0^2 / 2}$. Then posterior is $\sg^2 \mid y, X, \beta \sim \text{InvGam}\left( \dis\frac{\nu_0 + n}{2}, \frac{\nu_0 \sg_0^2 + SSR(\beta)}{2}\right)$.
+
+\item \textbf{Ridge regression:} Take $\beta_0 = 0$, $\Sg_0 = \tau^2 I$. (We can take $(\Sg_0)_{11}$ to be zero if we don't want to penalize the intercept. We can also have $\Sg_0$ be a general diagonal matrix with positive entries.)
+
+\item \textbf{Unit information prior:} Contains the same amount of information as a single observation. This sets $\Sg_0^{-1} = \dis\frac{X^T X}{n\sg^2}$, and $\beta_0 = \hat{\beta}_{OLS} = (X^T X)^{-1} X^T Y$.
+
+\item \textbf{Invariance:} Let $H$ be some $p \times p$ matrix, $\tilde{X} = XH$. The principle of invariance says that if we get the posterior distributions of $\beta$ ($\tilde{\beta}$ resp.) from $y$ and $X$ ($y$ and $\tilde{X}$ resp.), then the posterior distributions of $\beta$ and $H \tilde{\beta}$ should be the same.
+
+To achieve this, we need $\beta_0 = 0$ and $\Sg_0 = k (X^T X)^{-1}$ for any positive $k$.
+
+\item \textbf{Zellner's $g$-prior:} In the invariance set-up above, if we further take $k = g\sg^2$, we get Zellner's $g$-prior. (If we set $g = n$, we get the unit information prior.) Under this prior, $\beta \mid y, X, \sg^2$ still multivariate normal, with $\var [\beta \mid y, X, \sg^2] = \dis\frac{g}{g+1}(X^T X)^{-1}\sg^2$, $\bbE [\beta \mid y, X, \sg^2] = \dis\frac{g}{g+1}(X^T X)^{-1} X^T Y$.
+
+With Zellner's $g$-prior, if we let $\gamma = \sg^{-2}$ and set the prior $\gamma \sim \text{Gam}(\nu_0/2, \nu_0 \sg_0^2/2)$, then the posterior distribution is $\sg^2 \mid y, X \sim \text{InvGam} \left( \dis\frac{\nu_0 + n}{2}, \frac{\nu_0 \sg_0^2 + SSR_g}{2} \right)$, where $SSR_g = y^T \left(I - \dis\frac{g}{g+1}X(X^T X)^{-1} X^T \right)y$.
+
+\item \textbf{Hierarchical regression:} Say we want to run regression for $m$ different groups which are different but somewhat related. For each group $j$, we have the within-group sampling model
+\[ Y_{i,j} = \beta_j^T x_{i,j} + \eps_{i,j}, \qquad \eps_{i,j,} \stackrel{iid}{\sim} \calN(0, \sg^2). \]
+
+We can set up a between group sampling model, e.g. $\beta_1, \dots, \beta_m \stackrel{iid}{\sim} MVN(\t, \Sg)$. Typical priors for this set-up:
+\begin{align*}
+\t &\sim MVN(\mu_0, \Lmb_0), \\ 
+\Sg &\sim \text{InvWishart}(\eta_0, S_0^{-1}), \\ 
+\sg^2 &\sim \text{InvGam}(\nu_0 / 2, \nu_0 \sg_0^2 / 2).
+\end{align*}
+
+\item \textbf{Ordered probit regression:} Response variable $Y$ is related to predictors $X$ through a latent variable:
+\begin{align*}
+\eps_1, \dots, \eps_n &\stackrel{iid}{\sim} \calN(0, 1), \\ 
+Z_i &= \beta^T x_i + \eps_i, \\ 
+Y_i &= g(Z_i),
+\end{align*}
+where $g$ is usually taken to be non-decreasing. If $Y$ can only take on $K$ values, then set thresholds $-\infty = g_0 < g_1 < \dots < g_K = \infty$, and have $Y_i = j$ if $g(Z_j) \in (g_{j-1}, g_j)$.
+
+If we use normal prior distributions, the joint posterior of $\{ \beta, g_1, \dots, g_K, Z_1, \dots, Z_n\}$ given $Y$ can be approximated using a Gibbs sampler (see Hoff p212).
+
+\end{itemize}
+
+% Bayesian Model Selection
+\section{Bayesian Model Selection}
+\begin{itemize}
+\item If we believe that many of the regression coefficients are potentially equal to zero, then we come up with a prior distribution that reflects this possibility.
+
+\item \textbf{Spike and slab prior:} Mix an atom at $\{ 0 \}$ (or $U[-\eps, \eps]$ or $\calN(0, \eps^2)$) with a diffuse distribution (e.g. $U[-M, M], \calN(0, M^2)$). (We could put a prior on the proportion of each component as well.)
+
+\item \textbf{Alternative:} Can write $\beta_j = z_j b_j$, where $z_j \in \{ 0, 1\}$. Each value of $z = (z_1, \dots, z_p)$ corresponds to a different model.
+\begin{itemize}
+\item Possible prior: Say $z$ has $p_z$ non-zero entries. Let $X_z$ be the $n \times p_z$ matrix corresponding to the variables with $z_j = 1$, and let $\beta_z$ be the $p_z \times 1$ vector consisting of $\beta_j$ for which $z_j = 1$. Modified $g$-prior for $\beta$ is $\beta_j = 0$ if $z_j = 0$, and $\beta_z \mid X_z, \sg^2 \sim \text{MVN}(0, g\sg^2 (X_z^T X_z)^{-1})$.
+
+\item Let $\gamma = \sg^{-2}$, and give $\gamma$ a $\text{Gamma}(\nu_0/2, \nu_0 \sg_0^2 / 2)$ prior. Then the conditional density of $y$ given $X$ and $z$ is
+\[ p(y \mid X, z) = \frac{\pi^{-n/2}\Gamma([\nu_0 + n]/2)(1+g)^{-p_z/2}}{\Gamma(\nu_0/2)} \frac{(\nu_0 \sg_0^2)^{\nu_0/2}}{(\nu_0 \sg_0^2 + SSR_g^z)^{(\nu_0 + n)/2}}, \]
+where $SSR_g^z = y^T \left(I - \dis\frac{g}{g+1}X_z(X_z^T X_z)^{-1} X_z^T \right)y$.
+
+\item Assume that we further set $g = n$ and use the unit information prior for $\sg^2$ for each model $z$ (i.e. $\nu_0 = 1$, $\sg_0^2$ the estimated residual variance under the least squares estimate for model $z$). To compare 2 models $z_a$ and $z_b$, we may look at
+\[ \frac{p(y \mid X, Z_a)}{p(y \mid X, Z_b)} = (1 + n)^{(p_{z_b} - p_{z_a})/2} \left(\frac{s_{z_a}^2}{s_{z_b}^2} \right)^{1/2} \left(\frac{s_{z_b}^2 + SSR_g^{z_b}}{s_{z_a}^2 + SSR_g^{z_a}} \right)^{(n+1)/2}. \]
+
+There is a balance between model complexity and goodness of fit: A large value of $p_{z_b}$ penalizes model $z_b$, but a large value of $SSR_g^{z_a}$ penalizes model $z_a$.
+
+\item After setting up a prior for $z$, we can run the Bayesian machinery to get a posterior distribution for $z$, which is a posterior probability for each of the models.
+
+\item \textbf{Prediction:} We could get a prediction from each of the models, then weight according to posterior probabilities.
+
+\end{itemize}
+
+\item \textbf{Bayesian model averaging:} If we sample the posterior distribution of $\beta$ $S$ times, then the Bayesian model averaged estimate of $\beta$ is $\hat{\beta}_{bma} = \dis\frac{1}{S}\sum_{s=1}^S \beta^{(s)}$.
+
+
+
+\end{itemize}
+
+% Special Topics
+\section{Special Topics}
+See notes for the material in this section.
+
+\begin{itemize}
+\item \textbf{Bayesian testing:} For 2 models $M_1$ and $M_2$,
+\begin{equation*}
+\underbrace{\frac{p(M_1 \mid y)}{p(M_2 \mid y)}}_{\text{posterior ratio}} = \underbrace{\frac{p(y \mid M_1)}{p(y \mid M_2)}}_{\text{Bayes factor}} \cdot \frac{p(M_1)}{p(M_2)}.
+\end{equation*}
+The Bayes factor is also denoted by $B_{1,2}$. $\log B_{1,2}$ is called \textbf{evidence}.
+
+\item Jeffreys: ``substantial evidence'' if $\log_{10} B \in (1/2, 1)$, ``strong evidence'' if $\log_{10} B \in (1, 2)$, ``decisive evidence'' if $\log_{10} B > 2$.
+
+
+\end{itemize}
+
+\end{document}

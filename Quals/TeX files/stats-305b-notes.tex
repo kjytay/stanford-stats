@@ -1,0 +1,872 @@
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,amssymb,graphicx,mathtools,flexisym, float, enumitem}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+%
+% Macros for shortcuts
+%
+\newcommand\dis{\displaystyle}
+\def\lc{\left\lceil}   
+\def\rc{\right\rceil}
+\def\lf{\left\lfloor}   
+\def\rf{\right\rfloor}
+\newcommand\bbC{\mathbb{C}}
+\newcommand\bbE{\mathbb{E}}
+\newcommand\bbN{\mathbb{N}}
+\newcommand\bbP{\mathbb{P}}
+\newcommand\bbQ{\mathbb{Q}}
+\newcommand\bbR{\mathbb{R}}
+\newcommand\bbZ{\mathbb{Z}}
+\newcommand\calA{\mathcal{A}}
+\newcommand\calB{\mathcal{B}}
+\newcommand\calC{\mathcal{C}}
+\newcommand\calF{\mathcal{F}}
+\newcommand\calG{\mathcal{G}}
+\newcommand\calH{\mathcal{H}}
+\newcommand\calJ{\mathcal{J}}
+\newcommand\calL{\mathcal{L}}
+\newcommand\calM{\mathcal{M}}
+\newcommand\calN{\mathcal{N}}
+\newcommand\calP{\mathcal{P}}
+\newcommand\calU{\mathcal{U}}
+\newcommand\dlt{\delta}
+\newcommand\Dlt{\Delta}
+\def\eps{\varepsilon}
+\newcommand\lmb{\lambda}
+\newcommand\Lmb{\Lambda}
+\newcommand\om{\omega}
+\newcommand\Om{\Omega}
+\newcommand\sg{\sigma}
+\newcommand\Sg{\Sigma}
+\def\t{\theta}
+\newcommand\T{\Theta}
+\newcommand\vt{\vartheta}
+\newcommand\equivto{\Leftrightarrow}
+\newcommand\goesto{\rightarrow}
+\newcommand\var{\text{Var }}
+
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+\begin{document}
+\title{STATS 305B Notes}
+\author{Kenneth Tay}
+\date{\vspace{-3ex}}
+\maketitle
+
+\tableofcontents
+
+% Estimating/Testing a Binomial Parameter
+\section{Estimating/Testing a Binomial Parameter}
+Say $Y \sim \text{Bin}(n, \pi)$, we wish to estimate $\pi$.
+\begin{itemize}
+\item MLE is $\hat{\pi} = y/n$.
+
+\item $\bbE \hat{\pi} = \pi$, $\var \hat{\pi} = n\pi(1-\pi)$.
+
+\item \textbf{Wald test:} $\hat{\pi} \approx \calN \left( \pi_0, (I(\hat{\pi})^{-1}) \right)$, so the corresponding $z$-statistic is $z_{Wald} = \dfrac{\hat{\pi} - \pi_0}{\sqrt{\hat{\pi}(1 - \hat{\pi}) / n}}$. The $(1-\alpha)$-level confidence interval is given by 
+\begin{equation*} \left( \hat{\pi} - z_{1-\alpha/2} \sqrt{\frac{\hat{\pi}(1 - \hat{\pi})}{n}}, \hat{\pi} + z_{1-\alpha/2} \sqrt{\frac{\hat{\pi}(1 - \hat{\pi})}{n}} \right). \end{equation*}
+
+\item \textbf{Score test:} Let $S = \dfrac{\partial L(\pi\mid Y)}{\partial \pi} \Bigg|_{\pi_0}$. Under $H_0$, $S \approx \calN(0, I(\pi_0))$, and the corresponding $z$-statistic is $z_{score} = \dfrac{\hat{\pi} - \pi_0}{\sqrt{\pi_0(1 - \pi_0) / n}}$. The $(1-\alpha)$-confidence interval is given by
+\begin{equation*} \left\{ \pi: \frac{(\hat{\pi} - \pi)^2}{\pi(1 - \pi) / n} \leq \chi_{1, 1-\alpha}^2 \right\}.\end{equation*}
+
+\item \textbf{Likelihood ratio test:} The binomial log-likelihood function is equal to $L_0 = y \log \pi_0 + (n-y) \log (1 - \pi_0)$ under $H_0$, and is equal to $L_1 = y \log \hat{\pi} + (n-y) \log (1 - \hat{\pi})$ more generally. Hence, the likelihood-ratio test statistic simplifies:
+\begin{equation*} -2(L_0 - L_1) = 2 \left[ y \log \frac{\hat{\pi}}{\pi_0} + (n-y) \log \frac{1 - \hat{\pi}}{1 - \pi_0} \right], \end{equation*}
+which has approximate distribution $\chi_1^2$ under $H_0$. The $(1-\alpha)$-level confidence interval is given by
+\begin{equation*} \left\{ \pi: -2 (L_0 - L_1) \leq \chi_{1, 1-\alpha}^2 \right\}. \end{equation*}
+
+\end{itemize}
+
+% Estimating/Testing Multinomial Parameters
+\section{Estimating/Testing Multinomial Parameters}
+Suppose $Y \sim \text{Multinom}(n, \pi)$, where $\pi \in \bbR^k$ represents the probability of $Y$ being in each of $k$ categories.
+
+\begin{itemize}
+\item If we let $\Sg(\pi) = \text{diag}(\pi) - \pi \pi^T$, then we have $\text{Cov}(Y) = n \Sg(\pi)$. (Note: The rank of $\Sg(\pi)$ is $k-1$.) As $n \goesto \infty$, $\dfrac{Y}{n} - \pi = \hat{\pi}_{MLE} - \pi \sim \calN\left(0, \dfrac{\Sg(\pi)}{n}\right)$.
+
+\item \textbf{Pearson $\chi^2$ test:} To test $H_0: \pi = \pi_0$, the test statistic is $\dis\sum_{j=1}^k \frac{(O_j - E_j)^2}{E_j} = \sum_{j=1}^k \frac{(y_j - n\pi_{0, j})^2}{n\pi_{0, j}}$, which has an approximate $\chi_{k-1}^2$ distribution under $H_0$.
+
+\item \textbf{Likelihood ratio test:} To test $H_0: \pi = \pi_0$, the test statistic is $G(\pi_0, \hat{\pi}) = 2 \dis\sum_{j=1}^k y_j \log \left( \frac{y_j/n}{\pi_{0, j}}  \right)$, which has an approximate $\chi_{k-1}^2$ distribution under $H_0$.
+
+\end{itemize}
+
+% Contingency Tables
+\section{Contingency Tables}
+A contingency table is a tabulation of the empirical joint distribution of categorical random variables.
+
+Let $(X, Y)$ be categorical random variables with $I$ and $J$ categories respectively. Define
+\begin{itemize}
+\item $Y_{ij} := \text{ number of observations in cell } (i, j)$.
+\item $\pi_{ij} := P \{ X = i, Y = j \}$ (joint probabilities).
+\item $\pi_{i+} := P \{ X = i \}$, $\pi_{+j} := P \{ Y = j \}$ (marginal probabilities).
+\item $\pi_{j \mid i} = P \{ Y = j \mid X = i \} = \pi_{ij} / \pi_{i+}$ (conditional probabilities).
+\end{itemize}
+
+\subsection{Sampling models}
+\begin{itemize}
+\item \textbf{Poisson sampling model.} Fix a $\lmb$, and let $N \sim \text{Poisson}(\lmb)$. Then, get a simple random sample of size $N$ and check which cell of the contingency table each subject falls in.
+
+It can be shown that $Y_{ij} \stackrel{ind.}{\sim} \text{Poisson}(\lmb_{ij})$.
+
+\item \textbf{Multinomial sampling model.} Instead of letting the sample size be Poisson-distributed, let it be some fixed number $n$. (Row and column counts are not fixed.) Then we have $Y \sim \text{Multinom}\left(n, (\pi_{ij}) \right)$.
+
+\item \textbf{Independent multinomial sampling model.} This can be used when either row or column totals are fixed. If row totals are fixed, then we can model the counts by $Y[i, ] \sim \text{Multinom}(Y_{i+}, \pi_{\cdot \mid i})$. (Similar set-up if column totals are fixed.
+
+\item \textbf{Hypergeometric sampling model.} This is used when both row and column totals are fixed. See Agresti Sec 3.5.1 for details.
+\end{itemize}
+
+\subsection{Comparing 2 proportions in $2 \times 2$ tables}
+Define $\pi_1 := \t_{Yes \mid 1}$, $\pi_2 := \t_{Yes \mid 2}$. Then there are few different ways to measure the relationship between $\pi_1$ and $\pi_2$:
+\begin{itemize}
+\item \textbf{Difference of proportions} $\pi_1 - \pi_2$. 
+\begin{itemize}
+\item \textbf{Normal approximation:} $\hat{\pi}_1 - \hat{\pi}_2 \approx \calN \left(\pi_1 - \pi_2, \dfrac{\hat{\pi}_1(1 - \hat{\pi}_1)}{n_1} + \dfrac{\hat{\pi}_2(1 - \hat{\pi}_2)}{n_2} \right)$.
+\end{itemize}
+
+\item \textbf{Relative risk} $r := \displaystyle\frac{\pi_1}{\pi_2}$.
+\begin{itemize}
+\item \textbf{Normal approximation:} Usually look at $\log r$ instead. $\log \left( \dfrac{\hat{\pi}_1}{\hat{\pi}_2}\right) \approx \calN \left( \log \left( \dfrac{\pi_1}{\pi_2} \right), \dfrac{1 - \hat{\pi}_1}{y_1} + \dfrac{1 - \hat{\pi}_2}{y_2} \right)$.
+\end{itemize}
+
+\item \textbf{Odds ratio} $\t := \dis\frac{Odds(\pi_1)}{Odds(\pi_2)} := \frac{\pi_1 / (1 - \pi_1)}{\pi_2 / (1 - \pi_2)} = \frac{\pi_{11}\pi_{22}}{\pi_{12}\pi_{21}}$.
+\begin{itemize}
+\item In the Poisson and Multinomial sampling models, $\t = 1$ is equivalent to $X$ and $Y$ being independent.
+
+\item In the independent multinomial sampling model, $\t = 1$ and $r = 1$ individually imply that $\pi_1 = \pi_2$.
+
+\item Odds ratio does not change value when rows and columns are switched. This is useful for case control studies (Agresti Sec 2.2.6).
+
+\item \textbf{Rare disease hypothesis:} When $\pi_1$ and $\pi_2$ are small, $\t \approx r$.
+
+\item For $2 \times 2 \times K$ tables, we can talk about \textbf{conditional odds ratios} for each level of $Z$. These are denoted by $\t_{XY(1)}, \dots, \t_{XY(K)}$.
+\begin{itemize}
+\item \textbf{Homogeneous $XY$ association} means $\t_{XY(1)} = \dots = \t_{XY(K)}$. If there is homogeneous association, we say that there is no interaction between $X$ and $Y$.
+\item Conditional independence is the special case of the above, where all the conditional odds ratios are 1.
+\item \textbf{Collapsibility:} When there is homogeneous association, then $\t_{XY} = \t_{XY(K)}$ if either $Z$ and $X$ conditionally independent or if $Z$ and $Y$ conditionally independent.
+\end{itemize}
+
+\item Due to convergence issues, we look at $\log \hat{\t}$, then exponentiate to get results for $\hat{\t}$. For large samples, we have
+\begin{equation*} \log \hat{\t} \approx \calN \left( \log \t, \frac{1}{Y_{11}} + \frac{1}{Y_{12}} + \frac{1}{Y_{21}} + \frac{1}{Y_{22}}  \right). \end{equation*}
+We can get Wald confidence intervals for $\log \t$ and $\t$ from the above.
+
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Testing}
+See Agresti Sec 6.6.4 for power calculations for $\chi^2$ tests in contingency tables.
+
+\subsubsection*{Tests of independence}
+\begin{itemize}
+\item Purpose: To test independence of $X$ and $Y$, i.e. $H_0: \pi_{ij} = \pi_{i+} \pi_{+j}$. Assume sampling model is $n \sim \text{Pois}(\mu)$. Then the entries of the table are independent with $n_{ij} \stackrel{ind}{\sim} \text{Pois}(\mu \pi_{ij})$.
+
+\item \textbf{Pearson $\chi^2$ test statistic} is $X^2 = \dis\sum_{i,j}\frac{(n_{ij} - \hat{\mu}_{ij})^2}{\hat{\mu}_{ij}}$, where $\hat{\mu}_{ij} = n \hat{\pi}_{i+}\hat{\pi}_{+j}$ is the MLE under the null. (This turns out to be the score statistic.)
+
+\item \textbf{Pearson residual} $e_{ij} = \dfrac{n_{ij} - \hat{\mu}_{ij}}{\sqrt{\hat{\mu}_{ij}}}$, \textbf{standardized residual} $r_{ij} = \dfrac{e_{ij}}{\sqrt{(1-p_{i+})(1-p_{+j})}}$. $r_{ij}$ has asymptotic $\calN(0,1)$ distribution.
+
+\item \textbf{Likelihood ratio test statistic} is $G^2 = - 2 \log \Lmb = 2 \dis\sum_{i,j}n_{ij} \log (n_{ij}/\hat{\mu}_{ij})$.
+
+\item Both $X^2$ and $G^2$ have asymptotic $\chi^2$ distributions with $df = (I-1)(J-1)$. Also, $X^2 - G^2 \stackrel{P}{\goesto} 0$.
+
+\item See Agresti Sec 3.2.3 for discussion on the adequacy of the $\chi^2$ distribution, and Sec 3.3.7 on limitations of $\chi^2$ tests.
+
+\item If $X$ and $Y$ can be treated ordinally, we may use a linear trend alternative to independence (see Agresti Sec 3.4.1 for details).
+
+\end{itemize}
+
+
+\subsubsection*{McNemar's test for marginal homogeneity in $2 \times 2$ tables (Agresti p227)}
+\begin{itemize}
+\item Purpose: To test for marginal homogeneity in $2 \times 2$ tables, i.e. $H_0: \pi_{1+} = \pi_{+1}$, or equivalently, $H_0: \pi_{12} = \pi_{21}$.
+
+\item Under $H_0$, the score test statistic is
+$z_0 = \dfrac{n_{21} - n_{12}}{\sqrt{n_{21} + n_{12}}}$.
+
+$z_0$ has an asymptotic $\calN(0,1)$ distribution, and $z_0^2$ has chi-squared distribution with $df = 1$. (We typically look at $z_0^2$.)
+
+\item McNemar's test can be viewed as a CMH test for a $2 \times 2 \times n$ table, where each table corresponds to one paired observation.
+\end{itemize}
+
+\subsubsection*{Cochran-Mantel-Haenszel (CMH) Test of Conditional Independence (Agresti p227)}
+\begin{itemize}
+\item Purpose: A non-model-based test of $H_0:$ conditional independence in $2 \times 2 \times K$ tables, i.e. $X$ and $Y$ are independent given $Z$.
+
+\item This is frequently used in matched pairs. Each pair is a partial table (so there are $K$ pairs), one subject is assigned the control while the other is assigned the new treatment. The null hypothesis is that ``accounting for the pair'', treatment and response are independent (i.e. new treatment has no effect).
+
+\item Let the partial counts in table $k$ be $n_{11k}, \dots, n_{22k}$. Under the null, the hypergeometric mean and variance of $n_{11k}$ are
+\begin{align*}
+\mu_{11k} &= \bbE n_{11k} = \frac{n_{1+k} n_{+1k}}{n_{++k}}, \\ 
+\text{Var } n_{11k} &= \frac{n_{1+k}n_{2+k}n_{+1k}n_{+2k}}{n_{++k}^2 (n_{++k} - 1)}.
+\end{align*}
+
+\item The test statistic is
+\begin{equation*}
+CMH = \frac{\left[ \sum_{k} (n_{11k} - \mu_{11k}) \right]^2}{\sum_k \text{Var } n_{11k}}.
+\end{equation*}
+It has large-sample $\chi^2$ distribution with $df = 1$.
+
+\item When $K=1$, this is the same as the Pearson $\chi^2$ statistic for the $2 \times 2$ table.
+\end{itemize}
+
+\subsubsection*{Fisher's exact test for $2 \times 2$ tables (Agresti p90)}
+\begin{itemize}
+\item Purpose: For testing $H_0:$ independence, in the case of fixing both row and column totals.
+
+\item In this case, $\bbP(n_{11} = t) = \dfrac{\binom{n_{1+}}{t} \binom{n_{2+}}{n_{+1}-t}}{\binom{n}{n_{+1}}}$ has a hypergeometric distribution.
+\end{itemize}
+
+\subsection{Linear logit model for $I \times 2$ tables (Agresti Sec 5.3.4)}
+\begin{itemize}
+\item We can use this if the categories for $X$ have some natural ordering.
+\item Model: $\text{logit}(\pi_i) = \alpha + \beta x_i$, where $(x_1, \dots, x_I)$ are the scores for the categories of $X$. (Natural extension to multiway contingency tables in Agresti Sec 5.4.1.)
+
+\item Independence corresponds to $\beta = 0$. To test for this (in the case where each row can be thought of as an independent $\text{Binom}(n_i, \pi_i)$ realization), we can use the \textbf{Cochran-Armitage Trend Test} (Agresti p178). The test statistic is given by
+\begin{equation*} z^2 = \left[\frac{\sum_i (x_i - \bar{x})y_i}{\sqrt{p(1-p) \sum_i n_i (x_i - \bar{x})^2}}\right]^2, \end{equation*}
+where $p = \left( \sum_i y_i \right)/n$ (i.e. overall proportion of successes). Under the null, it is asymptotically $\chi^2$ with $df = 1$.
+\end{itemize}
+
+% GLMs
+\section{Generalized Linear Models (GLMs)}
+\subsection{Set-up}
+A GLM consists of 3 parts:
+\begin{enumerate}
+\item \textbf{The random component:} Responses $Y_1, \dots, Y_n$ are independent observations from a distribution in the exponential family, taking the form
+\[ f_Y(y; \t, \phi) = \exp \left\{ \frac{y\t - b(\t)}{a(\phi)} + c(y, \phi) \right\}, \]
+for specific functions $a$, $b$ and $c$. This is a 1- or 2-parameter exponential family, depending of whether $\phi$ is known or unknown.
+\begin{itemize}
+\item Let $\ell(\t, \phi; y) = \log f_Y(y; \t, \phi)$ be the log-likelihood function.
+
+\item (M\&N p29, Agresti p131) $\bbE Y = \mu = b'(\t)$, and $\var Y = b''(\t) a(\phi)$. We often write $b''(\t) = V(\mu)$ and call it the \textbf{variance function}.
+
+\item $a(\phi)$ commonly of the form $a(\phi) = \phi/w$. Here, $\phi$ is called the \textbf{dispersion parameter} and is sometimes denoted by $\sg^2$.
+\end{itemize}
+
+\item \textbf{The systematic component:} Covariates $x_1, \dots, x_p$ produce a linear predictor $\eta$ given by $\eta = \dis\sum_{j=1}^p x_j \beta_j$.
+
+\item \textbf{The link function:} A function $g$ such that $\eta_i = g(\mu_i)$, where $\mu_i = \bbE Y_i$.
+\begin{itemize}
+\item Logit link: $\eta = \log \left( \dfrac{\mu}{1 - \mu}\right)$.
+\item Probit link: $\eta = \Phi^{-1}(\mu)$.
+\item Complementary log-log link: $\eta = \log[-\log(1-\mu)]$.
+\item Power family of links: $\eta = (\mu^\lmb - 1)/ \lmb$ if $\lmb \neq 0$, $\eta = \log \mu$ if $\lmb = 0$.
+\item \textbf{Canonical link:} The link function when $\eta = \t$ (i.e. the canonical parameter in the random component). For canonical links, the sufficient statistic is $X^T Y$ (in vector notation).
+\end{itemize}
+
+\end{enumerate}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item Given the predictors $X_i$, the $Y_i$ are independent.
+\item $Y_i$'s follow the stated parametric form (in the random component).
+\item The link function has the stated form.
+\end{itemize}
+
+\subsection{Fitting the model}
+\subsubsection*{Maximum likelihood}
+\begin{itemize}
+\item Differentiating the log-likelihood and setting it to zero, we obtain the \textbf{score equation} $X^T y - X^T \hat{\mu} = 0$. In general, $\hat{\mu}$ is a non-linear function of $\hat{\beta}$, so the score equation cannot be solved directly. (For details, see Agresti Sec 4.4.5 p133.)
+
+\item (Agresti Sec 4.4.8, p135) We can determine the asymptotic covariance matrix of the MLE $\hat{\beta}$. Let $W$ be a diagonal matrix with diagonal elements $w_i = \dfrac{1}{\var Y_i}\left(\dfrac{\partial \mu_i}{\partial \eta_i} \right)^2$. Then the inverse of the asymptotic covariance matrix, also known as the \textbf{information matrix}, is $\calJ = X^T W X$.
+
+\item Note that $W$ depends on the link function. $\calJ$ will be used in fitting procedures.
+\end{itemize}
+
+\subsubsection*{Newton-Raphson method (Agresti Sec 4.6.1)}
+\begin{itemize}
+\item Given a first guess, it obtains a second guess by approximating the function in a neighborhood of the first guess by a second-degree polynomial, and then finding the location of that polynomial's maximum.
+
+\item Let $L(\beta)$ be the function to be maximized. Let $u = \nabla L = \begin{pmatrix} \frac{\partial L(\beta)}{\partial \beta_0}, \frac{\partial L(\beta)}{\partial \beta_1}, \dots \end{pmatrix}^T$. Let $H$ be the Hessian.
+
+If our current guess is $\beta^{(t)}$, then the next guess is $\beta^{(t+1)} = \beta^{(t)} - \left[ H^{(t)}\right]^{-1} u^{(t)}$, where $H^{(t)}$ and $u^{(t)}$ are the Hessian and score evaluated at the current guess.
+
+\item Newton-Raphson uses \textbf{observed information}, i.e. $H_{ij} = \dfrac{\partial^2 L(\beta)}{\partial \beta_i \partial \beta_j}$ evaulated at $\beta^{(t)}$.
+\end{itemize}
+
+\subsubsection*{Fisher scoring (Agresti Sec 4.6.2)}
+\begin{itemize}
+\item Instead of observed information, Fisher scoring uses \textbf{expected information}.
+
+\item Let $\calJ$ have elements $\calJ_{ij} = -\bbE \left[ \dfrac{\partial^2 L(\beta)}{\partial \beta_i \partial \beta_j} \right]$. Let $\calJ^{(t)}$ be $\calJ$ evaluated at the current guess $\beta{(t)}$. The the next guess is $\beta^{(t+1)} = \beta^{(t)} + \left[\calJ^{(t)} \right]^{-1} u^{(t)}$.
+
+\item For GLMs with canonical links, observed and expected information are the same. 
+\end{itemize}
+
+\subsubsection*{Iterated reweighted least squares (IRLS)}
+\begin{itemize}
+\item Given a current guess $\hat{\beta}^{(t)}$ for the parameters, consider the linear model with the correct mean and correct variance: $y_i = \mu_i(\beta) + \eps_i$, with $\eps_i \sim \calN(0, W(\hat{\eta}_i^{(t)}))$.
+
+\item Using a Taylor series approximation for $\mu(\beta)$, we get the approximate weighted linear model $y = \hat{\mu}^{(t)} + \hat{W}^{(t)}(X \beta - X\hat{\beta}^{(t)}) + \eps$, with $\eps \sim \calN(0, \hat{W}^{(t)})$, where $\hat{W}^{(t)} = \text{diag}(W(\hat{\eta}_i^{(t)}))$.
+
+\item Rearranging, we get $\hat{z}^{(t)} = X\beta + \eps$, $\eps \sim \calN(0, (\hat{W}^{(t)})^{-1})$, where $\hat{z}^{(t)} = X \hat{\beta}^{(t)} + (\hat{W}^{(t)})^{-1} (y - \hat{\mu}^{(t)})$.
+
+\item We can fit this model with usual OLS! The solution is $\hat{\beta}^{(t+1)} = (X^T \hat{W}^{(t)} X)^{-1} X^T \hat{W}^{(t)} \hat{z}^{(t)}$.
+
+\item IRLS is equivalent to Fisher scoring.
+\end{itemize}
+
+\subsection{Goodness of fit / inference}
+\begin{itemize}
+\item \textbf{Generalized hat matrix:} $H = W^{1/2}X(X^T W X)^{-1} X^T W^{1/2}$.
+
+\item \textbf{Asymptotic distribution} for $\hat{\beta}$ is $\hat{\beta} \sim \calN(\beta, (X^T W X)^{-1})$. Can use this for standard errors and confidence intervals. (Note that $W$ depends on $\beta$, so we can just use the plug-in estimate where necessary.)
+
+\item For a GLM with observations $y = (y_1, \dots, y_n)$, let $\ell(\mu; y)$ denote the log-likelihood function expressed in terms of the means $\mu = (\mu_1, \dots, \mu_n)$. Let $\ell(\hat{\mu};y)$ denote the maximum of the log-likelihood for the GLM, and let $\ell(y;y)$ denote the maximum achievable log-likelihood, i.e. the saturated model, where the number of parameters is equal to the number of observations and has the perfect fit $\hat{\mu} = y$.
+
+\item \textbf{Scaled deviance} $D^*(y;\hat{\mu}) := 2 \ell(y;y) - 2 \ell(\hat{\mu};y)$. Asymptotically, $D^*(y;\hat{\mu}) \dot{\sim} \chi_{n-p}^2$.
+
+\item More generally, to test model $M_1$ vs. model $M_2$, we would use the test statistic $D^*(y; \mu(\hat{\beta}_{M_1})) - D^*(y; \mu(\hat{\beta}_{M_2})) \approx \chi_{|M_2|-|M_1|}^2$.
+
+\item If we let $\hat{\t}$ and $\tilde{\t}$ be the estimates of the canonical parameters under the GLM and the saturated model respectively, if $a_i(\phi) = \phi/w_i$, the scaled deviance can be written as
+\[D^*(y;\hat{\mu}) = \frac{2w_i[y_i (\tilde{\t}_i - \hat{\t}_i) - b(\tilde{\t}_i) + b(\hat{\t}_i)]}{\phi} =: \frac{D(y; \hat{\mu})}{\phi}.\]
+
+$D(y; \hat{\mu})$ is called the \textbf{deviance}.
+
+\item \textbf{Generalized Pearson $X^2$ statistic:} $X^2 = \dis\sum_{i=1}^n \frac{(y_i - \hat{\mu}_i)^2}{V(\hat{\mu}_i)}$.
+
+\item \textbf{McFadden's $R^2$:} An analog for $R^2$ in OLS. It is equal to $\dfrac{DEV(M_0) - DEV(M)}{DEV(M_0)}$, where $M_0$ is the null model (i.e. intercept-only).
+
+\item For binary response, we could set up the confusion matrix and use that to estimate predictive power.
+
+\item \textbf{Pearson residuals:} $e_i = \dfrac{y_i - \hat{\mu}_i}{\sqrt{V(\hat{\mu}_i)}}$. We have $\sum e_i^2 = X^2$.
+
+\item \textbf{Deviance residuals:} Let $d_i = 2w_i[y_i (\tilde{\t}_i - \hat{\t}_i) - b(\tilde{\t}_i) + b(\hat{\t}_i)]$. (Note that $\sum d_i = D(y; \hat{\mu})$.) The deviance residual is $\sqrt{d_i} \cdot \text{sign}(y_i - \hat{\mu}_i)$.
+
+\item \textbf{Standardized residuals:} Divide the Pearson residuals by their standard error: $r_i = \dfrac{e_i}{\sqrt{1 - \hat{h}_i}}$, where $\hat{h}_i$ is the estimated diagonal element of $H = W^{1/2}X(X^T W X)^{-1} X^T W^{1/2}$, the generalized hat matrix. $\hat{h}_i$ is also called the \textbf{leverage} of observation $i$. (Derivation in Agresti p142.)
+
+\item Can plot residuals against each predictor $X_j$. If there seems to be some structure, then maybe higher-order terms or interaction terms should be added.
+
+\end{itemize}
+
+\subsection{Latent variable interpretation for binary response (Agresti Sec 4.2.6, p122)}
+\begin{itemize}
+\item A subject has response $Y = 0$ or $1$.
+\item Let $X = x$ be the value of the predictor value. Suppose that there is a threshold $T$  such that $Y = 1 \; \Leftrightarrow \; T \leq x$.
+\item The threshold $T$ varies from subject to subject, having distribution with CDF $F$.
+\item Thus, for a fixed dosage $x$, the probability a randomly selected subject dies is $\pi(x) = \bbP(Y =1 \mid X = x) = \bbP(T \leq x) = F(x)$.
+\item In practice, we don't observe $T$. We assume that $F$ belongs to some parametric family. If $\Phi$ is the standard CDF for the family, then we can write $\Phi^{-1}[\pi(x)] = \alpha + \beta x$.
+\end{itemize}
+
+\subsection{Model selection}
+\begin{itemize}
+\item \textbf{Forward stepwise:} Add terms sequentially. At each stage, select the term with the greatest improvement in fit, stop when adding the next predictor doesn't help fit. \textbf{Backward stepwise} does the opposite.
+\item \textbf{Akaike information criterion (AIC):} -2 (\text{maximized log likelihood} - \text{number of parameters in model}). The smaller the AIC, the better.
+\item \textbf{Bayesian information criterion (BIC):} The coefficient in front of number of parameters changes from $2$ to $\log n$.
+
+\end{itemize}
+
+% Logistic Regression
+\section{Logistic Regression (Agresti Ch 5)}
+\subsection{Set-up}
+\begin{itemize}
+\item \textbf{Model:} $\text{logit}(\pi) = x^T \beta, \text{ i.e. } \log \left( \frac{\pi}{1 - \pi} \right) = x^T \beta$, where $\pi = \pi_\beta (X) = P \{Y = 1 \mid X_1 = x_1, \dots, X_p = x_p \} = \bbE_\beta [Y \mid X]$.
+
+\item From the above, we get
+\begin{equation*}
+\bbE_\beta [Y \mid X] = \pi = \frac{\exp (x^T \beta)}{1 + \exp (x^T \beta)}, \qquad 1 - \pi = \frac{1}{1 + \exp (x^T \beta)}.
+\end{equation*}
+
+\item Since each $Y_i$ is a Bernoulli random variable, the variance of $\pi$ is given by
+\begin{align*}
+\text{Var}_\beta [Y \mid X] &= \text{diag}(\bbE_\beta [Y \mid X] (1 - \bbE_\beta [Y \mid X])) = \text{diag} (\pi_\beta (X) (1 - \pi_\beta(X))) \\
+&= \text{diag} \frac{\exp (x^T \beta)}{[1 + \exp (x^T \beta)]^2} =: W_\beta(X).
+\end{align*}
+
+\end{itemize}
+
+\subsection{Fitting the model} 
+\begin{itemize}
+\item \textbf{Log-likelihood} $L = \dis\sum_{i=1}^n Y_i \log \left( \frac{\pi_i}{1 - \pi_i} \right) + \log (1 - \pi_i) = (X\beta)^T Y - \dis\sum_{i=1}^n \log \left(1 + e^{X_i^T \beta} \right)$.
+
+\item \textbf{Score function:} For each $j = 1, \dots, p$,
+\begin{equation*}
+\frac{\partial \log L(\pi \mid Y)}{\partial \beta_j} = \sum_{i = 1}^n X_{ij} Y_i - \frac{X_{ij} \exp (X_i^T \beta)}{1 + \exp (X_i^T \beta)}.
+\end{equation*}
+
+Combining and writing it as a column vector:
+\begin{align*}
+\nabla \log L(\pi \mid Y) &= X^T Y - X^T \frac{\exp(X^T \beta)}{1 + \exp(X^T \beta)} \\ 
+&= X^T \left( Y - \bbE_\beta [Y \mid X ] \right).
+\end{align*}
+
+\item \textbf{Hessian:} $\nabla^2 \log L(\pi \mid Y) = -X^T \text{Var}_\beta[Y \mid X] X$.
+
+\item Details on Newton-Raphson in Agresti p194-195.
+
+\item Problems with fitting may result if there is \textbf{complete/quasi-complete separation} in the data. In this case, some of the MLEs may be infinite. (When there is no separation, MLEs are finite and unique.)
+\begin{itemize}
+\item When this happens, we usually see huge reported standard errors.
+\item With infinite estimates, Wald inference cannot be done, but likelihood-ratio and score tests (and CIs) still work.
+\item Fixes: Use a Bayesian approach, combine categories, regularize, drop predictors (if you suspect overfitting). See Agresti p236-237 for details.
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Inference and testing}
+\begin{itemize}
+\item See Agresti p138-139 for deviance of grouped vs. ungrouped data.
+\end{itemize}
+
+\subsection{Goodness of fit}
+\begin{itemize}
+\item \textbf{$X^2$ or $G^2$ test:} If number of levels of $x$ is fixed, we can use the $X^2$ and $G^2$ statistics as in contingency tables.
+\begin{itemize}
+\item The $X^2$ and $G^2$ statistics have limiting $\chi^2$ distributions; the degrees of freedom is the number of parameters in the saturated model minus the number of parameters in the model.
+\item When the $x$ values are not grouped or are continuous, we can group them, and then apply this test.
+\end{itemize}
+
+\item (Agresti p173) \textbf{Hosmer-Lemeshow test:} Partition the data into groups based on the fitted values.
+\begin{itemize}
+\item Calculate the fitted values $\hat{\pi}$, order them, then group them into $g$ groups. Let $y_{ij}$ be the binary outcome for observation $j$ in group $i$, and let $\hat{\pi}_{ij}$ be the corresponding fitted probability. The test statistic is
+\begin{equation*} \sum_{i=1}^g \frac{\left(\sum_j y_{ij} - \sum_j \hat{\pi}_{ij}\right)^2}{\left( \sum_j \hat{\pi}_{ij} \right) \left[ 1 - \left( \sum_j \hat{\pi}_{ij} \right)/n \right]}. \end{equation*}
+\item Test statistic does not have a limiting $\chi^2$ distribution, but when the number of distinct patterns of covariate values equals the sample size, the null distribution is approximately $\chi^2$ with $df = g - 2$.
+\end{itemize}
+
+\end{itemize}
+
+% Multinomial logistic regression
+\section{Multinomial Logistic Regression (Agresti Ch 8)}
+Logistic regression models capture conditional distributions $Y \mid X, Z$, so are appropriate for cases where $Y$ is viewed as a response while $X$ and $Z$ and viewed as explanatory.
+
+Let $Y$ be a response variable with $J$ categories. Let $\pi_j(x) = \bbP (Y = j \mid x)$.
+
+\subsection{Nominal responses}
+\begin{itemize}
+\item \textbf{Baseline-category logit model:} $\log \dfrac{\pi_j(x)}{\pi_J(x)} = \alpha_j + \beta_j^T x$, $j = 1, \dots, J-1$.
+
+\item See Agresti Sec 8.1.4 for details on fitting.
+\end{itemize}
+
+\subsection{Ordinal responses}
+\begin{itemize}
+\item \textbf{Cumulative logit model:} $\text{logit}[\bbP(Y \leq j \mid x)] = \alpha_j + \beta^T x$, $j = 1, \dots, J-1$. Also called the \textbf{proportional odds model}.
+
+\item \textbf{Cumulative link model:} $G^{-1}[\bbP(Y \leq j \mid x)] = \alpha_j + \beta^T x$, where $G^{-1}$ is a link function (i.e. inverse of continuous CDF $G$).
+
+\item \textbf{Adjacent-categories logit model:} $\log \dfrac{\pi_j(x)}{\pi_{j+1}(x)} = \alpha_j + \beta^T x$, $j = 1, \dots, J-1$.
+\end{itemize}
+
+\subsection{Testing conditional independence in $I \times J \times K$ tables using multinomial models}
+
+See Agresti Sec 8.4 (p314-316) for details.
+
+% Loglinear and Logistic Regression Models for Contingency Tables
+\section{Loglinear Models for Contingency Tables (Agresti Ch 9)}
+Loglinear models capture the joint distribution of $(X,Y,Z)$, so are appropriate when we want to view all variables as response variables.
+
+\begin{itemize}
+\item \textbf{Saturated model:} $\log \mu_{ij} = \lmb + \lmb_i^X + \lmb_j^Y + \lmb_{ij}^{XY}$, with identifiability constraints. There are $IJ$ parameters in this model.
+
+For 3 variables, the saturated model is $\log \mu_{ijk} = \lmb + \lmb_i^X + \lmb_j^Y + \lmb_k^Z + \lmb_{ij}^{XY} + \lmb_{ik}^{XZ} + \lmb_{jk}^{YZ} + \lmb_{ijk}^{XYZ}$. Degrees of freedom is $0$ ($IJK$ parameters to be fit). The symbol for this model is $(XYZ)$.
+
+\item \textbf{Mutual independence model:} $\log \mu_{ij} = \lmb + \lmb_i^X + \lmb_j^Y +\lmb_k^Z$, with identifiability constraints such as $\lmb_I^X = \lmb_J^Y = \lmb_K^Z = 0$ or $\sum_i \lmb_i^X = \sum_j \lmb_j^Y = \sum_j \lmb_k^Z = 0$. Degrees of freedom is $IJK - [(I-1) + (J-1) + (K-1) + 1] = IJK - I - J - K + 2$. The symbol for this model is $(X,Y,Z)$.
+
+\item \textbf{Joint independence model:} $Y$ is jointly independent of $X$ and $Z$ if $\pi_{ijk} = \pi_{i+k}\pi_{+j+}$ for all $i,j,k$. The model for this is $\log \mu_{ijk} = \lmb + \lmb_i^X + \lmb_j^Y + \lmb_k^Z + \lmb_{ik}^{XZ}$. Degrees of freedom is $(J-1)(IK - 1)$. The symbol for this model is $(XZ,Y)$.
+
+\item \textbf{Conditional independence model:} If $X$ and $Y$ are conditionally independent given $Z$, the model for this is $\log \mu_{ijk} = \lmb + \lmb_i^X + \lmb_j^Y + \lmb_k^Z + \lmb_{ik}^{XZ} + \lmb_{jk}^{YZ}$. Degrees of freedom is $(I-1)(J-1)K$. The symbol for this model is $(XZ, YZ)$.
+
+\item \textbf{Homogeneous association model:} $\log \mu_{ijk} = \lmb + \lmb_i^X + \lmb_j^Y + \lmb_k^Z + \lmb_{ij}^{XY} + \lmb_{ik}^{XZ} + \lmb_{jk}^{YZ}$. Degrees of freedom is $(IJK-1) - [(I-1) + (J-1) + (K-1) + (I-1)(J-1) + (J-1)(K-1) + (I-1)(K-1)] = (I-1)(J-1)(K-1)$. The symbol for this model is $(XY, XZ, YZ)$.
+\end{itemize}
+
+\subsection*{Inference}
+\begin{itemize}
+\item $X^2$ or $G^2$ test could be used for goodness-of-fit.
+
+\item See Agresti Table 9.11 (p355) for equivalence between loglinear and logistic models.
+
+\item See Agresti Table 9.12 (p357) for the minimal sufficient statistics for each loglinear model.
+
+\item See Agresti Sec 9.6.2 (p357-358) and Table 9.13 (p359) for the likelihood equations for fitting the loglinear models.
+
+\item For testing \textbf{marginal homogeneity}, compare the fit under the symmetry model and the quasi-symmetry model. See Agresti Sec 11.4.3 for details.
+
+\item \textbf{Residuals:} Look at the Pearson residual $e_i = \dfrac{n_i - \hat{\mu}_i}{\sqrt{\hat{\mu}_i}}$ ($n_i$ observed in cell $i$, $\hat{\mu}_i$ fitted value for cell $i$), or the standardized residual $r_i = \dfrac{e_i}{\sqrt{1 - \hat{h}_i}}$, where $\hat{h}_i$ is a diagonal element of the estimated hat matrix. Standardized residuals have asymptotic $\calN(0,1)$ distribution.
+\end{itemize}
+
+\subsection*{Fitting}
+\begin{itemize}
+\item Loglinear models can be fit using Newton-Raphson or iterative proportional fitting (Agresti Sec 9.7).
+\end{itemize}
+
+% Models for Matched Pairs
+\section{Models for Matched Pairs (Agresti Ch 11)}
+Here, the row and column categories are the same. For a matched pair randomly selected from the population of interest, let $\pi_{ab}$ denote the probability of outcome $a$ for the first observation and outcome $b$ for the second observation. We then treat $\{n_{ab}\}$ as a sample from $\text{Multinom}(n; \{ \pi_{ab}\})$.
+
+\subsection*{Comparing proportions for $2 \times 2$ square tables}
+\begin{itemize}
+\item See Agresti p414 for a confidence interval for $\pi_{+1} - \pi_{1+}$.
+
+\item \textbf{Marginal homoegeneity} refers to $\pi_{1+} = \pi_{+1}$ (which in turn implies $\pi_{2+} = \pi_{+2}$). This can be tested using \textbf{McNemar's test} (see Agresti p415).
+
+\item \textbf{McNemar-CMH test connection:} An alternative representation of binary responses for $n$ matched pairs is $n$ $2 \times 2$ tables, 1 for each pair. Using the CMH statistic to test for conditional independence is algebraically the chi-squared form of McNemar's statistic.
+\end{itemize}
+
+\subsection*{Logistic Models for $2 \times 2$ square tables}
+Let $(Y_{i1}, Y_{i2})$ denote the pair of observations for subject $i$, with $Y_{ij}$ being $0/1$-valued. Let $P(Y_t=1)$ be the mean of $P(Y_{it} = 1)$. Let $x_1 = 0$, $x_2 = 1$.
+\begin{itemize}
+\item \textbf{Marginal model for matched pairs:} $P(Y_t = 1) = \alpha + \dlt x_t$, or $\text{logit}[P(Y_t = 1)] = \alpha + \beta x_t$.
+
+\item \textbf{Subject-specific model:} $\text{logit}[P(Y_{it} = 1)] = \alpha_i + \beta x_t$.
+\end{itemize}
+
+\subsection*{Models for square tables}
+Let $x_1 = 0$, $x_2 = 1$.
+\begin{itemize}
+\item \textbf{Baseline-category logit model:} \[ \log \left[\frac{P(Y_t = j)}{P(Y_t = I)} \right] = \alpha_j + \beta_j x_t, \quad t = 1, 2, \quad j = 1, \dots, I-1. \]
+\begin{itemize}
+\item This can be used for nominal-scale matched-pair responses.
+\item This model has $2(I-1)$ parameters.
+\item Marginal homogeneity is the special case $\beta_1 = \dots = \beta_{I-1} = 0$.
+\item Goodness-of-fit can be tested with $X^2$ or $G^2$, with $df = I - 1$.
+\end{itemize}
+
+\item \textbf{Cumulative logit model:} \[ \text{logit} \left[P(Y_t \leq j) \right] = \alpha_j + \beta x_t, \quad t = 1, 2, \quad j = 1, \dots, I-1. \]
+\begin{itemize}
+\item This can be used for ordinal-scale matched-pair responses.
+\item This model has $I$ parameters.
+\item Marginal homogeneity is the special case $\beta = 0$.
+\item Goodness-of-fit can be tested with $X^2$ or $G^2$, with $df = I - 2$.
+\end{itemize}
+
+\item \textbf{Symmetry:} $I \times I$ joint distribution $\{ \pi_{ab}\}$ has symmetry if $\pi_{ab} = \pi_{ba}$ for all $a \neq b$.
+\begin{itemize}
+\item Model: $\log \mu_{ab} = \lmb + \lmb_a + \lmb_b + \lmb_{ab}$, with $\lmb_{ab} = \lmb_{ba}$.
+
+\item Solution: $\hat{\mu}_{ab} = \dfrac{n_{ab} + n_{ba}}{2}$ for all $a,b$.
+
+\item Goodness of fit test: $df = I(I-1)/2$.
+\end{itemize}
+
+\item \textbf{Quasi-symmetry:} 
+\begin{itemize}
+\item Model: $\log \mu_{ab} = \lmb + \lmb_a^X + \lmb_b^Y + \lmb_{ab}$, with $\lmb_{ab} = \lmb_{ba}$.
+
+\item Symmetry is the special case of $\lmb_a^X = \lmb_a^Y$ for $a = 1, \dots, I$.
+
+\item Independence is the special case of $\lmb_{ab} = 0$ for all $a, b$.
+
+\item Identifiability requires further constraints, such as $\lmb_I^X = 0$ and all $\lmb_b^Y = 0$.
+
+\item Goodness of fit test: $df = (I-1)(I-2)/2$.
+\end{itemize}
+
+\item \textbf{Quasi-independence:} Variables are independent, given that the row and column outcomes differ.
+\begin{itemize}
+\item Model: $\log \mu_{ab} = \lmb + \lmb_a^X + \lmb_b^Y + \dlt_a I(a=b)$.
+
+\item This is a special case of quasi-symmetry (see Agresti p430).
+
+\item Goodness of fit test: $df = (I-1)^2 - I$ (for $I \geq 3)$.
+\end{itemize}
+
+\item \textbf{Bradley-Terry model:} Let $\Pi_{ab}$ denote the probability that $a$ is preferred to $b$. Assume that ties cannot occur, so $\Pi_{ab} + \Pi_{ba} = 1$.
+\begin{itemize}
+\item Model: $\log (\Pi_{ab}/\Pi_{ba}) = \beta_a - \beta_b$.
+
+\item We can think of $\beta_a$ as some rating for how good team $a$ is.
+
+\item The Bradley-Terry model is a logistic formulation of the quasi-symmetry model, with $\beta_a = \lmb_a^X - \lmb_a^Y$.
+\end{itemize}
+
+\end{itemize}
+
+\subsection*{Measuring agreement between observers}
+\begin{itemize}
+\item Perfect agreement: $\sum \pi_{aa} = 1$.
+
+\item Can try to fit one of the models above.
+
+\item \textbf{Cohen's kappa:} Compares the probability of agreement $\sum \pi_{aa}$ to that expected if the ratings were independent:
+\[\kappa = \frac{\sum \pi_{aa} - \sum \pi_{a+}\pi_{+a} }{1 - \sum \pi_{a+}\pi_{+a}}. \]
+\end{itemize}
+
+% LASSO
+\section{LASSO}
+\begin{itemize}
+\item In the general case, the LASSO solution is the solution to $\text{argmin}_{\beta} -\ell(\beta) + \lmb \| \beta\|_1$, where $\ell$ is the log-likelihood function of interest.
+
+\item In our case, the LASSO is the solution to $\text{argmin}_{\beta} \dfrac{1}{2}\|Y - X\beta\|_2^2 + \lmb \| \beta\|_1$.
+
+\item The minimize $\hat{\beta}$ need not be unique, but the fitted value $X \hat{\beta}$ is always unique.
+
+\item Any 2 LASSO solutions must have the same signs in the overlap of their supports.
+
+\item \textbf{Equicorrelation set} $E := \{ j \in \{1, \dots, p \}: |X_j^T(Y - X\hat{\beta})| = \lmb \}.$ These variables achieve maximum inner product with the residual vector.
+
+\item The solution path $\lmb \mapsto \hat{\beta}(\lmb)$ is a piecewise, continuous function of $\lmb$ with knots $\lmb_1 \geq \dots \geq \lmb_r \geq 0$. The knots correspond to the values of $\lmb$ at which the active set changes.
+
+\item \textbf{Model selection consistency:} See Lec 22 for details.
+
+\item The LASSO is most successful for sparse problems with features that are not too correlated.
+\end{itemize}
+
+\subsection{Solving the LASSO}
+\begin{itemize}
+\item \textbf{Coordinate descent:} Because the penalty is separable, we can solve the minimization problem by successively solving low-dimensional problems. 
+\item \textbf{Proximal gradient descent}
+
+\item \textbf{Strong rules:} Say we are currently at a solution $\hat{\beta}_{\lmb_0}$. When fitting the LASSO at $\lmb$, we only include new variable $j$ if $|X_j^T(Y - \hat{\beta}_{\lmb_0})| > 2\lmb - \lmb_0$.
+\end{itemize}
+
+\subsection{KKT conditions for LASSO}
+\begin{itemize}
+\item The \textbf{KKT conditions} are $X^T (Y - X \hat{\beta}) = \hat{u}$, where $\hat{u}$ is in the subgradient of the $\ell_1$ norm evaluated at $\hat{\beta}$.
+
+\item The above can be rewritten as $X^T(Y - X\hat{\beta}) = \lmb s$, where
+\[ s_j \in \begin{cases} \{+1 \} &\text{if } \hat{\beta}_j > 0, \\ \{ -1 \} &\text{if } \hat{\beta}_j < 0, \\ [-1, 1] &\text{if } \hat{\beta}_j = 0. \end{cases} \]
+
+\item For the equicorrelation variables, we can write the KKT conditions as $X_E^T (Y - X_E \hat{\beta}_E) = \lmb s_E$. This is a linear system that we can solve for $\hat{\beta}_E$.
+
+\item We thus get the representation
+\[ \begin{cases} \hat{\beta}_E &= (X_E^T X_E)^\dagger (X_E^T Y - \lmb s_E) + \eta, \\ \hat{\beta}_{-E} &= 0, \end{cases} \]
+where the dagger indicates the pseudoinverse, and $\eta$ is a vector in the null space of $X_E$.
+
+If $X_E$ has full column rank, the LASSO solution is unique.
+
+\item Essentially, the LASSO constructs a map $X^T Y \mapsto (\hat{\beta}, \hat{u}) \in \{ (\beta, u): \beta \in N_u(K) \}$.
+
+\end{itemize}
+
+
+\subsection{Group LASSO}
+\begin{itemize}
+\item Let $G$ be a partition of $\{ 1, \dots, p\}$. The group LASSO minimizes $\dfrac{1}{2}\|Y - X\beta\|_2^2 + \dis\sum_{g \in G} \lmb_g \|\beta_g \|_2$.
+
+\item The group LASSO gives sparsity of groups instead of sparsity of variables.
+
+\item A common use of this is for categorical variables. If a variable has $I$ levels, then we can group the $I$ dummy variables together. (We put in all $I$ variables instead of treating one as a baseline: otherwise, the LASSO will be biased toward the baseline.)
+
+For identifiability, the $\beta$'s in each group must sum to 0.
+
+\item LASSO is the group LASSO with all groups of size 1.
+
+\item \textbf{KKT conditions:} For $\hat{\beta}_g \neq 0$, $u_g = \lmb_g \cdot \dfrac{\hat{\beta}_g}{\|\beta_g\|_2}$. For $\hat{\beta}_g = 0$, $\left\|\dfrac{u_g}{\lmb_g}\right\|_2 \leq 1$.
+
+\item (HW4) \[ \text{argmin}_{\beta} \frac{L}{2}\|z - \beta\|_2^2 + \lmb \|\beta\|_2 = \frac{z}{\|z\|_2} \max \left( \|z\|_2 - \frac{\lmb}{L}, 0 \right). \]
+\end{itemize}
+
+% Kernel methods
+\section{Kernel Methods}
+We observe $(X_1, Y_1), \dots (X_n, Y_n)$ with $X_i \in T$, $Y_i \in \bbR$ and we wish to solve
+\[ \underset{f \in \calC}{\text{argmin }} \frac{1}{2} \| Y - f(X) \|_2^2, \]
+where $\calC$ is the span of a set of \textbf{flexible functions} $f_j : T \mapsto \bbR$, $j = 1, \dots, p$.
+
+\begin{itemize}
+\item A symmetric function $R: T \times T \mapsto \bbR$ is \textbf{non-negative definite} if for all $k$, $t_1, \dots, t_k \in T$ and $a \in \bbR^k$, we have $\dis\sum_{i,j = 1}^k a_i a_j R(t_i, t_j) = 0$.
+
+\item \textbf{Theorem:} Given a non-negative definite $R$, there exists a stochastic process $Z: \Om \times T \mapsto \bbR$ such that $\var \left(\dis\sum_{i=1}^k a_i Z_{t_i} \right) = \dis\sum_{i,j = 1}^k a_i a_j R(t_i, t_j)$. (In fact, we can take $Z$ to be a Gaussian process.) $R$ is called the \textbf{covariance function/kernel} of $Z$.
+
+\item From a covariance kernel $R$, we can get a Hilbert space
+\[ \calH = \text{completion of } \left\{ \sum_i a_i R_{t_i}: \left\| \sum_i a_i R_{t_i} \right\|_\calH^2 < \infty \right\}, \]
+where $R_t: T \mapsto \bbR$ is defined by $R_t(s) = R(t,s)$, and the norm is from the inner product $\langle \sum_j a_j R_{t_j}, \sum_i a_i R_{s_i} \rangle_\calH = \sum_{i,j} a_j b_i R(t_j, s_i)$.
+
+\item \textbf{Evaluation property:} For any $h \in \calH$, we have $\langle h, R_t \rangle_\calH = h(t)$.
+\end{itemize}
+
+Instead of the original minimization problem, consider the problem $\underset{f \in \calH}{\text{argmin }} \dfrac{1}{2}\dis\sum_{i=1}^n \left[ Y_i - f(X_i) \right]^2 + \lmb \| f \|_\calH^2$ instead.
+
+\textbf{Theorem:} Consider the problem
+\begin{equation*}
+\underset{f \in \calH}{\text{minimize}} \quad \sum_{i=1}^n L \left( Y_i, f(X_i) \right) + \lmb \| f \|_\calH^2,
+\end{equation*}
+where $L$ is some loss function. If there is a minimizer, then all minimizers are in the linear span $\mathcal{L} = \text{span}(R_{X_1}, \dots, R_{X_n})$.
+
+\begin{itemize}
+\item For covariance function $R$, define the \textbf{Gram matrix} $G$ to be such that $G_{ij} = R(X_i, X_j)$.
+\item With the Gram matrix, we can rewrite the minimization problem as a finite dimensional problem of finding weights:
+\[ \underset{w \in \bbR^n}{\text{minimize}} \quad \frac{1}{2}\| Y - Gw \|^2 + \frac{\lmb}{2} w^T G w. \]
+
+Once we find solution, $\hat{w}$, we set $\hat{f} = \dis\sum_{j=1}^n \hat{w}_j R_{X_j}$.
+\end{itemize}
+
+\subsection{Kernel choices}
+\begin{itemize}
+\item Gaussian kernel: $R(t,s) = \exp \left( - \dfrac{(t-s)^2}{2\gamma^2} \right)$ (infinitely smooth paths).
+\item Double exponential/Ornstein-Uhlenbeck kernel: $R(t,s) = \exp(-\gamma^{-1}|t-s|)$ (H\"{o}lder $1/2$ paths).
+\item Brownian motion kernel: $R(t,s) = t \wedge s$ (H\"{o}lder $1/2$ paths).
+
+\item \textbf{Linear kernel:} For $t \in \bbR^p$, define the Gaussian process $Z_t = \gamma^T t$, where $\gamma \sim \calN(0, \Sg)$. The corresponding covariance function is $R_t(s) = t^T \Sg s$.
+\begin{itemize}
+\item We find that $\calH = \{ \ell_a: \ell_a(x) = a^T x, a \in \text{row}(\Sg)\}$, and $\langle \ell_a, \ell_b \rangle_\calH = a^T \Sg^\dagger b$.
+\end{itemize}
+
+\item \textbf{Cubic smoothing splines:} $T = [0,1]$. When we solve
+\[ \underset{f}{\text{minimize }} \frac{1}{2}\| Y - f(X)\|_2^2 + \frac{\lmb}{2} \int_{[0,1]} f''(t)^2 dt, \]
+where the minimization is over the class of twice-differentiable functions, the solution is a cubic spline.
+
+The covariance function corresponding to the cubic spline is $\text{Cov}(Z_s, Z_t) = \dfrac{ts(t \wedge s)}{2} - \dfrac{(t \wedge s)^3}{6}$.
+
+\item \textbf{Linear smoothing splines:} $T = [0,1]$. We seek to solve
+\[ \underset{f}{\text{minimize }} \frac{1}{2}\| Y - f(X)\|_2^2 + \frac{\lmb}{2} \int_{[0,1]} f'(t)^2 dt. \]
+
+Here, the corresponding covariance function is $\text{Cov}(Z_t, Z_s) = t \wedge s$.
+
+\end{itemize}
+
+% SURVIVAL ANALYSIS
+\section{Survival Analysis}
+
+\subsection{Set-up}
+We have observations $(T_i, \dlt_i, X_i)$, where $T_i$ is the failure/death time, $\dlt_i$ is whether $T_i$ is right-censored or not, and $X_i$ are explanatory covariates.
+
+Key objects of interest:
+\begin{itemize}
+\item \textbf{Survival function} $S(t) = \bbP(T > t) = 1 - F(t) = \bar{F}(t)$.
+
+\item \textbf{Hazard function} $h(t) = \displaystyle\lim_{\Dlt \goesto 0}\frac{\bbP (t < T < t + \Dlt \mid T \geq t)}{\Dlt} = - \displaystyle\frac{S'(t)}{S(t)} = - \frac{d}{dt}\log S(t)$.
+
+\item If cumulative hazard $H(t) = \displaystyle\int_0^t h(s) ds$, then $S(t) = e^{-H(t)}$.
+\end{itemize}
+
+\subsection{Survival analysis with 1 sample}
+Main goal is to estimate the survival function, i.e. get $\hat{S}(t)$ for different values of $t$.
+
+\begin{itemize}
+\item \textbf{Kaplan-Meier method:} Let $t_{(1)} < \dots < t_{(m)}$ be the ordered times of death. Let $d_i$ be the number of deaths at time $t_{(i)}$, and let $n_i$ be the number alive just before $t_{(i)}$ (i.e. the number "at risk"). Then the Kaplan-Meier estimate of the survival function is
+\begin{equation*}
+\hat{S}(t) = \prod_{i: t_{(i)} < t} \left( 1 - \frac{d_i}{n_i}\right).
+\end{equation*}
+Justification: $S(t) = \bbP (T > t_{(1)}) \bbP (T > t_{(2)} \mid T > t_{(1)}) \dots$, and $1 - \frac{d_i}{n_i}$ estimates $\bbP (T > t_{(i)} \mid T > t_{(i-1)})$.
+
+\end{itemize}
+
+To estimate the cumulative hazard function, we can use the \textbf{Nelson-Aalen method:}
+\begin{itemize}
+\item Under no censoring and assuming no ties in data, we have $\hat{H}(t) = \displaystyle\sum_{T_i \leq t}\frac{1}{\# \{ T_j \geq t \}}$.
+
+\item Under right-censoring, using the notation for the Kaplan-Meier method, $\hat{H}(t) = \displaystyle\sum_{t_{(i)} \leq t}\frac{d_i}{n_i}$.
+\end{itemize}
+
+\subsection{Survival analysis with 2 samples}
+The task is to test the null hypothesis that the 2 samples come from the same (survival) distribution. This can be accomplished by the \textbf{log-rank test}. (The log-rank test works for right-censored data.)
+
+Let $t_{(1)} < \dots < t_{(m)}$ be the ordered times of death for both samples. For each $i$, set-up a $2 \times 2$ contingency table, tabulating the number which survived and died from each sample at time $t_{(i)}$ (rows are survived/died, columns are which group the sample is from). If the 2 samples were the same, then there would be independence in each $2 \times 2$ table. Hence, we apply the Cochran-Mantel-Haenszel test stratified across time.
+
+\subsection{Survival regression}
+Strategies to model the effect of covariates on survival time:
+\begin{itemize}
+\item \textbf{Accelerated failure time:} Model $S(t) = S_0 \left( e^{-x^T \beta} t \right)$, where $S_0$ is some baseline survival function.
+
+\item \textbf{Proportional hazards model:} Model $h(t) = h_0(t) e^{x^T \beta}$, where $h_0(t)$ is the baseline hazard.
+
+\item \textbf{Cox proportional hazards model:} As above, but we try to get away with not making any assumption on $h_0(t)$.
+
+Let $t_{(1)}< \dots < t_{(m)}$ be the times of death. At time $t_{(i)}$, say individual $j(i)$ dies. We ask, what is the probability that particular individual died, given that someone died? Letting $R_i$ be the risk set at time $t(i)$ (i.e. the people still alive just before time $t(i)$),
+\begin{equation*}
+\bbP (j(i) \text{ died } | \text{ someone died}) = \frac{\exp \left( x_{j(i)}^T \beta \right)}{\sum_{j \in R_i} \exp \left( x_j^T \beta \right)}.
+\end{equation*}
+Multiplying across $i$, we get Cox's \textbf{partial likelihood} $L(\beta) = \displaystyle\prod_{i=1}^m \frac{\exp \left( x_{j(i)}^T \beta \right)}{\sum_{j \in R_i} \exp \left( x_j^T \beta \right)}$. Cox showed that we can treat this like a real likelihood and carry out MLE estimation, etc.
+\end{itemize}
+
+% EM Algorithm
+\section{EM Algorithm}
+The EM algorithm is an iterative approach to maximizing a likelihood, designed for the case when there are latent variables or missing data in the problem. We might use this if
+\begin{itemize}
+\item There is no closed form for the MLE, or
+\item The log-likelihood function is non-convex.
+\end{itemize}
+
+Assume that we have data $X$ and latent variables $Z$ jointly following the law $L(\t; X, Z) = p_\t(X,Z)$. We do not observe latent variables $Z$, so we must work with
+\begin{equation*}
+L(\t; X) = p_\t(x) = \int_z p_\t (x, z) dz.
+\end{equation*}
+
+While we do not see the complete data log-likelihood, we can average over the $z$'s to get the expected complete data log-likelihood.
+
+\textbf{Expectation (E) step:} Calculate the expected value of the log-likelihood function w.r.t. the conditional distribution of $Z$ given $X$, under the current estimate $\hat{\t}^k$ for $\t$:
+\begin{equation*}
+Q \left( \t \mid \hat{\t}^k \right) := \bbE_{Z \mid X, \hat{\t}^k} \left[ \log L(\t; X, Z) \right].
+\end{equation*}
+
+\textbf{Maximization (M) step:} Find the value of $\t$ that maximizes the quantity above and let that be the new estimate, i.e.
+\begin{equation*}
+\hat{\t}^{k+1} := \underset{\t}{\arg\max } Q \left( \t \mid \hat{\t}^k \right).
+\end{equation*}
+
+\textbf{Guarantee:} EM will increase $\ell(\t)$ (the value of the log-likelihood) at each iteration, which implies that it will converge to a local maximum. (See Gene's notes for an explanation for why the EM algorithm works.)
+
+\subsection*{Gene's version of EM}
+
+Assume that we have parameters $\t$ which we want to estimate. These parameters generate observed variables $X$, and unobserved variables $Z$. Assume that given $\t$, $Z$ and $X$ have a joint density $p_\t(X, Z)$.
+
+If we could observe $Z$, we have a \textbf{complete data log-likelihood} $\ell(\t; X, Z) = \log p_\t(X, Z)$. Unfortunately, we can't observe $Z$. Instead, assume we have some initial guess $\t^{(k)}$ for $\t$.
+
+\textbf{Expectation (E) step:} Calculate the expected value of the log-likelihood function w.r.t. the conditional distribution of $Z$ given $X$, under the current estimate $\hat{\t}^{(k)}$ for $\t$:
+\begin{equation*}
+\hat{\pi}^{(k)} := \bbE_{\hat{\t}^{(k)}} \left[ Z \mid X \right].
+\end{equation*}
+
+Then write out the \textbf{expected complete data log-likelihood}, i.e. basically plugging in $\hat{\pi}^{(k)}$ for $Z$ in the complete data log-likelihood:
+\begin{equation*}
+\tilde{\ell}^{(k)} (\t; X) := \bbE_{\hat{\t}^{(k)}} \left[ \ell(\t; X, Z) \mid X \right].
+\end{equation*}
+
+
+\textbf{Maximization (M) step:} $\tilde{\ell}^{(k)} (\t; X)$ is a function of $\t$. Maximize it to get $\hat{\pi}^{(k+1)}$.
+
+\section{Lindsey's Method}
+Suppose we wish to estimate the probability density $g(y)$ that produced observed random sample $Y_i \stackrel{iid}{\sim} g(y)$, $i = 1, \dots, n$.
+
+Say we have a histogram data for the $y_i$'s, i.e. we have bins $1, \dots, K$, which are centered at $x_1, \dots, x_K$, and we have the counts of the number of $y_i$'s which fall into each bin, $Z_1, \dots, Z_K$. Then $(Z_1, \dots, Z_K) \sim \text{Multinom}(n, (p_1, \dots, p_K))$, where $p_i$ is the probability of $Y$ falling into bin $i$.
+
+\textbf{The trick: Instead of assuming $n$ is known, assume that $n \sim \text{Pois}(\mu)$ for unknown $\mu$.} With this assumption, $Z_j \stackrel{ind.}{\sim} \text{Pois}(\mu p_j)$. Let $\mu_j = \mu p_j$.
+
+If we have a parametric form for $g$, we can write each $p_j$ in terms of $x_j$. We will usually end up getting $p_j = e^{\beta_0 + \beta_1f_1(x_j) + \dots + \beta_p f_p(x_j)}$ for some functions $f_1, \dots, f_p$.
+
+We can then do standard Poisson regression: $Z_j \stackrel{ind.}{\sim} \text{Pois}(\mu_j)$, $\log \mu_j = \beta_0 + \beta_1f_1(x_j) + \dots + \beta_p f_p(x_j)$.
+
+
+
+
+\end{document}

@@ -1,0 +1,293 @@
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,amssymb,graphicx,mathtools,flexisym, float, enumitem}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+%
+% Macros for shortcuts
+%
+\newcommand{\dis}{\displaystyle}
+\def\lc{\left\lceil}   
+\def\rc{\right\rceil}
+\def\lf{\left\lfloor}   
+\def\rf{\right\rfloor}
+\newcommand\bbC{\mathbb{C}}
+\newcommand\bbE{\mathbb{E}}
+\newcommand\bbN{\mathbb{N}}
+\newcommand\bbP{\mathbb{P}}
+\newcommand\bbQ{\mathbb{Q}}
+\newcommand\bbR{\mathbb{R}}
+\newcommand\bbZ{\mathbb{Z}}
+\newcommand\calA{\mathcal{A}}
+\newcommand\calB{\mathcal{B}}
+\newcommand\calC{\mathcal{C}}
+\newcommand\calF{\mathcal{F}}
+\newcommand\calG{\mathcal{G}}
+\newcommand\calH{\mathcal{H}}
+\newcommand\calL{\mathcal{L}}
+\newcommand\calM{\mathcal{M}}
+\newcommand\calN{\mathcal{N}}
+\newcommand\calP{\mathcal{P}}
+\newcommand\calR{\mathcal{R}}
+\newcommand\calS{\mathcal{S}}
+\newcommand\calU{\mathcal{U}}
+\newcommand\calX{\mathcal{X}}
+\newcommand\calY{\mathcal{Y}}
+\newcommand\dlt{\delta}
+\newcommand\Dlt{\Delta}
+\def\eps{\varepsilon}
+\newcommand\lmb{\lambda}
+\newcommand\Lmb{\Lambda}
+\newcommand\om{\omega}
+\newcommand\Om{\Omega}
+\newcommand\sg{\sigma}
+\newcommand\Sg{\Sigma}
+\def\t{\theta}
+\newcommand\T{\Theta}
+\newcommand\vp{\varphi}
+\newcommand\cas{\stackrel{a.s.}{\goesto}}
+\newcommand\cd{\stackrel{d}{\goesto}}
+\newcommand\cp{\stackrel{P}{\goesto}}
+\newcommand\equivto{\Leftrightarrow}
+\newcommand\goesto{\rightarrow}
+\newcommand\var{\text{Var }}
+
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+\begin{document}
+\title{Theoretical Sequence Notes}
+\author{Kenneth Tay}
+\date{\vspace{-3ex}}
+\maketitle
+
+% Overall Tricks
+\section{Overall Tricks}
+\textbf{Tricks with multivariate normal:}
+\begin{enumerate}
+\item Rotate to get identity covariance. If $X \sim \calN(\mu, \Sg)$, then $\Sg^{-1/2} X \sim \calN(\Sg^{-1/2}\mu, I)$.
+
+\item Change basis (using spherical symmetry). If $U$ is orthogonal (i.e. $U^T U = I$), then if $X \sim \calN(\mu, \Sg)$, we have $U^T X \sim \calN(U^T \mu, I)$.
+
+$U^T$ is an invertible map, so hypotheses about $\mu$ correspond to hypotheses about $U^T \mu$.
+
+\item Use the eigendecomposition of $\Sg$: $\Sg = VDV^T$, where $D$ is a diagonal matrix with eigenvalues on the diagonal, and $V$ is orthogonal with eigenvectors as columns.
+
+$\Sg^{1/2} = VD^{1/2}V^T$, and if $\Sg$ is positive definite, $\Sg^{-1/2} = VD^{-1/2}V^T$.
+\end{enumerate}
+
+\textbf{To find the MLE:}
+\begin{enumerate}
+\item Differentiate the likelihood and set to 0. It is often easier to look at the log-likelihood.
+
+\end{enumerate}
+
+\textbf{To come up with an estimator:}
+\begin{enumerate}
+\item Try the MLE.
+\end{enumerate}
+
+% Properties of Estimators
+\section{Properties of Estimators}
+\textbf{To compute the asymptotic distribution of an estimator (whether one- or multi-dimensional):}
+\begin{enumerate}
+\item Make use of the multivariate CLT (VdV p16), especially if there is some averaging going on.
+
+\item If it is a function of something whose asymptotic distribution you already know, try the delta method. (See VdV p26 for the Taylor expansion argument.)
+
+\item If it is an MLE which is consistent, use the asymptotic normality result. (For exponential families, we may dispense with the consistency condition and use VdV Thm 4.6 directly.)
+
+\end{enumerate}
+
+\textbf{To show an estimator is consistent:}
+\begin{enumerate}
+\item Bare hands approach: Law of large numbers.
+
+\item From Chebyshev's inequality: $\bbP(|\hat{\t}_n - \t| \geq \eps) \leq \dis\frac{\bbE [(\hat{\t}_n - \t)^2]}{\eps^2}$. Thus, an estimator will be consistent if $\bbE [(\hat{\t}_n - \t)^2] \goesto 0$.
+
+\item An estimator will be consistent if it is asymptotically unbiased (i.e. $\bbE_\t [\hat{\t}_n] - \t \goesto 0$) and its variance goes to 0.
+
+\item If $\t$ can only take on finitely many values, the MLE is consistent (proved in Lec 3).
+
+\item (TPE Thm 6.3.7 p447) Say we have a model family $\{ P_\t\}_{\t \in \T}$ with density $p_\t$ w.r.t. some $\mu$. Suppose that: 
+\begin{itemize}
+\item The $P_\t$'s have common support, 
+\item $X_1, \dots, X_n \stackrel{iid}{\sim} P_\t$,
+\item $\T$ contains an open set $\om$ such that true parameter $\t_0 \in \text{int } \om$,
+\item For almost all $x$, $p_\t(x)$ is differentiable w.r.t. $\t$ in a neighborhood around $\t_0$.
+\end{itemize}
+Then the solution to $\dis\frac{\partial}{\partial \t}\ell(\t \mid x_1, \dots, x_n) = \dis\sum\frac{p_\t'(x_i)}{p_\t(x_i)} = 0$ (usually the MLE) is consistent.
+
+\item If $\hat{\t}_n$ is an M-estimator or Z-estimator, try to use the Argmax consistency theorem (Lec 15).
+
+\end{enumerate}
+
+\textbf{To show an estimator is efficient:}
+\begin{enumerate}
+\item Bare hands approach: Use CLT to get the limiting distribution of $\hat{\t}_n$, and show that the asymptotic variance is equal to the inverse Fisher information.
+
+\item (TPE Thm 6.5.1 p463) Show that the \textbf{Cram\'{e}r conditions} hold: Say we have a model family $\{ P_\t\}_{\t \in \T}$ with density $p_\t$ w.r.t. some $\mu$. Suppose that: 
+\begin{itemize}
+\item The $P_\t$'s have common support, 
+\item $X_1, \dots, X_n \stackrel{iid}{\sim} P_\t$,
+\item There exists an open subset $\om \subseteq \T$ which contains the true $\t_0$ such that for almost all $x$, $p_\t(x)$ admits all third derivatives $\left( \dis\frac{\partial^3}{\partial \t_j \partial \t_k \partial \t_l} p_\t(x) \right)$ for all $\t \in \om$,
+\item $\bbE_\t \left[ \nabla \log p_\t(x) \right] = 0$, $I(\t)_{jk} = \bbE_\t \left[ -\dis\frac{\partial^2}{\partial \t_j \partial \t_k} \log p_\t(x) \right]$,
+\item $I(\t)$ is finite and invertible for all $\t \in \om$, and
+\item There are functions $M_{jkl}$ such that $\left| \dis\frac{\partial^3}{\partial \t_j \partial \t_k \partial \t_l} p_\t(x) \right| \leq M_{jkl}(x)$ for all $\t \in \om$, and $\bbE_{\t_0} [M_{jkl}(X)] < \infty$ for all $j,k,l$.
+\end{itemize}
+Then, with probability tending to 1 as $n \goesto \infty$, there exist solutions $\hat{\t}_n$ to the likelihood equations such that
+\begin{itemize}
+\item $\hat{\t}_{jn}$ is consistent for estimating $\t_j$,
+\item $\sqrt{n}(\hat{\t}_n - \t) \cd \calN (0, I(\t)^{-1})$,
+\item $\hat{\t}_{jn}$ is asymptotically efficient, i.e. $\sqrt{n} (\hat{\t}_{jn} - \t_j) \cd \calN(0, [I(\t)]_{jj}^{-1})$.
+\end{itemize}
+
+\item For QMD families, can refer to VdV Theorem 5.39 p65.
+
+\end{enumerate}
+
+\textbf{To show an estimator is not efficient:}
+\begin{enumerate}
+\item Bare hands approach: Use CLT to get the limiting distribution of $\hat{\t}_n$, and show that the asymptotic variance is not equal to the inverse Fisher information.
+
+\end{enumerate}
+
+% Confidence Intervals and Tests
+\section{Confidence Intervals and Tests}
+
+\textbf{To compute a confidence interval/standard error for $\t$:}
+\begin{enumerate}
+\item Use the plug-in estimate. For example, if $\hat{s} \sim \text{Bin}(n, s)$, then $\var \hat{s} = ns(1-s) \approx n \hat{s}(1 - \hat{s})$.
+
+\item Find an estimator $\hat{\t}_n$ for $\t$ and determine its asymptotic distribution, i.e. $\sqrt{n}(\hat{\t}_n - \t) \cd \calN(0, \sg^2)$, then construct the CI from there: $\left(\hat{\t}_n - z_\alpha \dfrac{\sg}{\sqrt{n}}, \hat{\t}_n + z_\alpha \dfrac{\sg}{\sqrt{n}} \right)$ for an asymptotic level $1 - 2\alpha$ CI.
+
+\item Invert the exact distribution. For example, see Applied Qual 2015 Qn 3.
+
+\item Invert a test. For example, with a generalized likelihood test, the confidence region at level $\alpha$ would look something like $\left\{ \t: \ell(\hat{\t}) - \ell(\t) \leq \frac{1}{2}\chi_1^2(1-\alpha) \right\}$.
+
+\item For MLEs, can use the Fisher information estimate. If $\hat{\mu}$ is the MLE, the standard error can be approximated given by $\sqrt{-1/\ddot{\ell}(\hat{\mu})}$.
+
+\item Use a parametric bootstrap. Get repeated bootstrap estimates $\hat{\t}^{*1}, \dots, \hat{\t}^{*B}$, then construct the CI using the quantiles of the $\hat{\t}^*$'s.
+
+\item For linear regression, use the fact that $\hat{\beta} \sim \calN(\beta, \sg^2 (X^T X)^{-1})$.
+
+\end{enumerate}
+
+\textbf{To come up with a test:}
+\begin{enumerate}
+\item If MLE is difficult to compute, consider using the score test.
+
+\item If we have already computed the restricted MLE, consider using the score test.
+
+\item The score test and Le Cam's Third Lemma (finding limiting distribution under alternative regime) often come together.
+
+\end{enumerate}
+
+% Concentration inequalities
+\section{Concentration Inequalities}
+\begin{enumerate}
+\item The bounded differences inequality is very handy here. Usually there is an envelope or Lipschitz condition from which you can derive the conditions for the inequality.
+\end{enumerate}
+
+% LAN Stuff
+\section{LAN Stuff}
+\textbf{To show contiguity of measures:}
+\begin{enumerate}
+\item Use the definition of continguity directly.
+
+\item Use Le Cam's First Lemma.
+\end{enumerate}
+
+\textbf{To show a model family is QMD:}
+\begin{enumerate}
+\item Exponential families are QMD (Lec 19).
+
+\item (TSH Thm 12.2.1 p486) Suppose $\T$ is an open subset of $\bbR$, fix $\t_0 \in \T$. If
+\begin{itemize}
+\item $\sqrt{p_\t(x)}$ is an absolutely continuous function of $\t$ in some neighborhood of $\t_0$ for $\mu$-almost all $x$, 
+\item $\dis\frac{\partial p_\t(x)}{\partial \t}$ exists at $\t = \t_0$ for $\mu$-almost all $x$,
+\item Fisher information $I(\t)$ is finite and continuous in $\t$ at $\t_0$,
+\end{itemize}
+then $\{ P_\t \}$ is QMD at $\t_0$. (See slightly different set of conditions in TSH Cor 12.2.1 p487, basically relaxing condition 2. VdV Lem 7.6 also has a slightly different set of conditions.)
+
+\item (TSH Thm 12.2.2 p488) Suppose Suppose $\T$ is an open subset of $\bbR^k$, and that $P_\t$ has density $p_\t$ w.r.t. $\mu$. Assume $p_\t(x)$ is continuously differentiable in $\t$ for $\mu$-almost all $x$, and that $I(\t)$ exists and is continuous in $\t$. Then the family is QMD.
+\end{enumerate}
+
+
+\textbf{To find the limiting distribution of a statistic in the local asymptotic regime:}
+\begin{enumerate}
+\item Show that the family of distributions is LAN, then use Le Cam's Third Lemma. (To show the joint normality condition in Le Cam's Third Lemma, use the multivariate CLT.)
+
+\item To show LAN, hope that your family is QMD.
+
+\end{enumerate}
+
+\section{Quantiles (VdV Ch 21)}
+\begin{itemize}
+\item The \textbf{quantile function} of a CDF $F$ is the generalized inverse: $F^{-1}(p) = \inf \{x: F(x) \geq p \}$. It is left-continuous with range equal to the support of $F$.
+
+\item $F^{-1}(U)$ has CDF $F$ if $U \sim \text{Unif}(0,1)$.
+
+\item (VdV Lem 21.2) For any sequence of CDFs, $F_n^{-1} \Rightarrow F^{-1}$ if and only if $F_n \Rightarrow F$.
+
+\item (VdV Cor 21.5) Fix $0 < p < 1$. If $F$ is differentiable at $F^{-1}(p)$ with positive derivative $f(F^{-1}(p))$, then we have asymptotic normality of the empirical quantiles: $\sqrt{n} \left(\mathbb{F}_n^{-1}(p) - F^{-1}(p) \right) \cd \calN \left(0, \dfrac{p(1-p)}{f^2 (F^{-1}(p))} \right)$.
+\end{itemize}
+
+
+
+
+
+
+
+\end{document}

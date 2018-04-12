@@ -1,0 +1,817 @@
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,amssymb,graphicx,mathtools,flexisym, float, enumitem}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+%
+% Macros for shortcuts
+%
+\newcommand{\dis}{\displaystyle}
+\def\lc{\left\lceil}   
+\def\rc{\right\rceil}
+\def\lf{\left\lfloor}   
+\def\rf{\right\rfloor}
+\newcommand{\norm}[1]{\left\|{#1}\right\|} % A norm with 1 argument
+\newcommand{\ltwo}[1]{\norm{#1}_2} % l2 norm
+\newcommand{\matrixnorm}[1]{\left|\!\left|\!\left|{#1}
+  \right|\!\right|\!\right|} % Matrix norm with three bars
+  \newcommand{\opnorm}[1]{\matrixnorm{#1}_{\rm op}}
+\newcommand\bbC{\mathbb{C}}
+\newcommand\bbD{\mathbb{D}}
+\newcommand\bbE{\mathbb{E}}
+\newcommand\bbG{\mathbb{G}}
+\newcommand\bbN{\mathbb{N}}
+\newcommand\bbP{\mathbb{P}}
+\newcommand\bbQ{\mathbb{Q}}
+\newcommand\bbR{\mathbb{R}}
+\newcommand\bbZ{\mathbb{Z}}
+\newcommand\calA{\mathcal{A}}
+\newcommand\calB{\mathcal{B}}
+\newcommand\calC{\mathcal{C}}
+\newcommand\calD{\mathcal{D}}
+\newcommand\calF{\mathcal{F}}
+\newcommand\calG{\mathcal{G}}
+\newcommand\calL{\mathcal{L}}
+\newcommand\calM{\mathcal{M}}
+\newcommand\calN{\mathcal{N}}
+\newcommand\calP{\mathcal{P}}
+\newcommand\calU{\mathcal{U}}
+\newcommand\calX{\mathcal{X}}
+\newcommand\dlt{\delta}
+\newcommand\Dlt{\Delta}
+\def\eps{\varepsilon}
+\newcommand\lmb{\lambda}
+\newcommand\Lmb{\Lambda}
+\newcommand\om{\omega}
+\newcommand\Om{\Omega}
+\newcommand\sg{\sigma}
+\newcommand\Sg{\Sigma}
+\def\t{\theta}
+\newcommand\T{\Theta}
+\newcommand\vt{\vartheta}
+\providecommand{\argmax}{\mathop{\rm argmax}}
+\providecommand{\argmin}{\mathop{\rm argmin}}
+\newcommand\cas{\stackrel{a.s.}{\goesto}}
+\newcommand\cd{\stackrel{d}{\goesto}}
+\newcommand\cp{\stackrel{P}{\goesto}}
+\newcommand\equivto{\Leftrightarrow}
+\newcommand\goesto{\rightarrow}
+\newcommand\var{\text{Var }}
+
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+\begin{document}
+\title{STATS 300B Notes}
+\author{Kenneth Tay}
+\date{\vspace{-3ex}}
+\maketitle
+
+% Preliminearies
+\section{Preliminaries}
+\begin{itemize}
+\item (Lec 1) \textbf{SLLN and CLT:} If $X \stackrel{iid}{\sim} P$, $\text{Cov}(X_i) = \Sg = \bbE [(X_i - \mu)(X_i - \mu)^T]$, $\mu = \bbE X_i$, then $\dis\frac{1}{n}\sum_{i=1}^n X_i \cas \mu$ and $\dis\frac{1}{\sqrt{n}}\sum_{i=1}^n (X_i-\mu) \cas \calN(0, \Sg)$.
+
+\item (Lec 1) \textbf{Continuous mapping theorem:} Let $g$ be continuous on a set $B$ such that $\bbP(X \in B)=1$. Then $X_n \cas X \Rightarrow g(X_n) \cas g(X)$, $X_n \cp X \Rightarrow g(X_n) \cp g(X)$, and $X_n \cd X \Rightarrow g(X_n) \cd g(X)$.
+
+\item (Lec 1) \textbf{Slutsky's theorem:}
+\begin{itemize}
+\item If $c$ is constant, then $X_n \cd c\iff X_n \cp c$.
+
+\item If $X_n \cd X$ and $d(X_n,Y_n) \cp 0$, then $Y_n \cd X$.
+
+\item If $X_n \cd X$, $Y_n \cp c$, then $\left( \begin{array}{c} X_n \\ Y_n \end{array} \right) \cd \left( \begin{array}{c} X \\ c \end{array} \right)$.
+
+\item If $X_n \cd X$ and $Y_n \cd c$, then $X_n+Y_n \cd X+c$, $Y_nX_n \cd cX$, and $\frac{X_n}{Y_n} \cd \frac{X}{c}$ if $c \neq 0$. (This holds even for matrices.)
+\end{itemize}
+
+\item (Lec 2) \textbf{Uniform tightness:} A collection of random vectors $\{ X_\alpha\}_{\alpha \in A}$ is \textbf{uniformly tight} if $$\dis\limsup_{M \goesto \infty} \left[ \sup_\alpha \bbP(\|X_\alpha\| \geq M) \right] = 0.$$
+
+A single random vector is uniformly tight. If $X_n \cd X$, then $\{X_n\}$ is uniformly tight.
+
+
+\item (Lec 1) \textbf{O notation:} Let $X_n$ be random vectors, $R_n$ be random variables.
+\begin{itemize}
+\item We say that $X_n=o_p(R_n)$ if there are random vectors $Y_n$ such that $X_n = Y_n R_n$ and $Y_n \cp 0$.
+
+\item We say that $X_n=O_p(R_n)$ if there are random vectors $Y_n$ such that $X_n = Y_n R_n$ and $Y_n = O_p(1)$, i.e. $\{Y_n\}$ uniformly tight.
+
+\item $o_p(1)+o_p(1)=o_p(1)$.
+\item $O_p(1)+o_p(1)=O_p(1)$.
+\item $O_p(1)+O_p(1)=O_p(1)$.
+\item $O_p(1)o_p(1) = o_P(1)$.
+\item $[1 + o_p(1)]^{-1} = O_p(1)$.
+\item $o_p(O_p(1)) = o_p(1)$.
+\item Let $R: \bbR^d \mapsto \bbR^k$ be a function with $R(0)=0$, and assume $X_n \cp 0$. If $R(h) = o(\|h\|^p)$ as $h \goesto 0$, then $R(X_n) = o_p(\|X_n\|^p)$. If $R(h) = O(\|h\|^p)$ as $h \goesto 0$, then $R(X_n) = O_p(\|X_n\|^p)$.
+\end{itemize}
+
+\item (Lec 2) \textbf{Prohorov's theorem:} A collection of random vectors $\{X_{\alpha}\}_{\alpha \in A}$ is uniformly tight iff it is sequentially compact for weak convergence, i.e. $\forall $ sequences $\{X_{n} \}_{n \in \bbN} \subset \{X_{\alpha}\}_{\alpha \in A}$, there exist a subsequence $n_k$ and a random vector $X$ such that $X_{n_k} \cd X$.
+
+\item (Lec 2) \textbf{Portmanteau theorem:} Let $X_n$, $X$ be random vectors. The following are equivalent:
+\begin{enumerate}
+\item $X_n \cd X$.
+\item $\bbE(f(X_n)) \goesto \bbE(f(X))$ for all bounded and continuous $f$.
+\item $\bbE(f(X_n)) \goesto \bbE(f(X))$ for 1-Lipschitz $f$ with $f \in [0,1]$.
+\item $\dis\liminf_{n \goesto \infty} \bbE(f(X_n)) \geq \bbE(f(X))$ for non-negative and continuous $f$.
+\item $\dis\liminf_{n \goesto \infty}\bbP(X_n\in O) \geq \bbP(X \in O) $ for all open sets $O$.
+\item $\dis\limsup_{n \rightarrow \infty}\bbP(X_n\in C) \leq \bbP(X \in C) $ for all closed sets $C$.
+\item $\dis\lim_{n \goesto \infty}\bbP(X_n \in B) = \bbP(X \in B) $ for all sets $B$ such that $\bbP(X \in \partial B) = 0$.
+\end{enumerate}
+
+\end{itemize}
+
+% Delta Method
+\section{Delta Method}
+\begin{itemize}
+\item (Lec 2) Let $r_n \goesto \infty$ be a deterministic sequence and $\phi:\bbR^d \mapsto \bbR^k$ be differentiable at $\t$. Assume that $r_n (T_n - \t)$ converges in distribution to some random vector $T \in \bbR^d$. Then, 
+\begin{enumerate}
+\item $r_n(\phi(T_n) - \phi(\t)) \cd\phi'(\t)T$, and
+\item $r_n(\phi(T_n) - \phi(\t)) - r_n\phi'(\t)(T_n - \t) \cp 0$.
+\end{enumerate}
+Here $\phi'(\theta) \in \bbR^{k \times d}$ is the Jacobian matrix of derivatives $[\phi'(\theta)]_{ij} = \dis\frac{\partial\phi_i(\theta)}{\partial \theta_j}$.
+
+\item (Lec 2) If $\phi'(\t) = 0$, we can do a higher order Taylor expansion to get more power results/faster rate of convergence.
+
+\item (Lec 2) Let $r_n \goesto \infty$ be a deterministic sequence and $\phi:\bbR^d \mapsto \bbR^k$ be twice differentiable at $\t$ such that $\nabla \phi(\theta)=0$. Then,
+$$r_n^2 (\phi(T_n) - \phi(\theta)) \cd \frac{1}{2}T^T\nabla^2 \phi(\theta)T,$$
+where $\nabla^2 \phi(\theta)$ is the Hessian matrix.
+
+\item (Lec 5) \textbf{Restatement of CLT:} Assume $X_1, \dots, X_n \stackrel{iid}{\sim} P_{\t_0}$. Let $f: \calX \mapsto \bbR^d$ with $P_{\t_0} \ltwo{f}^2 < \infty$. Then CLT says that under $P_{\t_0}$, $\sqrt{n}(P_n f - P_{\t_0} f) \cd \calN \left( 0, \text{Cov}_{\t_0} (f) \right)$.
+
+\item (Lec 5) \textbf{Delta method for method of moments:} Suppose that $e(\t) = P_\t f$ is one-to-one on an open set $\T \subseteq \bbR^d$ and continuously differentiable at $\t_0$ with non-singular derivative $e_{\t_0}'$. Assume also that $P_{\t_0}\ltwo{f}^2 < \infty$. Then $P_n f \in \text{dom }(e^{-1})$ eventually, and if $\hat{\t}_n = e^{-1}(P_n f)$, under $P_{\t_0}$ we have 
+\[\sqrt{n}(\hat{\t}_n - \t_0) \cd \calN \left( 0, [e'(\t_0)]^{-1} \text{Cov}_{\t_0}(f) ([e'(\t_0)]^{-1})^T \right). \]
+
+\end{itemize}
+
+% Asymptotic normality
+\section{Asymptotic Normality}
+Set-up: Model family $\{P_\t\}_{\t \in \T}$, where $\T \subseteq \bbR^d$. Assume $P_\t$ has density $p_\t$ w.r.t. some base measure $\mu$. We denote the log-likelihood by $\ell_\t(x) = \log p_\t(x)$.
+
+Say we observe $X_i \stackrel{iid}{\sim} P_{\t_0}$, where $\t_0$ is unknown and we wish to estimate it.
+
+\begin{itemize}
+\item (Lec 3) \textbf{Score function:} $\nabla \ell_\t(x) := \left [ \dis\frac{\partial}{\partial \t_j} \log{p_\t(x)} \right]_{j = 1}^d \in \bbR^d$. Also written as $\dot{\ell}_\t$. \textbf{We always have $\bbE_\t [\nabla \ell_\t(x)] = 0$}.
+
+\item (Lec 3) \textbf{Fisher information:} $I_\t = \text{Cov}_\t \nabla \ell_\t = \bbE_\t \left[ \nabla \ell_\t \nabla \ell_\t^T \right] = -\bbE_\t [\nabla^2 \ell_\t]$.
+\begin{itemize}
+\item (Lec 4) For a function $h$, $I(h(\t)) = \dis\frac{I(\t)}{h'(\t)^2}$.
+
+\item (Lec 4) Fisher information is additive (if stuff is independent).
+\end{itemize}
+
+\item (Lec 3) \textbf{MLE estimation:} The MLE estimate is
+$$\hat{\t}_n \in \argmax_{\t \in \T} P_n \ell_\t (x) = \argmax_{\t \in \T} \dis\frac{1}{n}\sum_{i=1}^n \log p_\t(x_i)$$.
+
+\item \textbf{Functional invariance of MLE:} If $\hat{\t}$ is MLE for $\t$, then for any function $f$, $f(\hat{\t})$ is MLE for $f(\t)$.
+
+\item (Lec 3) \textbf{Consistency:} An estimator $\hat{\t}_n$ is consistent if $\hat{\t}_n \cp \t_0$ as $n \goesto \infty$.
+
+\item (Lec 3) \textbf{Identifiability:} A model $\{P_\t\}_{\t \in \T}$ is identifiable if $P_{\t_1} \neq P_{\t_2}$ for all $\t_1, \t_2 \in \T$ with $\t_1 \neq \t_2$.
+
+\item (Lec 3) \textbf{Consistency of MLE for finite $\T$:} Suppose $\{P_\theta \}_{\theta \in \Theta}$ is identifiable and $|\Theta| < \infty$. Then, if $\hat{\theta}_n := \argmax_{\theta \in \Theta} P_n \ell_\theta(x)$, $\hat{\theta}_n \cp \theta_0$ when $X_i \stackrel{iid}{\sim} P_{\theta_0}$.
+
+\item (Lec 4) \textbf{Asymptotic normality of the MLE:} Let $X_i \stackrel{iid}{\sim} P_{\theta_0}$, where $\theta_0 \in \text{int } \Theta$. Assume that:
+\begin{enumerate}
+\item $\ell_\theta(x) = \log p_\theta(x)$ is smooth enough that $\bbE_{\theta_0}[\nabla \ell_{\theta_0}\nabla \ell_{\theta_0}^T]$ exists,
+
+\item The Hessian $\nabla^2 \ell_\theta(x)$ is $M(x)$-Lipschitz in $\theta$, i.e. $\opnorm{\nabla^2 \ell_{\theta_1}(x) - \nabla^2 \ell_{\theta_2}(x)} \leq M \norm{\theta_1 - \theta_2}$, with $\bbE_{\theta_0}[M(X)^2]< \infty$,
+
+\item The MLE $\hat{\theta}_n$ is consistent, i.e. $\hat{\theta}_n \cp \theta_0$ under $P_{\t_0}$.
+\end{enumerate}
+
+Then, $\sqrt n(\hat \theta_n - \theta_0) \cd \calN \left(0, I_{\theta_0}^{-1}\right)$, where $I_\theta = \bbE_\theta [\nabla \ell_{\theta}\nabla \ell_{\theta}^T]$ is the Fisher information.
+
+(Exponential family version of this theorem is in VdV Thm 4.6 p39.)
+
+\item (Lec 4) \textbf{Covariance lower bound:} For any decision procedure $\delta: \calX \mapsto \bbR$ and any function $\psi: \calX \mapsto \bbR$ ($\calX$ is where the data lives, $\bbR$ is where the parameter lives), we have $\var(\delta) \geq \dis\frac{\text{Cov}(\delta,\psi)^2}{\var(\psi)}$. (Proof by Cauchy-Schwarz.)
+
+\item (Lec 4) \textbf{1-Dimensional information inequality:} Assume that $\bbE_\t [\dlt] = g(\t)$ is differentiable at $\t$ and density $P_\t$ is regular enough so that we can interchange differentiation and integration. Then $\text{Var}_\t (\dlt) \geq \dis\frac{[g'(\t)]^2}{I(\t)}$.
+
+Implication: In 1 dimension, any unbiased estimator has MSE $\geq 1/I(\t)$.
+
+\item (Lec 4) \textbf{Multi-dimensional covariance lower bound:} Assume we have $\delta: \calX \mapsto \bbR^d$ and any function $\psi: \calX \mapsto \bbR^d$ with $\bbE_\t [\psi] = 0$. Let $\gamma = \left[ \text{Cov}(\dlt, \psi_j) \right]_{j=1}^d$, and $C = \text{Cov}_\t (\psi) = \bbE_\t [\psi\psi^T]$. Then $\text{Var}_\t(\delta) \geq \gamma^T C^{-1} \gamma$.
+
+\item (Lec 4) \textbf{Multi-dimensional information inequality:} Assume that $\bbE_\t [\dlt] = g(\t) \in \bbR^d$, and that we have enough regularity so that we can interchange differentiation and integration. Then $\text{Var}_\t(\dlt) \succeq \nabla g(\t)^T I(\t)^{-1} \nabla g(\t)$.
+\end{itemize}
+
+
+% Efficiency of Estimators
+\section{Efficiency of Estimators}
+\begin{itemize}
+\item (Lec 5) An estimator $\hat{\t}_n$ is \textbf{efficient} if $\sqrt{n}(\hat{\t}_n - \t) \cd \calN(0, I_\t^{-1})$ under $P_\t$.
+
+\item (Lec 5) \textbf{Asymptotic relative efficiency (ARE):} Let $\hat{\theta}_n$ and $T_n$ be estimators of parameter $\theta \in \bbR$. Assume that 
+$\sqrt{n}(\hat{\theta}_n - \theta) \cd \calN(0,\sigma^2(\theta))$. Let $m(n) \goesto \infty$ be such that $\sqrt{n}(T_{m(n)} - \theta)\cd \calN(0,\sigma^2(\theta))$.
+
+Then the \textbf{asymptotic relative efficiency} of $\hat{\theta}_n$ with respect to $T_n$ is $\dis\liminf_{n \goesto \infty}\frac{m(n)}{n}$.
+
+\item (Lec 5) Bigger ARE means that $\hat{\t}_n$ is a better (more efficient) estimator than $T_n$.
+
+\item (Lec 5) ARE is related to the relative length of confidence intervals.
+
+\item (Lec 5) Suppose $\hat{\theta}_n$ and $T_n$ are estimators of $\theta$ such that
+$\sqrt{n}(\hat{\theta}_n - \theta)\cd \calN(0, \sigma^2(\theta))$ and
+$\sqrt{n}(T_n - \theta)\cd \calN(0, \tau^2(\theta))$. Then the ARE of $\hat{\theta}_n$ with respect to $T_n$ is $\dis\frac{\tau^2(\theta)}{\sigma^2(\theta)}$. (In higher dimensions, it is roughly $\text{tr}\left(\tau^2(\theta)(\sigma^2(\theta)^{-1}\right)$.)
+
+\item (Lec 6) \textbf{Super-efficiency:} An estimator $\hat{\t}_n$ is super-efficient if $\sqrt{n}(\hat{\t}_n - \t) \cd \calN(0, \sg^2(\t))$ under $P_\t$, with $\sg^2(\t) \leq I(\t)^{-1}$ for all $\t$ and $\sg^2(\t_0) < I(\t_0)^{-1}$ for some $\t_0$.
+
+\end{itemize}
+
+% U-Statistics
+\section{U-Statistics (VdV Ch 12)}
+\begin{itemize}
+\item (Lec 6) Let $h:\ X^r \mapsto \bbR$ be symmetric. For
+$X_i \stackrel{iid}{\sim} P$, define $\theta(P):= \bbE_P\left[h\left(X_1,\dots,X_r\right)\right]$
+and associated \textbf{U-statistic} $U_n := \dis\frac{1}{\binom{n}{r}} \sum_{|\beta|=r,\beta\subseteq [n]} h(X_\beta)$, where $\beta$ ranges over size $r$ subsets of $[n]= \{ 1,...,n\}$, $X_\beta = \left(X_{i_1},...,X_{i_r}\right)$ for $\beta=(i_1,...,i_r)$.
+
+\item (Lec 6) $\bbE_P [U_n] = \t(P)$, i.e. the U-statistic is unbiased.
+
+\item (Lec 6) Let $h:\ X^r \mapsto \bbR$ be symmetric. For $c < r$, Define the following quantities:
+\begin{align*}
+h_c(X_1,\dots,X_c) &:= \bbE \left[h \left(\underset{\text{fixed}}{\underbrace{X_1,\dots,X_c}}, \underset{\text{i.i.d. P}}{\underbrace{X_{c+1},\dots,X_r}}\right)\right], \\ 
+\hat{h}_c &:= h_c - \bbE[h_c] = h_c - \t(P), \\ 
+\zeta_c &:= \text{Var}[h_c(X_1, \dots, X_c)] = \bbE \left[ \hat{h}_c^2 \right].
+\end{align*}
+
+\item (Lec 7) If $\alpha, \beta \subseteq [n]$, $S = \alpha \cap \beta$, $c = |S|$, then $\bbE \left[ \hat{h}(X_\alpha) \hat{h}(X_\beta) \right] = \zeta_c$.
+
+\item (Lec 7) Let $U_n$ be an $r^{th}$ order U-statistic. Then $\var U_n = \dis\frac{r^2}{n}\zeta_1 + O(n^{-2})$.
+
+\item (Lec 7) \textbf{Projections:} Let $\mathcal{V}$ be a Hilbert space, and let $C \subseteq \mathcal{V}$ be a convex and closed set. Define the \textbf{projection of $w$ onto $C$} as $\pi_C(w) := \dis\argmin_{v \in C} \{ \ltwo{w-v}^2 \}$. 
+
+$\pi_C(w)$ exists, is unique, and is characterized by the inequality $\langle w - \pi_C(w), v - \pi_C(w) \rangle \leq 0$.
+
+\item (Lec 7) Suppose $C$ is a linear subspace of $\mathcal{V}$. Then $\pi_C(w)$ is the projection of $w$ onto $C$ iff for all $v \in C$, $\langle w - \pi_C(w), v \rangle = 0$.
+
+\item (Lec 7, VdV Thm 11.1) If $\mathcal{S}$ is a linear subspace of $L_2(P)$, then $\hat{S} \in \mathcal{S}$ is the projection of $T \in L_2(P)$ onto $\mathcal{S}$ iff for all $S \in \mathcal{S}$, $\bbE [(T - \hat{S})S] = 0$.
+
+Every two projections of $T$ onto $\mathcal{S}$ are a.s. equal. If the linear space $\mathcal{S}$ contains the constant variables, then $\bbE T = \bbE \hat{S}$ and $\text{Cov}(T - \hat{S}, S) = 0$ for every $S \in \mathcal{S}$.
+
+\item (Lec 7) Let $T_n$ be statistics, and let $\hat{S}_n$ be the projections of $T_n$ onto subspaces $\mathcal{S}_n$ which contain constant random variables.
+\begin{equation*}
+\text{If } \dis\frac{\var T_n}{\var \hat{S}_n} \goesto 1, \text{ then } \frac{T_n - \bbE T_n}{\sqrt{\var T_n}} - \frac{\hat{S}_n - \bbE \hat{S}_n}{\sqrt{\var \hat{S}_n}} \cp 0.
+\end{equation*}
+
+\item (Lec 7) \textbf{H\'{a}jek Projections}: Let $X_1, \dots, X_n$ be independent. Let $\mathcal{S} = \left\{ \dis\sum_{i=1}^n g_i(X_i): g_i \in L_2(P) \right\}$. If $\bbE T^2 < \infty$, then the projection $\hat{S}$ of $T$ onto $\mathcal{S}$ is given by $\hat{S} = \dis\sum_{i = 1}^n \bbE [T \mid X_i] - (n-1) \bbE T$.
+
+\item (Lec 8) \textbf{Asymptotic normality of U-statistics:} Let $h$ be a symmetric kernel (function) of order $r$ with $\bbE [h^2] <\infty$, and let $U_n$ be the associated U-statistic. Then $\sqrt{n}(U_n- \theta) \cd \calN(0,r^2 \zeta_1)$, where $\theta = \bbE [U_n] = \bbE h(X_1,\dots,X_n)$.
+
+\end{itemize}
+
+% Testing and Confidence Intervals
+\section{Testing and Confidence Intervals}
+\begin{itemize}
+\item (Lec 9) Let $T_n$ be a sequence of tests for some model $\{P_\theta\}_{\theta \in \Theta}$, and let $H_0: \theta \in \Theta_0 \subset \Theta$. Then $T_n$ is \textbf{asymptotically level $\alpha$} if 
+
+\[\lim_{n\rightarrow\infty} \sup_{\theta \in \Theta_0} P_\theta(T_n \text{ rejects } H_0) \leq \alpha. \]
+
+\item (Lec 8) Suppose $\sqrt{n}(\hat{\t}_n - \t_0) \cd \calN(0, I_{\t_0}^{-1})$. Assume that $I_\t$ is continuous and invertible. Let $C_{n, \gamma} := \left\{ \t: \bbR^d: (\t - \hat{\t}_n)^T I_{\hat{\t}_n} (\t - \hat{\t}_n) \leq \dis\frac{\gamma}{n} \right\}$. Then as $n \goesto \infty$, $P_{\t_0} \{ \t_0 \in C_{n, \gamma} \} \goesto \alpha$. $C_{n, \gamma}$ is called a \textbf{Wald confidence ellipsoid}. (We have $n(\t - \hat{\t}_n)^T I_{\hat{\t}_n} (\t - \hat{\t}_n) \cd \chi_d^2$.)
+
+\item In one-dimension, the \textbf{Wald confidence interval} is $\hat{\t}_n \pm \dis\frac{1}{\sqrt{n}}\sqrt{I(\hat{\t}_n)^{-1}} \cdot z^{1 - \alpha/2}$.
+
+\item (Lec 9) \textbf{Wald tests:} Let $u_{d, \alpha}^2$ be the value such that $\bbP(\chi_d^2 \geq u_{d, \alpha}^2) = \alpha$. Then the Wald test rejects if $\hat{\t}_n \notin C_{n,\gamma}$ with $\gamma = u_{d, \alpha}^2$.
+
+If $H_0$ is a point null (just $\t_0$), we can replace $I_{\hat{\t}_n}$ with $I_{\t_0}$ in the confidence ellipsoid.
+
+\item (Lec 8) \textbf{Generalized Likelihood Ratio Test:} Suppose we are testing $H_0: \t \in \T_0$ vs. $H_1: \t \in \T$, where $\T_0$ is a strict subset of $\T$. Define statistic
+\[ T(x)=\log \frac{\sup_{\theta\in\Theta}p(x,\theta)}{\sup_{\theta\in\Theta_0}p(x,\theta)}=\log \frac{p(x,\hat{\theta}_{\text{MLE}})}{\sup_{\theta\in\Theta_0}p(x,\theta)}. \]
+
+The Generalized Likelihood Ratio test rejects $H_0$ if $T(X) > t$.
+
+\item (Lec 8) \textbf{Wilk's Theorem:} Setting as above, where $\T_0 = \{ \t_0 \}$ is a point null and $\T = \bbR^d$. Assume that the usual asymptotic normality conditions hold (log-likelihood is twice-differentiable, Hessian is Lipschitz-continuous). Let $X = (X_1, \dots, X_n)$, where $X_i \stackrel{iid}{\sim} P_{\t_0}$. Then $2 T_n (X) \cd \chi_d^2$ under the null.
+
+\item (Lec 9) Assume a point null $H_0: \t = \t_0$. Under the CLT, $\sqrt{n} P_n \nabla \ell_{\t_0} \cd \calN(0, I_{\t_0})$, so $n(P_n \nabla l_{\theta_0})^TI_{\theta_0}^{-1}(P_n \nabla l_{\theta_0}) \cd \chi_d^2$. The \textbf{Rao score test} for $H_0$ vs. $H_1: \t \neq \t_0$ is reject if $(P_n \nabla l_{\theta_0})^TI_{\theta_0}^{-1}(P_n \nabla l_{\theta_0}) \geq u^2_{d,\alpha}/n$.
+
+Rao score test is useful if MLE is difficult to compute.
+
+($\sqrt{n} P_n \nabla \ell_{\t_0}$ could potentially be used for a one-sided test.)
+
+\end{itemize}
+
+\subsection{Testing with Nuisance Parameters}
+Assume that our model family is parametrized by $\t \in \bbR^p$. Let $\t = (\eta, \nu)$, where $\eta \in \bbR^k$. Say we are only interested in $\eta$ and not $\nu$. We have to modify our tests above to account for the nuisance parameters.
+
+Assume that we are testing $\eta = \eta_0$ vs. $\eta \neq \eta_0$.
+
+\begin{itemize}
+\item Write the Fisher information matrix in block form: $I_\t = \begin{pmatrix} I_{\eta\eta} & I_{\eta\nu} \\ I_{\nu\eta} & I_{\nu\nu} \end{pmatrix}$. Then the upper left block of $I_\t^{-1}$ is $(I_{\eta\eta} - I_{\eta\nu}I_{\nu\nu}^{-1}I_{\nu\eta})^{-1}$.
+
+\item \textbf{Wald test:} We now have $\sqrt{n}(\hat{\eta} - \eta) \cd \calN(0, (I_{\eta\eta} - I_{\eta\nu}I_{\nu\nu}^{-1}I_{\nu\eta})^{-1})$.
+
+\item \textbf{Score test:} Let $\hat{\nu}_0$ be the MLE for $\nu$ when $\eta$ is fixed at $\eta_0$. Let $\nabla_\eta \ell(\eta, \nu)$ denote the gradient of the score function w.r.t. just the parameters we care about. Then the new score statistic is $Z_n = \sqrt{n} P_n \nabla_\eta \ell(\eta_0, \hat{\nu}_0)$. Under the null, $Z_n \cd \calN(0, I_{\eta\eta} - I_{\eta\nu}I_{\nu\nu}^{-1}I_{\nu\eta})$.
+
+\item \textbf{Likelihood ratio test:} $R_n = 2 \ell(\hat{\t}) - 2 \ell (\eta_0, \hat{\nu}_0) \cd \chi_{p-k}^2$.
+
+For more details, see TSH Thm 12.4.2 p515.
+
+\end{itemize}
+
+% Uniform Laws of Large Numbers (ULLN)
+\section{Uniform Laws of Large Numbers (ULLN)}
+\begin{itemize}
+\item (TSH Thm 11.2.17 p441, HW1) \textbf{Glivenko-Cantelli Theorem:} Suppose $X_1, \dots, X_n$ are i.i.d. real-valued random variables with cdf $F$. Let $\hat{F}_n$ be the ECDF defined by $\hat{F}(t) = \dis\frac{1}{n}\sum_{i=1}^n 1\{ X_i \leq t \}$.
+
+Then $\dis\sup_t |\hat{F}_n(t) - F(t)| \cas 0$.
+
+\item (Lec 10) $X$ is a mean zero \textbf{$\sigma^{2}-$sub-Gaussian random variable} if
+$\mathbb{E}\left[e^{\lambda X}\right] \leq \exp\left(\frac{\lambda^{2}\sigma^{2}}{2}\right)$ for all $\lambda \in \mathbb{R}$.
+\begin{itemize}
+\item $\calN(0, \sg^2)$ is $\sg^2$-sub-Gaussian.
+\item If $X \in [a,b]$, then $X$ is $\dis\frac{(b-a)^2}{4}$-sub-Gaussian.
+\item If $|X| \leq c$, then $X$ is $c^2$-sub-Gaussian.
+\item If $X_i$'s are independent $\sg_i^2$-sub-Gaussian random variables, then $\sum X_i$ is a $\sum \sg_i^2$-sub-Gaussian random variable.
+\end{itemize}
+
+\item $X$ is a \textbf{sub-Gaussian random vector with variance proxy $\sg^2$} if $\bbE X = 0$ and $u^T X$ is $\sg^2$-sub-Gaussian for all unit vectors $u$ on the unit sphere in $\bbR^d$.
+
+\item (Lec 11, HW1) If $X_1, \dots, X_n$ are mean 0 $\sg^2$-sub-Gaussian random variables, then $\bbE \left[\dis\max_{1 \leq k \leq n} X_k \right] \leq \sqrt{2\sg^2 \log n}$ and $\bbE \left[\dis\max_{1 \leq k \leq n} |X_k| \right] \leq \sqrt{2\sg^2 \log (2n)}$.
+
+\item (Lec 10) If $X$ is $\sg^2$-sub-Gaussian, then $\max [\bbP(X - \bbE X \geq t), \bbP(X - \bbE X \leq -t)] \leq \exp \left( -\dis\frac{t^2}{2\sg^2} \right)$.
+
+\item (Lec 10) \textbf{Hoeffding's inequality:} Let $X_i$'s be independent $\sg_i^2$-sub-Gaussian random variables. Then
+\begin{align*}
+\bbP \left( \frac{1}{n}\sum_{i=1}^n (X_i - \bbE X_i) \geq t \right) \leq \exp\left[ \frac{-n^2t^{2}}{2\sum_{i=1}^{n}\sigma_{i}^{2}}\right] \quad \text{for } t \geq 0, \\
+\bbP \left( \frac{1}{n}\sum_{i=1}^n (X_i - \bbE X_i) \leq -t \right) \leq \exp\left[ \frac{-n^2t^{2}}{2\sum_{i=1}^{n}\sigma_{i}^{2}}\right] \quad \text{for } t \leq 0.
+\end{align*}
+
+When we have $X_i \in [a,b]$ for all $i$, the bound on the RHS becomes $\exp \left[ -\dis\frac{2nt^2}{(b-a)^2} \right]$.
+
+\item (Lec 10) Setting for coverings and packings: Let $(\T, d)$ be a metric space with distance measure $d: \T \times \T \mapsto \bbR$.
+
+\item (Lec 10) For any $\eps > 0$, $\left\{\t_{i}\right\}_{i=1}^N$ is an \textbf{$\eps$-cover} of $\T$ if $\min_i d(\theta,\theta_{i})< \eps$ for all $\theta \in \Theta$. (We do not require that $\t_i \in \T$.)
+
+\item (Lec 10) For $\eps > 0$, the \textbf{covering number} of $\T$ for metric $d$ is $N(\T, d, \eps) := \inf \{ N: \exists \text{ an } \eps-\text{cover } \{\t_i \}_{i=1}^N \text{ of } \T \}$. $\log N(\T, d, \eps)$ is called the \textbf{metric entropy}.
+
+\item (Lec 10) For any $\eps > 0$, $\left\{\t_{i}\right\}_{i=1}^M$ is an \textbf{$\eps$-packing} of $\T$ if $\dis\min_{i,j} d(\t_i, \t_j) > \eps$. (We require $\t_i \in \T$.)
+
+\item (Lec 10) For $\eps > 0$, the \textbf{packing number} of $\T$ for metric $d$ is $M(\T, d, \eps) := \sup \{ M: \exists \text{ an } \eps-\text{packing } \{\t_i \}_{i=1}^M \text{ of } \T \}$. $\log M(\T, d, \eps)$ is called the \textbf{packing entropy}.
+
+\item (Lec 10, Quals Ex 4) For all $\eps$, $M(2\eps) \leq N(\eps) \leq M(\eps)$.
+
+\item (Lec 10) Let $\T \subseteq \bbR^d$ be compact. Then $N(\T, \|\cdot\|, \eps) < \infty$ for any $\eps > 0$.
+
+\item (Lec 10) \textbf{Balls in $\bbR^d$ with Euclidean norm:} If the ball has radius $r$, then $M(\T, \| \cdot \|, \eps) \leq \left( 1 + \dis\frac{2r}{\eps}\right)^d$, and $\left( \dis\frac{r}{\eps}\right)^d \leq N(\T, \| \cdot \|, \eps) \leq \left( 1 + \dis\frac{2r}{\eps}\right)^d$. Thus, $\log N(\T, \| \cdot \|, \eps) \approx d \log \left( 1 + \dis\frac{r}{\eps}\right)$.
+
+\item (Lec 10) Let $\calF \subseteq \left\{ f:\mathcal{X} \mapsto \bbR \right\}$ be a collection of functions with measure $\mu$ on $\mathcal{X}$. A set $\left\{[l_i,u_i]\right\}_{i=1}^N$ of functions $\mu_{i},l_{i}:\mathcal{X}\rightarrow\mathbb{R}$ is
+an \textbf{$\eps$-bracketing} of $\calF$ in the $L_p(\mu)$ norm if
+\begin{enumerate}
+\item $\dis\int \left[u_i(x) - l_i(x)\right]^p d\mu(x) \leq \eps^p$ for all $i$, and
+\item For all $f \in \calF$, there is an $i$ s.t. $l_i(x) \leq f(x) \leq u_i(x)$ for all $x$.
+\end{enumerate}
+
+\item (Lec 10) The \textbf{bracketing number} of $\calF$ is $N_{[\,]} (\calF, L_p(\mu), \eps) := \inf \left\{ N: \exists \text{ an } \eps\text{-bracketing of } \calF \; \{ [l_i, u_i] \}_{i=1}^N \right\}$.
+
+\item (HW7) The collection of functions $f: [0,1] \mapsto [0,1]$ which are 1-Lipschitz has bracketing number (w.r.t. sup norm) bounded by $\exp(C / \eps)$.
+
+\item (Lec 10) Let $\calF = \{ m_\t: \t \in \T \}$, where the $m_\t$ are $L$-Lipschitz in $\t$, with $\bbE[L(X)^p] < \infty$. Then $N_{[\,]} (\calF, L_p, \eps \|L(X)\|_p) \leq N(\T, \| \cdot \|, \eps / 2)$.
+
+\item (Lec 10) \textbf{Uniform convergence with bracketing numbers:} Let $\calF$ satisfy $N_{[\,]} (\calF, L_1(P), \eps) < \infty$. Then under i.i.d. sampling, $\dis\sup_{f \in \calF} |P_n f - Pf| \cp 0$.
+
+\item (Lec 11) For a function class $\calF$, we define the \textbf{$\calF$-norm} $\norm{P_n -P}_\calF := \dis\sup_{f \in \calF} |P_n f - Pf|$. $\calF$ satisfies a \textbf{uniform law of large numbers} if $\dis\lim_{n \goesto \infty} \norm{P_n - P}_\calF = 0$.
+
+\item (Lec 11) A function class $\calF$ is a \textbf{Glivenko-Cantelli (GC) class} w.r.t. $P$ if $\norm{P_n - P}_\calF \cp 0$.
+
+\item (Lec 11) \textbf{Symmetrization:} If $X_1,...,X_n$ are random vectors in a vector space equipped with a norm $\norm{\cdot}$ and $\eps_1,\dots,\eps_n$ are i.i.d. Rademacher random variables which are independent of the $X_i$'s, then for $p \geq 1$,
+\begin{equation*}
+\bbE \left[ \left| \left| \sum_{i=1}^n X_i - \bbE[X_i] \right| \right|^p \right] \leq 2^p \bbE \left[ \left| \left| \sum_{i=1}^n \eps X_i \right| \right|^p \right]
+\end{equation*}
+
+\item (Lec 11) \textbf{Symmetrization inequality:} If $\calF$ is a function class, then by symmetrization,
+\begin{equation*}
+\frac{1}{2}\bbE \left[\sup_{f \in \mathcal{F}} |P_n f - Pf| \right] \leq  \bbE \left[\sup_{f \in \calF} \left| \frac{1}{n} \sum_{i=1}^n \eps_i f(X_i) \right| \right].
+\end{equation*}
+The term on the right is known as the \textbf{Rademacher complexity} of $\mathcal{F}$, denoted $R_n(\calF)$. (See HW6 for Rademacher complexity for some collections of functions.)
+
+\item (HW6) \textbf{Ledoux-Talagrand Rademacher contraction inequality:} Let $\phi \circ \calF = \{ h: h(x) = \phi(f(x)), f \in \calF \}$. If $\phi$ is an $L$-Lipschitz function, then $R_n(\phi \circ \calF) \leq L R_n(\calF)$.
+
+\item (Lec 11) Let $(T,d)$ be a metric space. We say $\{X_t\}_{t \in T}$ is a \textbf{sub-Gaussian process} if  $\log \bbE \left[ \exp \left( \lambda(X_s - X_t) \right) \right] \leq \dis\frac{\lambda^2 d(s,t)^2}{2}$ for all $\lmb > 0, s,t \in T$.
+
+\item (Lec 11) Gaussian processes are sub-Gaussian processes.
+
+\item (Lec 11) Let $T$ be a vector space with a norm $\norm{\cdot}$, $X_i \in \mathcal{X}$ be random variables and loss function $\ell: T \times \mathcal{X} \mapsto \bbR$ be Lipschitz in its first argument, i.e. $|\ell(s,x) - \ell(t,x)| \leq ||t - s|| \text{ for all } x \in \mathcal{X}, s,t \in T$.
+
+If we define $Z_t = \sum_{i=1}^n \epsilon_i \ell(t,x_i)$, where $\eps_1, \dots, \eps_n$ are i.i.d. Rademacher random variables, then the stochastic process $\{X_t\}_{t \in T}$ is $n ||\cdot||^2$-sub-Gaussian.
+
+\item (Lec 11) \textbf{Entropy integral:} For a metric space $(T, d)$, the entropy integral is defined as $J(T, d) := \dis\int_0^{\text{diam } T} \sqrt{\log N(T, d, \eps)} d\eps$. ($N$ is covering number.)
+
+\item (Lec 11) \textbf{Dudley's Theorem:} If $\{X_t\}_{t \in T}$ is a separable sub-Gaussian process for metric $d(\cdot, \cdot)$, then $\bbE \left[ \dis\sup_{t \in T} X_t \right] \leq C J(T, d)$, for some numerical constant $C$. ($C$ can be taken to be $4\sqrt{2}$.)
+
+\item (Lec 12) \textbf{Empirical norm:} For empirical distribution $P_n$, let $L_p(P_n)$ be the $L_p$ norm w.r.t. $P_n$, i.e. $\norm{f}_{L_p(P_n)} = \left[\dis\frac{1}{n}\sum_{i=1}^n |f(X_i)|^p \right]^{1/p}$. We often use $L_2(P_n)$ for symmetrized processes.
+
+\item (Lec 12) If $\sqrt{n}P_n^o f = \dis\frac{1}{\sqrt{n}}\sum_{i=1}^n \eps_i f(X_i)$, then $f \mapsto \sqrt{n}P_n^o f$ is an $\norm{\cdot}_{L_2(P_n)}^2$ sub-Gaussian process, so
+\[ \bbE \left[\sup_{f \in \calF} \left| \sqrt{n}P_n^o f \right| \Bigg| X_1 \dots, X_n \right] =  \bbE \left[\sup_{f \in \calF} \left| \frac{1}{\sqrt{n}}\sum \eps_i f(X_i) \right| \Bigg| X_1 \dots, X_n \right] \leq C \int_{0}^\infty \sqrt{\log N(\calF,  L_2(P_n) , \eps)} d\eps. \]
+
+\item (Lec 12) \textbf{ULLNs with entropies:} For $M < \infty$, let $f_M(x) = f(x) 1_{\{|f(x)| \leq M\}}$. For a collection of functions $\calF$ with envelope $F$ (i.e. $|f(x)| \leq F(x)$ for all $x$), let $\calF_M := \{ f_M: f \in \calF\}$.
+
+If $\sqrt{\log N(\calF_M,  L_1(P_n) , \eps)} = o_p(n)$  for all $M < \infty$ and $\eps >0$, then $\norm{P_n - P}_{\calF} \cp 0$, ie. $\mathcal{F}$ is G.C. class.
+
+\item (VdV Thm 19.4) Every class $\calF$ of measurable functions such that $N_{[\,]} (\calF, L_1(P), \eps) < \infty$ for every $\eps > 0$ is a $P$-G.C. class.
+
+\item (VdV Thm 19.5) Every class $\calF$ of measurable functions with $\dis\int_0^1 \sqrt{\log N_{[\,]}(\calF, L_2(P), \eps) d\eps} < \infty$ is $P$-Donsker.
+
+\end{itemize}
+
+% Concentration Inequalities
+\section{Concentration Inequalities}
+\begin{itemize}
+\item (Lec 10) If $X$ is $\sg^2$-sub-Gaussian, then $\max [\bbP(X - \bbE X \geq t), \bbP(X - \bbE X \leq -t)] \leq \exp \left( -\dis\frac{t^2}{2\sg^2} \right)$.
+
+\item (Lec 10) \textbf{Hoeffding's inequality:} Let $X_i$'s be independent $\sg_i^2$-sub-Gaussian random variables. Then
+\begin{align*}
+\bbP \left( \frac{1}{n}\sum_{i=1}^n (X_i - \bbE X_i) \geq t \right) \leq \exp\left[ \frac{-nt^{2}}{2\sum_{i=1}^{n}\sigma_{i}^{2}}\right] \quad \text{for } t \geq 0, \\
+\bbP \left( \frac{1}{n}\sum_{i=1}^n (X_i - \bbE X_i) \leq t \right) \leq \exp\left[ \frac{-nt^{2}}{2\sum_{i=1}^{n}\sigma_{i}^{2}}\right] \quad \text{for } t \leq 0.
+\end{align*}
+
+When we have $X_i \in [a,b]$ for all $i$, the bound on the RHS becomes $\exp \left[ -\dis\frac{2nt^2}{(b-a)^2} \right]$.
+
+\item (TSH Thm 11.2.18 p442) \textbf{Dvoretzky-Kiefer-Wolfowitz (DKW) inequality:} Suppose $X_1, \dots, X_n$ are i.i.d. real-valued random variables with cdf $F$. Let $\hat{F}_n$ be the ECDF. Then, for any $d > 0$ and any positive $n$,
+\[ \bbP \left( \sup_t |\hat{F}_n(t) - F(t)| > d \right) \leq 2 \exp (-2nd^2). \]
+
+\item (HW6) \textbf{Azuma's inequality:} A martingale $\{Z_k\}$ adapted to $\{X_1, \dots, X_k\}$ is \textbf{$\sg_k^2$-sub-Gaussian} if for $\Dlt_k = Z_k - Z_{k-1}$, we have $\bbE \left[\exp(\lmb \Dlt_k) \mid \calF_{k-1} \right] \leq \exp \left(\dfrac{\lmb^2 \sg_k^2}{2} \right)$.
+
+Let $\Dlt_k$ be a $\sg_k^2$-sub-Gaussian martingale difference sequence with $Z_k = \dis\sum_{i=1}^k \Dlt_i$. Then $Z_k$ is $\sum_{i=1}^k \sg_i^2$-sub-Gaussian, and for $t \geq 0$,
+\[ \bbP (Z_k \geq t) \vee \bbP (Z_k \leq -t) \leq 2\exp \left( - \frac{t^2}{2 \sum_{i=1}^k \sg_i^2} \right). \]
+
+\item (HW6) \textbf{McDiarmid's Inequality:} Let $X_1, \dots, X_n$ be independent random variables. Let $f: \bbR^n \mapsto \bbR$ be a measurable function such that there exist $c_1, \dots, c_n$ with the property that for all $x_1, \dots, x_n$, $x_1', \dots, x_n'$,
+$|f(x_1, \dots, x_n) - f(x_1, \dots, x_i', \dots, x_n)| \leq c_i$.
+
+Let $W = f(X_1, \dots, X_n)$. Then for all $t > 0$,
+\[P (W - \bbE W \geq t) \leq \exp \left( - \frac{2t^2}{ \sum_{i=1}^n c_i^2} \right), \qquad P (W - \bbE W \leq -t) \leq \exp \left( - \frac{2t^2}{ \sum_{i=1}^n c_i^2} \right).\]
+
+\item (HW6) Let $\calF$ be a collection of functions $f:\calX \mapsto \bbR$, and let $R_n(\calF)$ be its Rademacher complexity. If $\calF$ satisfies envelope condition $\dis\sup_{x \in \calX}\sup_{f \in \calF} |f(x) - Pf| \leq M$, then
+\[ \bbP \left( \sup_{f \in \calF} |P_n f - Pf| \geq 2 R_n(\calF) + t \right) \leq 2 \exp \left(-\frac{cnt^2}{M^2} \right), \]
+for some numerical constant $c$ and for all $t \geq 0$. (We can take $c = 1/2$.)
+
+Thus, if $R_n(\calF) = o(1)$, then $\calF$ is G.C. class.
+
+\item (Tail Bounds Thm 2.4) Let $(X_1, \dots, X_n)$ be i.i.d. standard Gaussian random variables, and let $f: \bbR^n \mapsto \bbR$ be $L$-Lipschitz w.r.t. Euclidean norm. Then the variable $f(X) - \bbE[f(X)]$ is $L^2$-sub-Gaussian, and for all $t \geq 0$,
+\[ \bbP \left( |f(X) - \bbE [f(X)]| \geq t \right) \leq 2 \exp \left(-\frac{t^2}{2L^2} \right).  \]
+\end{itemize}
+
+% VC Dimension
+\section{VC Dimension}
+\begin{itemize}
+\item (Lec 12) Let $\mathcal{C}$ be a collection of sets and $X = \{X_1,\dots, X_n\}$ be a collection of points. A vector $y \in \{+1, -1\}^n$ is a labeling of X. We say that $\mathcal{C}$ \textbf{shatters} $X$ if for all labelings $y$ of $X$, $\exists$  a set $A\in \mathcal{C}$, i.e., $X_i \in A$ if $y_i = 1$ and  $X_i  \not\in A$ if $y_i = -1$.
+
+\item (Lec 12) The \textbf{VC dimension} of a collection of sets, $VC(\mathcal{C})$, is the size of the largest set $\{x_1,\dots, x_n\}$ s.t. $\mathcal{C}$ shatters $\{x_1,\dots, x_n\}$.
+
+The \textbf{subgraph} of a function: $\mathcal{X} \mapsto \bbR$ is $\text{sub }f := \{(x,t):t<f(x)\}=(\text{epi }f)^c$ (the part of $\mathcal{X} \times \bbR$ below the graph of $f(x)$).
+
+$\mathcal{F}$ is a \textbf{VC-class/VC-subgraph-class} if $\text{sub }f:f \in \calF$ is VC.
+
+\begin{itemize}
+\item Half-spaces in $\bbR^d$ have $VC(\mathcal{C}) = d+1$.
+
+\item (Lec 13) Let $\calF = \{f = \langle \t, x \rangle: \t \in \bbR^d \}$. Then $VC(\calF) \leq d + 2$.
+
+\item (Lec 13) If $\calF$ is a linear space of functions with $\dim \calF < \infty$, then $VC(\calF) = O(\dim \calF)$.
+
+\item (Lec 13) If $\calC$ and $\calD$ are VC classes of sets, then $\calC \cap \calD$ and $\calC \cup \calD$ are as well.
+
+\item (Lec 13) If $\calF$ is a VC class of functions and $\phi: \bbR \mapsto \bbR$ is monotone, then $\{ \phi \circ f: f \in \calF \}$ is VC.
+\end{itemize}
+
+\item (Lec 12) Let $\Dlt_n(\mathcal{C}, \{ x_1,\dots, x_n \}) := $ the number of labellings $\mathcal{C}$ realizes on $\{x_i\}$. Then $VC({\mathcal{C}}) := \dis\sup \{ n \in \bbN : \dis\max_{x_1,\ldots, x_n} \Delta_n(\mathcal{C},\{x_1, \dots, x_n\}) = 2^n\}$.
+
+\item (Lec 12) \textbf{Sauer-Shelah Lemma:} For any class $\mathcal{C}$, $\dis\max_{x_1,\dots, x_n} \Delta_n(\mathcal{C}, \{x_i\}) \leq \sum_{k=0}^{VC(\mathcal{C})} \binom{n}{k} = O(n^{VC(\mathcal{C})})$.
+
+Consequently, if $\sup\limits_{x_1,\ldots, x_n} \Delta_n(\mathcal{C}, \{x_i\}) < 2^n$, then $\Delta_n(\mathcal{C}, \{x_i\})$ is polynomial in $n$.
+
+\item (Lec 13) \textbf{VC bound on uniform covering number:} For sets $A$ and $B$, define $\norm{A-B}_{L_r(P)} = \norm{1_A - 1_B}_{L_r(P)} = \left( \dis\int |1_A - 1_B|^r dP \right)^{1/r}$. Then there is a universal constant $K < \infty$ s.t. for all $\eps > 0$, 
+\[ \sup_{P}N(\mathcal{C},L_r(P),\epsilon) \leq K \cdot VC(\mathcal{C}) \cdot (4e)^{VC(\mathcal{C})}\left(\frac{1}{\epsilon}\right)^{r \cdot VC(\mathcal{C})},
+\]
+which implies that $\log N(\mathcal{C},L_r(P),\epsilon) \leq c \cdot r \cdot VC(\mathcal{C}) \cdot \log(1/\epsilon)$.
+
+\item (Lec 13) \textbf{Using VC to get GC Theorem:} Let $\calF = \{f(x)=1_{x \leq t}, t \in \bbR^d\}$. Then $VC(\calF) = O(d)$, implying $\dis\sup_P \log N(\calF, L_2(P), \eps) \leq K d \log (1/\eps)$.
+
+\item (Lec 13) If $VC(\calF)<\infty$ and $\calF$ has envelope $F:\calX \mapsto \bbR_+$, then
+\[ \sup_P N(\calF,L_r(P),||F||_{L_r(P)}\eps)\leq \text{const} \cdot VC(\calF) (16e)^{VC(\calF)}(\frac{1}{\eps})^{rVC(\calF)}. \]
+
+\end{itemize}
+
+% Convergence in Distribution
+\section{Convergence in Distribution \& Uniform CLTs}
+\begin{itemize}
+\item (Lec 13) Let $\bbD$ be a metric space. $X$ is a \textbf{random variable on $\bbD$} if $X:\Om \mapsto \bbD$.
+
+\item (Lec 13) Say X is $\bbD$-valued. Given sequence $X_n: \Om_n \mapsto \bbD$, we say that $X_n \cd X$ if $\bbE[f(X_n)] \goesto \bbE[f(X)]$ for all bounded and continuous $f: \bbD \mapsto \bbR$ (even Lipschitz).
+
+\item (Lec 13) Let $(T,d)$ be a compact metric space. Let $L_{\infty}(T)$ denote the set of bounded functions $f: T \mapsto \bbR$. For $f, g \in L_{\infty}(T)$, define $\norm{f-g}_{\infty} = \dis\sup_{t\in T}|f(t)-g(t)|$. Let $\ell: T\times \calX \mapsto \bbR$ be continuous in $t$. Let $X, X_1, \dots, X_n$ be $\calX$-valued random variables. Define
+\[
+Z_n(\cdot) := \frac{1}{\sqrt{n}} \sum^n_{i=1}[\ell(\cdot,X_i)-\bbE \ell(\cdot,X)].\]
+Then $Z_n$ is a $L_{\infty}(T)$-valued random variable. (Since $t \mapsto Z_n(t)$ is continuous, we have $\dis\sup_{t\in T}|Z_n(t)|<\infty$.)
+\begin{itemize}
+\item If $T_0$ is a countable and dense subset of $T$, then $Z_n$ is completely determined by $\{ Z_n(t), t \in T_0\}$.
+
+\item For fixed $t_1, \dots, t_k$, by the CLT we get $\begin{pmatrix} Z_n(t_1) & \dots Z_n(t_k) \end{pmatrix}^T \cd \calN \left( 0, (\text{Cov} (\ell(t_i, X), \ell(t_j, X) ) )_{i,j = 1}^k \right)$.
+\end{itemize}
+
+\item (Lec 13) A random variable $X: \Om \mapsto \bbD$ is \textbf{tight} if for all $\eps > 0$, there is a compact set $K \subseteq \bbD$ such that $\bbP (X \notin K) < \eps$.
+
+
+A sequence random variables $X_n: \Om \mapsto \bbD$ is \textbf{asymptotically tight} if for all $\eps > 0$, there is a compact set $K \subseteq \bbD$ such that $\dis\limsup_{n \goesto \infty} \bbP (X_n \notin K^\dlt) \leq \eps$ for all $\dlt > 0$. (Here, $K^\dlt = \{ x: d(x, K) < \dlt\}$.)
+
+(Note: $X_n$ individually tight does \textbf{not} imply that $\{X_n\}$ is asymptotically tight.)
+
+\item (Lec 13) \textbf{Prohorov's Theorem:} Let $X_n:\Om \mapsto \bbD$ and $X:\Om \mapsto \bbD$.
+\begin{enumerate}
+\item If $X_n \cd X$, where $X$ is tight, then $\{X_n\}$ is asymptotically tight.
+\item If $\{X_n\}$ is asymptotically tight, then there is a subsequence $\{n_k\}$ and a tight $X:\Om \mapsto \bbD$ such that $X_{n_k} \cd X$.
+\end{enumerate}
+
+\item (Lec 13) For a function $f:T \mapsto \bbR$, its \textbf{modulus of continuity} is $w_f(\delta) := \dis\sup_{d(s,t)<\delta} |f(t)-f(s)|$.
+
+\item (Lec 13) A collection of functions $\calF$ is \textbf{uniformly equicontinuous} if $\dis\lim_{s \downarrow 0}\sup_{f \in \calF} w_f(\dlt) = 0$.
+
+\item (Lec 13) \textbf{Arzel\`{a}-Ascoli Theorem:} Let $(T,d)$ be a compact metric space. Let $\calC(T, \bbR)$ be the set of continuous functions $f: T \mapsto \bbR$. Then the following are equivalent:
+\begin{enumerate}
+\item  $\calF \subseteq \calC(T,\bbR)$ is compact (or equivalently, sequentially compact).
+\item $\calF$ is uniformly equicontinuous and there is a $ t_0\in T$ s.t. $\dis\sup_{f \in \calF} |f(t_0)| <\infty$.
+\end{enumerate}
+
+\item (Lec 14) Let $\{X_n\}$ be $L_\infty(T)$-valued random variables. (Recall $L_\infty(T)$ is the set of bounded functions $f: T \mapsto \bbR$.) We say that $\{X_n\}$ are \textbf{asymptotically equicontinuous} if for all $\eta, \eps > 0$, there is a finite partition $T_1, \dots, T_k$ of $T$ such that 
+\[ \limsup_{n \goesto \infty} \bbP \left( \max_i \sup_{s, t \in T_i} |X_{n, s} - X_{n, t}| \geq \eps\right) \leq \eta. \]
+
+\item (Lec 14) Let $Z_i \in \bbR^d$ with $Z_i \stackrel{iid}{\sim} P$. Assume that $\bbE[\norm{Z_i}^2] < \infty$ and $\bbE[Z_i] = 0$.
+
+Let $T$ be a compact subset of $\bbR^d$. For $t \in T$, define $X_{n, t} := \dis\frac{1}{\sqrt{n}} \sum_{i=1}^n Z_i^T t$. Then $\{X_n\}$ is asymptotically equicontinuous.
+
+\item (Lec 14) The following are equivalent:
+\begin{enumerate}[label=(\roman*)]
+\item $X_i \in L_\infty(T)$ and $X_n \cd X \in L_\infty(T)$, where $X$ is tight.
+\item
+\begin{enumerate}
+\item Finite dimensional convergence (FIDI): $(X_{n, t_1}, \dots, X_{n, t_k}) \cd $ something for any $t_1, \dots, t_k \in T$, and $k < \infty$.
+\item $X_n$ are (asymptotically) stochastically equicontinuous.
+\end{enumerate}
+\end{enumerate}
+
+\item (Lec 15) \textbf{Uniform limits via entropy integral:} Suppose $(T,d)$ is a totally bounded metric space with $\dis\lim_{\dlt \downarrow 0} \limsup_{n \to \infty} \bbP \left( \sup_{d(s,t) \leq \dlt} |X_{n,s}-X_{n,t}| \geq \epsilon \right) = 0$, and we have FIDI (finite dimensional convergence of $X_n$ to $X$). Then $X_n \cd X$ in $L_\infty(T)$.
+
+\item (Lec 15) \textbf{Donsker class:} Consider a collection of functions $\calF$. $L_\infty(\calF)$ is the collection of bounded functionals $m: \calF \mapsto \bbR$. The process $\sqrt{n}(P_n - P)$ is a member of $L_\infty(\calF)$.
+
+$\calF$ is \textbf{$P$-Donsker} if the empirical process $\bbG_n = \sqrt{n}(P_n-P)$ converges to a tight limit in $L_{\infty}(\calF)$.
+
+\item (Lec 15, VdV Thm 19.3) \textbf{Donsker's Theorem:} In the above setting, the limit $\bbG_n$, which we denote by $\bbG_P$ must be a Gaussian process because by the CLT, $\sqrt{n}(P_n - P)f \cd \calN(0, \text{Var}_P (f))$. We have
+\[ \bbE [\bbG_P f] = 0, \qquad \bbE [\bbG_P f \bbG_P g] = \text{Cov}_P(f, g) = P(fg) - Pf \cdot Pg. \]
+
+\item (Lec 15) \textbf{$\bbP$-Brownian bridge:} Let $F(t) = \bbP(X \leq t)$, $F_n(t) = \bbP_n(X \leq t)$ and $\calF = \{1\{\cdot \leq t\}, t \in \bbR \}$. Then $\sqrt{n}(F_n(\cdot) - F(\cdot)) \cd \bbG_P$ in $L_\infty(\bbR)$. We have $\text{Cov}(1\{X \leq t\}, 1\{X \leq s\}) = F(s \wedge t) - F(s)F(t)$.
+
+\item (Lec 15) \textbf{Uniform CLT via entropy integral:} Let $\calF$ be a collection of functions. Assume there exists an envelope function $B : X \mapsto \bbR_+$ such that $\bbP [B^2] < \infty$ and
+\[ \int_0^\infty \sup_Q \sqrt{\log N(\calF, L_2(Q), \norm{B}_{L_2(Q)}\eps)} d\eps < \infty, \]
+where the supremum is taken over all $Q$ such that $Q [F^2] > 0$. Then $\calF$ is $\bbP$-Donsker.
+
+\item (HW7) \textbf{Kolmogorov-Smirnov statistic:} Let $X_1, \dots, X_m \stackrel{iid}{\sim} F$ and $Y_1, \dots, Y_n \stackrel{iid}{\sim} G$. The K-S statistic is the sup distance between the 2 empirical distributions, i.e. $K_{m,n} = \norm{F_m - G_n}_\infty$. As $m, n \goesto \infty$, $\sqrt{\dfrac{mn}{m+n}} K_{m,n} \cd \| \bbG \|_\infty$, where $\bbG$ is the Brownian bridge generated from $F$.
+
+\end{itemize}
+
+\section{Modulus of Continuity}
+\begin{itemize}
+\item (Lec 15) Say we have a criterion function $m_\t: \calX \mapsto \bbR$. Let $M_n(\t) = \bbP_n m_\t$ and $M(\t) = \bbP m_\t$. Then the \textbf{M-estimator} is $\hat{\t}_n \in \text{argmax}_{\t \in \T} M_n(\t)$. (For example, maximum likelihood uses $m_\t(x) = \log p_\t(x)$.)
+
+\item (Lec 15) Say we have a criterion function $\psi_\t: \calX \mapsto \bbR$. Let $\Psi_n(\t) = \bbP_n \psi_\t$ and $\Psi(\t) = \bbP \psi_\t$. Then the \textbf{Z-estimator} is $\hat{\t}_n$ such that $\Psi(\hat{\t}_n) = 0$. (For example, maximum likelihood uses $\psi_\t(x) = \nabla_\t \log p_\t(x)$.)
+
+\item (Lec 15, VdV Thm 5.7) \textbf{Consistency of M-estimators (Argmax consistency theorem):} Suppose we have $\dis\sup_{\t \in \T} |M_n(\t) - M(\t)| \cp 0$, and that for all $\eps > 0$, $\dis\sup_{\t: d(\t, \t_0) \geq \eps} M(\t) < M(\t_0)$.
+
+Then $\hat{\t}_n \cp \t_0$.
+
+See VdV Thm 5.9 p46 for corresponding theorem for Z-estimators.
+
+\item (Lec 15) \textbf{Idea:} If $M(\t)$ shrinks quickly away from $\t_0$ but $[M_n(\t)-M(\t)] - [M_n(\t_0) - M(\t_0)]$ is well-behaved (i.e. small error), then the M-estimator cannot be bad.
+
+\item (Lec 16) \textbf{Theorem:} Suppose $M(\t_0) \geq M(\t) + d(\t,\t_0)^2$ near $\t_0$. Let $\phi$ be such that $\phi(c\dlt)\leq c^{\alpha} \phi(\dlt)$ for some $\alpha \in (0,2)$. Assume that we have a bound on the modulus of continuity:
+\[
+\bbE \left[ \sup_{d(\t,\t_0)\leq \dlt} \Bigg| [M_n(\t) - M(\t)] - [M_n (\t_0) - M(\t_0)]
+\Bigg|\right] \leq \frac{\phi(\dlt)}{\sqrt{n}}.
+\]
+
+Let $r_n \goesto +\infty$ such that $r_n^2\phi \left( \dis\frac{1}{r_n} \right)\leq \sqrt{n}$. If $\hat{\t}_n \cp \t_0$, then $r_n d(\hat{\t}_n, \t_0)=O_{P}(1)$.
+
+\begin{itemize}
+\item If $\phi(\dlt) = \dlt^{\alpha}$, we can solve to get $r_n = n^{\frac{1}{2(2-\alpha)}}$.
+
+\item More generally, if we have $M(\t_0) \geq M(\t) + d(\t, \t_0)^\beta$, we could choose $r_n$ so that $r_n^\beta \left( \dis\frac{1}{r_n} \right) \leq \sqrt{n}$. We would then obtain $r_n = n^{\frac{1}{2(\beta-\alpha)}}$. (We need $\beta > \alpha$ in order for $r_n \goesto \infty$.)
+\end{itemize}
+
+\end{itemize} 
+
+% Asymptotic Testing
+\section{Asymptotic Testing}
+\begin{itemize}
+\item (Lec 17) A sequence of tests based on statistics $T_n$ and rejection regions $K_n$ is \textbf{asymptotically level (size) $\alpha$} if $\dis\limsup_{n \to \infty} \sup_{\t \in \T_0}  \bbP_{\t}(T_n \in K_n) \leq \alpha$.
+
+\item (Lec 17) Suppose that there exists a mean function $\mu(\theta)$ and a variance function $\sigma^2(\theta)$ such that $ \sqrt{n}\left(\dis\frac{T_n - \mu(\theta_n)}{\sigma(\theta_n)} \right) \xrightarrow[\theta_n]{d} \mathcal{N}(0,1)$. Suppose we are testing $\t = 0$ vs. $\t > 0$. If $\mu'(0)$ exists, $\sg\left(\frac{h}{\sqrt{n}}\right) \to \sg(0)$ as $n \goesto \infty$, then the level $\alpha$ test rejecting large values of $\sqrt{n}\dis\frac{T_n - \mu(0)}{\sg(0)}$ satisfies:
+\[ \text{Power } \pi_n\left(\frac{h}{\sqrt{n}}\right) \xrightarrow{n \to \infty} 1 - \Phi\left(z_{\alpha} - h \frac{\mu'(0)}{\sigma(0)} \right),\]
+where $\Phi$ is the standard normal distribution function.
+
+\item (Lec 17) \textbf{Slope of a test:} If $\sqrt{n}\left(\dis\frac{T_n - \mu(\theta_n)}{\sigma(\theta_n)} \right) \xrightarrow[\theta_n]{d} \mathcal{N}(0,1)$ where $\t_n = \dis\frac{h}{\sqrt{n}}$, the \text{slope} of the tests $T_n$ is defined as $\dis\frac{\mu'(0)}{\sg(0)}$.
+
+A bigger slope means a better test.
+
+\item (Lec 17) \textbf{Distinguishing numbers:} For $\nu \in \mathbb{N}$, consider a sequence of tests $H_0: \t =0$ vs. $H_1: \t = \t_\nu$, where $\t_\nu \goesto 0$ as $\nu \to \infty$. Fix a level $\alpha$ and power $\beta \in (\alpha,1)$. Define the \textbf{distinguishing number} $n_\nu := \inf \{n \in \mathbb{N} : \pi_n (0) \leq \alpha, \pi_n ( \theta_\nu ) \geq \beta \}$, i.e. the smallest number of observations necessary to distinguish $H_0$ from $H_1$ at level $\alpha$ and power $\beta$.
+
+\item (Lec 17) \textbf{ARE/Pitman Efficiency:} Let tests $T_n^{(1)}, T_n^{(2)}$ have distinguishing numbers $n_\nu^{(1)}, n_\nu^{(2)}$, respectively. Then the \text{ARE/Pitman efficiency} of $T^{(1)}$ relative to $T^{(2)}$ is defined as $\dis\lim_{\nu \goesto \infty}\frac{n_\nu^{(2)}}{n_\nu^{(1)}}$.
+
+Larger ARE means $T^{(1)}$ is better than $T^{(2)}$.
+
+\item (Lec 17) Let models $\{P_{n,\t}\}_{\theta \geq 0}$ satisfy $\dis\lim_{\theta \to 0} \|P_{n,\theta}-P_{n,0}\|_{TV} = 0$ for every $n$. Let tests $T^{(1)}$, $T^{(2)}$ be such that as $\t_n \downarrow 0$, 
+\[\sqrt{n}\left(\frac{T_n^{(i)} - \mu_i(\t_n)}{\sigma_i(\t_n)} \right) \xrightarrow[\t_n]{d} \mathcal{N}(0,1), \]
+
+where $i\in\{1,2\}$, $\sigma_i$ is continuous at $0$, $\sg_i(0) > 0$ and $\mu_i ' (0) > 0$. Then the ARE of tests rejecting $H_0: \theta = 0$ against $H_1: \theta > 0$ when $T_n^{(i)}$ is large ($T_n^{(1)}$ relative to $T_n^{(2)}$) is
+\[\left( \frac{\mu_1'(0)/ \sigma_1 (0)}{\mu_2'(0)/ \sigma_2 (0)} \right)^2. \]
+
+\item See TSH E.g. 13.2.2 p537 for the ARE of $t$-test, Wilcoxon test and sign test in location model.
+
+\item (Lec 18) Let $M$ be the joint measure (law) of the pair $ (X,V) :=\left(X, \dis\frac{dQ}{dP}\right) $ under distribution $P$ (so $M$ is defined on $\calX \times \bbR_+$). Then $V \geq 0$, $\bbE_M[V] = 1$, and $Q(B) = \bbE_P\left[1_{\{B\}}(X)\dis\frac{dQ}{dP}\right] = \bbE_P[1_{\{B\}}(X)V] = \int_{B \times \bbR_+} VdM(x,v)$.  
+
+\item (Lec 18) \textbf{Contiguity:} A sequence $\{Q_n\}$ of distributions is \textbf{contiguous} w.r.t. $\{P_n\}$, written $Q_n \triangleleft P_n$, if $P_n(A_n) \rightarrow 0$ implies $Q_n(A_n) \rightarrow 0$ for any sequence of sets $A_n$. Sequences $\{Q_n\}$ and $\{P_n\}$ are \textbf{mutually contiguous}, written $Q_n \triangleleft \!\triangleright P_n$, if $Q_n \triangleleft P_n$ and $P_n \triangleleft Q_n$.
+
+\item (HW9) If $\norm{P_n - Q_n}_{TV} \goesto 0$, then $P_n$ and $Q_n$ are mutually contiguous.
+
+\item (Lec 18) Even if $Q_n \not \ll P_n$, we can still consider $Q_n = Q_n^\| + Q_n^\perp$, where $Q_n^\| \ll P$ and $Q_n^\perp \perp P$. If we define $\frac{dQ_n}{dP_n} := \frac{dQ_n^\|}{dP_n}$, then $\frac{dQ_n}{dP_n} \geq 0$ and $\bbE_{P_n}\left[\frac{dQ_n}{dP_n}\right] = Q_n^\|(\Omega) = 1 - Q_n^\perp(\Omega) \leq 1$. Thus, under $P_n$, the sequence $\frac{dQ_n}{dP_n}$ is tight. 
+
+\item (Lec 18) We can always assume without loss of generality that $P_n$ and $Q_n$ all have densities $p_n$ and $q_n$ with respect to some finite base measure $\mu$. One suitable measure is $\mu = \dis\sum_{n=1}^\infty 2^{-n} (P_n + Q_n)$, which has total mass 2. 
+
+We can also without loss of generality take $\dis\frac{dQ_n}{dP_n} = \frac{q_n}{p_n}$, so that $\dis\int \frac{q_n}{p_n}dP_n = \int q_n 1_{\{p_n > 0\}} d\mu = Q_n^\|(\Omega)$.
+
+\item We can think of $\dfrac{dP_n}{dQ_n}$ as a function $f_n: \calX \mapsto \bbR_+$. When we say $\dis\frac{dP_n}{dQ_n} \xrightarrow[Q_n]{d} U$, what we mean is $U$ is the limiting distribution of $f_n(X_n)$, where $X_n \sim Q_n$.
+
+\item (Lec 18, VdV Lem 6.4) \textbf{Le Cam's First Lemma:} The following are equivalent:
+\begin{enumerate}
+\item $Q_n \triangleleft P_n$.
+\item If $\dis\frac{dP_n}{dQ_n} \xrightarrow[Q_n]{d} U$ along a subsequence, then $\bbP(U > 0) = 1$.
+\item If $\dis\frac{dQ_n}{dP_n} \xrightarrow[P_n]{d} V$ along a subsequence, then $\bbE[V] = 1$. 
+\item If $T_n \xrightarrow{P_n} 0$, then $T_n \xrightarrow{Q_n} 0$.
+\end{enumerate}
+
+\item (Lec 18, VdV Eg 6.5) \textbf{Asymptotic log normality}: Suppose that $\log \dis\frac{dP_n}{dQ_n} \xrightarrow[Q_n]{d} \calN(\mu, \sg^2)$. Then $Q_n \triangleleft P_n$. Further, $P_n \triangleleft Q_n$ iff $\mu = -\dis\frac{\sg^2}{2}$.
+
+\item (Lec 18) \textbf{Smooth likelihoods:} Suppose $\{ P_\t\}_{\t \in \T}$ has densities $p_\t$ which are smooth enough in $\t$ such that $\log p_\t$ has a Taylor expansion around $\t_0 \in \text{int } \T$. Then $P_{\t_0}^n \triangleleft\!\triangleright P_{\t_0 + h/\sqrt{n}}^n$.
+
+\item (Lec 18, VdV Thm 6.6) Let $P_n$, $Q_n$ be distributions on $X_n \in \bbR^d$. If $Q_n \triangleleft P_n$ and $\left(X_n, \dis\frac{dQ_n}{dP_n}\right) \xrightarrow[P_n]{d} (X,V)$, then $L(B) := \bbE[1{\{B\}}(X)V]$ is a probability measure (ie. $\bbE[V] = 1$ and $V \geq 0$) and $X_n \xrightarrow[Q_n]{d} W$, where $W \sim L$.
+
+\item (Lec 18, TSH Cor 12.3.2 p500, VdV Eg 6.7) \textbf{Le Cam's Third Lemma:} If $\left(X_n,\log \dis\frac{dQ_n}{dP_n}\right) \xrightarrow[P_n]{d} \calN\left( \begin{pmatrix} \mu \\ - \frac{1}{2} \sg^2 \end{pmatrix}, \begin{pmatrix} \Sg & \tau \\ \tau^T & \sg^2 \end{pmatrix} \right)$, then $P_n \triangleleft\!\triangleright Q_n$ and $X_n \xrightarrow[Q_n]{d} \calN(\mu + \tau, \Sigma)$.
+
+\item (Lec 19) \textbf{Hellinger distance:} For probability distributions $P$ and $Q$ with densities $p$ and $q$ w.r.t. some dominating $\mu$, we define $d_{hel}^2 (P, Q) = \dis\frac{1}{2}\int(\sqrt{p}-\sqrt{q})^2 d\mu$.
+\begin{itemize}
+\item $d_{hel}^2 (P, Q) = 1 - \dis\int \sqrt{pq} d\mu$.
+
+\item (HW8) $d_{hel}^2 (P, Q) \leq \norm{P-Q}_{TV} \leq d_{hel} (P, Q) \sqrt{2 - d_{hel}^2 (P, Q)}$.
+
+\item (Lec 19) $d_{hel}^2 (P^n, Q^n) = 1 - \left( 1 - d_{hel}^2(P,Q)\right)^n$.
+
+\item 
+\end{itemize}
+
+\item (Lec 19) When testing $P_0$ vs. $P_1$, the associated \textbf{best error} is $\dis\inf_{\Phi:\mathcal{X} \mapsto \{0,1\}} \left(P_0(\Phi \neq 0) + P_1(\Phi \neq 1)\right) = 1 - \| P_0 - P_1 \|_{TV} \geq 1 - \sqrt{2}d_{hel}(P_0, P_1)$.
+
+\item (Lec 19) Given sequences of tests $P_{0,n}$ versus $P_{1,n}$, we are interested in
+considering when the asymptotic error does not vanish, i.e. $\dis\liminf_{n \to \infty} \inf_{\psi_n} [P_{0,n}(\psi_n \not= 0) + P_{1,n}(\psi_n \not= 1)] > 0$. This happens whenever $\liminf 1 - \sqrt{2}d_{hel}(P_{0,n}, P_{1,n}) > 0$, i.e. $\limsup d_{hel}(P_{0,n}, P_{1,n}) < \dis\frac{1}{\sqrt{2}}$.
+
+\item (Lec 19) \textbf{Quadratic mean differentiability:} A family $\{ P_\t\}_{\t \in \T}$ is \textbf{quadratic mean differentiable (QMD)} at $\t \in \text{int } \T$ if there is a score function $\dot\ell_\theta : \mathcal{X} \to \bbR^d$, so that
+\[ \int \left( \sqrt{p_{\t + h}} - \sqrt{p_{\t}} - \frac{1}{2} \dot\ell_\t^T h \sqrt{p_\t} \right)^2 d\mu = o\left(\norm{h}^2\right) \qquad \text{as } h \goesto 0. \]
+
+\item (Lec 19) For QMD families, $P_\t \dot\ell_\t = 0$ and $P_\t \dot\ell_\t \dot\ell_\t^T$ is well-defined.
+
+\item (Lec 19) Exponential families $p_\t(x) = \exp \left[ \t^T T(x) - A(\t) \right]$ are QMD with score $\dot\ell_{\t}(x) = T(x) - \bbE [T(x)]$.
+
+\item (VdV Eg 7.8 p96) A location model family $\{ f(x-\t): \t \in \bbR\}$ is QMD if $f$ is positive, continuously differentiable, with finite Fisher information for location $I_f = \int (f'/f)^2(x) f(x) dx$. Score function can be taken to be $-(f'/f)(x-\t)$.
+
+(In particular, double exponential/Laplace location model is QMD with $\text{sign}(x-\t)$.
+
+\item (HW9) The family $\{ P_\t\}_{\t > 0}$, where $P_\t \sim \text{Unif}[0,\t]$, is not QMD.
+
+\item (Lec 19, HW9) If $\{P_\t\}$ is QMD, then $d_{hel}^2(P_{\t + n}, P_\t) = \dis\frac{1}{8}h^T I_\t h + o(\norm{h}^2)$, which implies that \[\dis\lim_{n \goesto \infty} d_{hel}^2(P_{\t + h/\sqrt{n}}^n, P_\t^n) = 1 - \exp \left(-\dis\frac{1}{8}h^T I_\t h \right).\]
+
+\item (Lec 19, TSH Thm 12.2.3 p489, VdV Dfn 7.14) \textbf{Local asymptotic normality:} A family $\{ P_\t,n \}_{\t \in \T, n \in \bbN}$ is \textbf{locally asymptotically normal (LAN)} at $\t \in \operatorname{int} \T$ with precision/information matrix $K_\t \succeq 0$ if there exists a sequence $\Dlt_n \in \bbR^d$ such that for all $h \in \bbR^d$,
+\[ \log \frac{dP_{\t + h/\sqrt{n}, n}}{dP_{\t, n}} = h^T \Dlt_n - \frac{1}{2} h^T K_\t h + o_{P_{\t, n}}(\norm{h}), \]
+where $\Delta_n \xrightarrow[P_{\t,n}]{d} \calN(0, K_\t)$, and $o_P(\|h\|)$ means converging in probability to 0 uniformly, if $\|h\|$ is bounded.
+\begin{itemize}
+\item (Lec 19/20) LAN will imply continguity (by asymptotic log normality). Le Cam's Third Lemma then implies that if $Z_n = K_\t^{-1}\Dlt_n$, then $Z_n \xrightarrow[P_{\t + h/\sqrt{n}, n}]{d} \calN(h, K_\t^{-1})$.
+
+\item (Lec 19) Gaussian location family is LAN.
+
+\item (Lec 19, VdV Thm 7.2) QMD family is LAN with precision $I_\t$. Also, $\Dlt_n = \sqrt{n} P_n \nabla \ell_\t \xrightarrow[P_{\t, n}]{d} \calN(0, I_\t)$.
+\end{itemize}
+
+From here, assume WLOG that $\t_0 = 0$.
+
+\item (Lec 20) In an LAN family, let $Z_n = K^{-1}\Dlt_n$. Then $\{Z_n\}$ is uniformly tight under $P_{h/\sqrt{n},n}$ whenever $\norm{h}\leq C < \infty$.
+
+\item (Lec 20) Let $h \sim \calN(0, \Gamma)$ with $\Gamma \succ 0$ and $Z|h \sim \calN(Ah, \Sigma)$ with $\Sigma \succ 0$. Then 
+\[h |Z=z \sim \mathcal{N}\left((\Gamma^{-1} + A^T\Sigma^{-1}A)^{-1}A^T \Sigma^{-1} z, \,\,(\Gamma^{-1} + A^T\Sigma^{-1}A)^{-1}\right).\]
+
+\item (Lec 20) A function $L: \bbR^d\mapsto \bbR$ is \textbf{quasi-convex} if for all $\alpha \in \bbR$, the \textbf{$\alpha$-sublevel set} $ \{x: L(x) \leq \alpha \}$ is convex.
+
+\item (Lec 20) Let $L$ be symmetric and quasi-convex. Let $A \in \bbR^{d \times k}$ and $X \sim \mathcal{N}(\mu, \Sigma)$. Then
+\[\inf_{v \in \bbR^k} \bbE\left[L(AX-v)\right] = \bbE\left[L(A(X-\mu))\right] = \bbE\left[L(A \Sigma^{\frac{1}{2}}W)\right],\]
+where $W \sim \calN(0, I_k)$.
+
+\item (Lec 20, VdV Thm 8.11) \textbf{Local asymptotic minimax theorem:} Let $L: \bbR^d \mapsto \bbR$ be quasi-convex, symmetric and bounded (i.e. bowl-shaped). Let $\{P_{\t,n}\}$ be LAN at $\t_0$ with precision $K_{\t_0} \succeq 0$. Then, with $W \sim \calN(0, I_k)$,
+\[\liminf_{c \goesto \infty} \liminf_{n \goesto \infty} \inf_{\hat{\theta}_n} \sup_{||h|| \le c,\,\, \theta = \theta_0 + \frac{h}{\sqrt{n}}} \mathbb{E}_{P_{\theta, n}} \left[ L(\sqrt{n} (\hat{\theta}_n - \theta)) \right] \ge \mathbb{E}\left[L(K_{\theta_0}^{-\frac{1}{2}} W)\right]. \]
+
+(For LAN families and bowl-shaped loss, the Fisher information gives a lower bound on estimation error.)
+
+\item (VdV Lem 8.14, Thm 5.39) For most QMD families (conditions in Thm 5.39), the MLE achieves the bound in the local asymptotic minimax theorem.
+
+\end{itemize}
+
+
+% Other Stuff
+\section{Other Stuff}
+\begin{itemize}
+\item (Lec 2) \textbf{KL divergence:} Let $P$ and $Q$ be distributions with densities $p$, $q$ w.r.t. $\mu$. Then we define $D_{kl}(P \parallel Q) = \dis\int p \log\left(\frac{p}{q}\right) d \mu = \bbE_P \left[ \log \dis\frac{P}{Q} \right]$. (For discrete probability distributions, we can write it as $D_{kl}(P \parallel Q) =\dis\sum_i P(i) \log \dis\frac{P(i)}{Q(i)}$.)
+\begin{itemize}
+\item $D_{kl}(P \parallel Q) \geq 0$, and $D_{kl}(P \parallel Q) =  0$ if and only if $p=q$ almost everywhere.
+
+\item KL divergence is not symmetric.
+
+\item If $P_1$ and $P_2$ ($Q_1$ and $Q_2$ resp.) are independent distributions with joint distribution $P(x,y) = P_1(x)P_2(y)$ ($Q$ resp.), then $D_{kl}(P \parallel Q) = D_{kl}(P_1 \parallel Q_1) + D_{kl}(P_2 \parallel Q_2)$.
+
+\item Pinsker's inequality: If $\dis\lim_{n \goesto \infty} D_{kl}(P_n \parallel P) = 0$, then $P_n \stackrel{TV}{\goesto} P$.
+
+\item (HW2) For an exponential family $p_\t(x) = \exp [\langle \t, T(x) \rangle - A(\t)]$, $A(\t) = \log \dis\int \exp (\langle \t, T(x) \rangle) d\mu(x)$. It can be computed that $D_{kl}(P_{\t_0} \parallel P_{\t_1}) = A(\t_1) - A(\t_0) - \langle \nabla A(\t_0), \t_1 - \t_0 \rangle$.
+
+\end{itemize}
+
+\item (Lec 3) \textbf{Operator norm:} For $A \in \bbR^{k \times d}$, $u \in \bbR^d$, $\opnorm{A} := \dis\sup_{\ltwo{u} \leq 1} \ltwo{Au}$.
+\begin{itemize}
+\item The operator norm is also equal to the largest singular value of $A$ (which are defined to be the square root of the eigenvalues of $A^T A$). When $A$ is a real symmetric matrix, this reduces to the absolute value of the largest eigenvalue (in absolute value).
+
+\item For any $x \in \bbR^d$, $\ltwo{Ax} \leq \opnorm{A}\ltwo{x}$.
+
+\item $A \preceq \opnorm{A} I$.
+\end{itemize}
+
+\item (Lec 10, HW5) \textbf{Logistic regression:} $z = xy$, where $x \in \bbR^d$ and $y \in \{-1, 1\}$. Define $m_\t(z) := \log \left[ 1 + \exp(-z^T\t)\right] = \log \left[ 1 + \exp(-y \t^T x)\right]$. This function is $\|x\|$-Lipschitz in $\t$.
+
+\item (TSH Lem 11.2.1 p430) \textbf{Convergence of quantiles:} Assume that $F$ is a distribution function such that $F$ is continuous and strictly increasing at $y = F^{-1}(1-\alpha)$.
+\begin{enumerate}
+\item If $\{ F_n \}$ is a sequence of distribution functions s.t. $F_n \Rightarrow F$, then $F_n^{-1}(1-\alpha) \goesto F^{-1}(1-\alpha)$.
+
+\item If $\{ \hat{F}_n \}$ is a sequence of random distribution functions s.t. $\hat{F}_n(x) \cp F(x)$ for all $x$ which are points of continuity of $F$, then $\hat{F}_n^{-1}(1-\alpha) \cp F^{-1}(1-\alpha)$.
+\end{enumerate}
+
+\item (HW2) \textbf{Property of convexity:} If function $f$ is convex and $\nabla^2 f(\t) \succeq \lmb I$ for all $\t$ satisfying $\norm{\t - \t_0} \leq c$, then
+\[ f(\t) \geq f(\t_0) + \nabla f(\t_0)^T (\t - \t_0) + \frac{\lmb}{2} \min \left\{\norm{\t - \t_0}^2, c\norm{\t - \t_0} \right\}. \]
+
+\item (HW3) An estimator $\hat{\t}_n$ is \textbf{$\sqrt{n}$-consistent} if $\sqrt{n}(\hat{\t}_n - \t_0) = O_{P_{\t_0}}(1)$.
+
+
+
+\end{itemize}
+
+
+
+\end{document}

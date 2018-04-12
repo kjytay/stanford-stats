@@ -1,0 +1,272 @@
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,amssymb,graphicx,mathtools,flexisym, float, enumitem}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+%
+% Macros for shortcuts
+%
+\newcommand{\dis}{\displaystyle}
+\def\lc{\left\lceil}   
+\def\rc{\right\rceil}
+\def\lf{\left\lfloor}   
+\def\rf{\right\rfloor}
+\newcommand\bbC{\mathbb{C}}
+\newcommand\bbE{\mathbb{E}}
+\newcommand\bbN{\mathbb{N}}
+\newcommand\bbP{\mathbb{P}}
+\newcommand\bbQ{\mathbb{Q}}
+\newcommand\bbR{\mathbb{R}}
+\newcommand\bbZ{\mathbb{Z}}
+\newcommand\calA{\mathcal{A}}
+\newcommand\calB{\mathcal{B}}
+\newcommand\calC{\mathcal{C}}
+\newcommand\calF{\mathcal{F}}
+\newcommand\calG{\mathcal{G}}
+\newcommand\calH{\mathcal{H}}
+\newcommand\calL{\mathcal{L}}
+\newcommand\calM{\mathcal{M}}
+\newcommand\calN{\mathcal{N}}
+\newcommand\calP{\mathcal{P}}
+\newcommand\calR{\mathcal{R}}
+\newcommand\calS{\mathcal{S}}
+\newcommand\calU{\mathcal{U}}
+\newcommand\calX{\mathcal{X}}
+\newcommand\calY{\mathcal{Y}}
+\newcommand\dlt{\delta}
+\newcommand\Dlt{\Delta}
+\def\eps{\varepsilon}
+\newcommand\lmb{\lambda}
+\newcommand\Lmb{\Lambda}
+\newcommand\om{\omega}
+\newcommand\Om{\Omega}
+\newcommand\sg{\sigma}
+\newcommand\Sg{\Sigma}
+\def\t{\theta}
+\newcommand\T{\Theta}
+\newcommand\vp{\varphi}
+\newcommand\equivto{\Leftrightarrow}
+\newcommand\goesto{\rightarrow}
+\newcommand\var{\text{Var }}
+
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+\begin{document}
+\title{Probability Sequence Notes}
+\author{Kenneth Tay}
+\date{\vspace{-3ex}}
+\maketitle
+
+% Overall Tricks
+\section*{Overall Tricks}
+\textbf{For computing expectations:}
+\begin{enumerate}
+\item Consider the use of the moment generating function (either $\bbE [e^{tX}]$ or $\bbE [t^X]$) or the cumulant generating function ($\log \bbE [e^{tX}]$).
+
+\item For non-negative $X$, try the formula $\bbE X = \dis\int_0^\infty P(X \geq t) dt = \dis\int_0^\infty P(X > t)dt$. If $p > 0$, we also have $\bbE [Y^p] = \dis\int_0^\infty py^{p-1} P(Y > y) dy$.
+
+\end{enumerate}
+
+\textbf{To prove (in)equalities on the limit of a sequence of random variables $\{ X_n \}$:}
+\begin{enumerate}
+\item Consider picking a subsequence with properties that allow you to prove what you want, then use interpolation to fill in the gaps.
+
+\item If there is weak convergence, consider using the Portmanteau Theorem.
+\end{enumerate}
+
+\textbf{To prove a.s. convergence of i.i.d. series:}
+\begin{enumerate}
+\item Try Kolmogorov's Three-Series Theorem.
+
+\item If the $\{ X_n\}$ are non-negative, try the generalized Borel-Cantelli lemmas (see 310A section on convergence \& SLLN/WLLN).
+\end{enumerate}
+
+\textbf{To find the limit (in probability) of a sequence of random variables:}
+\begin{enumerate}
+\item Try to use the Law of Large Numbers (or the triangular array version of LLN).
+\end{enumerate}
+
+\textbf{To find the limiting distribution of a sequence of random variables:}
+\begin{enumerate}
+\item Check if you can use Lindeberg's or Lyapounov's CLT.
+
+\item If the CLT condition doesn't hold, try using truncation to make it hold.
+
+\item Consider looking at the characteristic functions and see if you can derive the limit.
+
+\item Sometimes the characteristic function $\varphi(t/n)$ ends up being an integral with no closed form. Consider applying the Mean Value Theorem to get $\varphi(t/n) = \varphi(0) + \varphi'(\eps_n) \displaystyle\frac{t}{n}$ for some $\eps_n \in (0, t/n)$.
+
+\item Approximation tricks are useful (e.g. $\log (1-x) \approx -x$ for small $x$, $1 - \Phi(x) \approx \displaystyle\frac{\phi(x)}{x}$ for large $x$).
+
+\item Consider using the Portmanteau Theorem.
+
+\item If we are looking at many events of small independent probability, the limit is probably a Poisson. Consider using Stein's method, or Poisson convergence (Durrett Thm 3.6.1).
+\end{enumerate}
+
+\textbf{To prove that function $F$ is a distribution function:}
+\begin{enumerate}
+\item Show that there exists a random variable $X$ such that $P(X \leq x) = F(x)$.
+
+\item Go directly through the definition (i.e. monotonically increasing in each variable, right-continuous, $F(\infty) = 1, F(-\infty) = 0$, and $\Dlt_A(F) \geq 0$ for all finite rectangles $A$).
+\end{enumerate}
+
+\textbf{Martingale questions:}
+\begin{enumerate}
+\item If a stopping time is involved, try to find a martingale and use the Optional Stopping Theorem.
+
+\item For a stopping time $\tau$ which takes on countably many values $\{ a_1, a_2, \dots \}$, we can rewrite $X_\tau$ as $\dis\sum_{i=1}^\infty X_{a_i} 1\{ \tau = a_i\}$.
+
+\item When trying to find a martingale, think of the linear, quadratic and exponential martingales.
+
+\item If the question involves $X_\infty$, think about how to involve the Martingale Convergence Theorem.
+\end{enumerate}
+
+\textbf{Markov chain questions:}
+\begin{enumerate}
+\item If the state space is finite with $p(x,y) > 0$ for all $x, y$, the Perron-Frobenius Theorem might come in handy.
+
+\item In computing expectations, it may be worth trying to find a relationship between $\bbE X_{n+1}$ and $\bbE X_n$ (or consider $\bbE [X_{n+1} - X_n \mid X_n ]$).
+
+\item It is worth checking if the Markov chain is a martingale. This will help us to prove convergence of the Markov chain.
+
+\end{enumerate}
+
+\textbf{For questions with stopping times:}
+\begin{enumerate}
+\item Find a martingale and use the Optional Stopping Theorem for the stopped process.
+
+\item To show that a stopping time is a.s. finite, the easiest way is to show that it has finite expectation. 
+
+\item Alternatively, try to use facts of the underlying process to show that the stopping time is a.s. finite (e.g. $\limsup_{t \goesto \infty} W_t = +\infty$, $N_t / t \stackrel{a.s.}{\goesto} \lmb$).
+
+\item To get $\bbE T$ from $\bbE [e^{-aT}]$, take a derivative w.r.t. $a$.
+\end{enumerate}
+
+\textbf{For questions with limits of random walks:}
+\begin{enumerate}
+\item To find the limiting distribution of functionals of random walks, use Donsker's invariance principle to show that they converge to the standard Brownian motion, and hope to use the continuous mapping theorem.
+
+Specifically, say $X_1, X_2, \dots$ i.i.d. with mean 0 variance 1, and $S_n = X_1 + X_2 + \dots + X_n$. If we let
+\[ S_n(t) = \begin{cases} S_k / \sqrt{n} &\text{if } t = k/n, \\ \text{linear interpolation} &\text{otherwise,} \end{cases} \]
+then $S_n$ converges in distribution to the standard Brownian motion on $[0,1]$.
+
+\item To find the limiting distribution of a bounded, continuous function of a martingale differences sequence, use the martingale CLT. (Verify the theorem's hypotheses.) There's usually a 3-step process:
+\begin{enumerate}
+\item We have some martingale $S_{k,n}$. Let $S_{t,n}^*$ be the linear interpolation of $S_{k,n}$. Show that CLT conditions are met so that $S_{t,n}^* \Rightarrow W_t$.
+
+\item Hope that for your functional $f$, there is an equivalent $g$ such that $g(S_{t,n}^*) = f(S_{k,n})$. This is the case for many functionals, e.g. $\max_{0 \leq t \leq 1} S_{t,n}^* = \max_{0 \leq k \leq n} S_{k,n}$.
+
+\item Conclude using the continuous mapping theorem.
+\end{enumerate}
+
+\end{enumerate}
+
+\textbf{Some results with sums of RVs:}
+\begin{enumerate}
+\item (Durrett Thm 2.5.7) Let $X_1, X_2, \dots$ be i.i.d. with $\bbE X_i = 0$ and $\bbE X_i^2 = \sg^2 < \infty$. Let $S_n = X_1 + \dots + X_n$. If $\eps > 0$, then $\dfrac{S_n}{\sqrt{n} (\log n)^{1/2 + \eps}} \stackrel{a.s.}{\goesto} 0$, and $\dis\limsup_{n \goesto \infty} \dfrac{S_n}{\sqrt{n \log \log n}} = \sg \sqrt{2}$ a.s.
+
+\item (Durrett Thm 2.5.8) Let $X_1, X_2, \dots$ be i.i.d. with $\bbE X_i = 0$ and $\bbE |X_i|^p < \infty$ for some $1 < p < 2$. Let $S_n = X_1 + \dots + X_n$. Then $\dfrac{S_n}{n^{1/p}} \stackrel{a.s.}{\goesto} 0$.
+
+\item (Durrett Thm 2.5.9) Let $X_1, X_2, \dots$ be i.i.d. with $\bbE |X_i| = \infty$. Let $S_n = X_1 + \dots + X_n$. Let $a_n$ be a sequence of positive numbers s.t. $a_n/n$ is increasing. Then $\dis\limsup_{n \goesto \infty} |S_n|/a_n =0$ or $\infty$, according as $\dis\sum_n P(|X_1| \geq a_n) < \infty$ or $= \infty$.
+\end{enumerate}
+
+\textbf{Miscellaneous tricks:}
+\begin{enumerate}
+\item For random variables $X \in [0,1]$, we have $X^2 \leq X$. This can be useful in inequalities involving variances.
+
+\item If we are counting things, we can try to represent the random variable as a sum of indicator variables.
+
+\item If a predictable sequence is involved, the martingale transform or Lenglart's bound might come in useful.
+
+\end{enumerate}
+
+% Misc facts
+\section*{Misc facts}
+\begin{itemize}
+\item See 310A Lec 1 for birthday problem approximation.
+
+\item For sets, $\limsup A_n = \{ A_n \text{ infinitely often}\} = \displaystyle\bigcap_{n=1}^\infty\bigcup_{m=n}^\infty A_n$, and $\liminf A_n = \{ A_n \text{ all but finitely often}\} = \displaystyle\bigcup_{n=1}^\infty\bigcap_{m=n}^\infty A_n$.
+
+\item (Durrett Ex 2.3.1) $P(\limsup A_n) \geq \limsup P(A_n)$ and $P(\liminf A_n) \leq \liminf P(A_n)$.
+
+\item (Billingsley Prob 14.5, 310A HW4) \textbf{Definition of L\'{e}vy distance:} For 2 distribution functions $F$ and $G$, $d(F, G) = \inf \{ \eps: G(x-\eps) - \eps \leq F(x) \leq G(x+\eps) + \eps \text{ for all } x \}$. This is a metric, and $F_n \Rightarrow F$ iff $d(F_n, F) \goesto 0$.
+
+\item (Billingsley Prob 20.25, 310A HW7) For 2 random variables $X$ and $Y$, define $d(X, Y) = \inf \{\eps: \bbP (|X-Y| \geq \eps) \leq \eps\}$.
+\begin{itemize}
+\item $d$ is a metric. Hence, $d(X,Y) = 0$ iff $X=Y$ w.p. 1.
+\item $X_n \stackrel{P}{\goesto} X$ iff $d(X_n, X) \goesto 0$.
+\item (Billingsley Prob 21.15, 310A HW7) This metric is equivalent to $d_1(X,Y) = \bbE \left[ \dis\frac{|X-Y|}{1+|X-Y|} \right]$.
+\end{itemize}
+
+
+
+\item (Durrett Thm 2.5.2) \textbf{Kolmogorov's maximal inequality}: Let $X_1, \dots, X_n$ be independent random variables, each with zero mean and finite variance. Then for each $\lmb > 0$,
+\begin{equation*}
+P \left( \max_{1 \leq k \leq n} |S_k| \geq \lmb \right) \leq \frac{1}{\lmb^2} \sum_{k=1}^n \var X_k.
+\end{equation*}
+
+\item (310B Lec 16) \textbf{Wald's equation for sums of i.i.d. random variables}: Let $X_1, X_2, \dots$ be i.i.d. random variables with $\bbE X_1 = \mu$, $\bbE |X_1| < \infty$. Let $\calF_n = \sg(X_1, \dots, X_n)$. Let $\tau$ be a stopping time w.r.t. $\{ \calF_n \}$. Let $S_n = \dis\sum_{i=1}^n X_i$.
+
+If $\bbE \tau < \infty$, then $\bbE [S_\tau] = \mu \bbE \tau$.
+
+\item If $X_n \stackrel{P}{\goesto} X$ and $Y_n \stackrel{P}{\goesto} Y$, then $X_nY_n \stackrel{P}{\goesto} XY$.
+
+\item (300B HW1) \textbf{Uniform over the $n$-sphere:} If $U_n$ is the random vector drawn uniformly from the unit sphere in $n$-dimensions, we may parametrize $U_n$ as $U_n = \dis\frac{1}{N}(X_1, \dots, X_n)$, where $X_i \stackrel{iid}{\sim} \calN(0,1)$, $N^2 = \dis\sum_{i=1}^n X_i^2$. 
+
+\end{itemize}
+
+
+
+\end{document}

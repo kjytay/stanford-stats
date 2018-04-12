@@ -1,0 +1,683 @@
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,amssymb,graphicx,mathtools,flexisym, float, enumitem}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+%
+% Macros for shortcuts
+%
+\newcommand\dis{\displaystyle}
+\def\lc{\left\lceil}   
+\def\rc{\right\rceil}
+\def\lf{\left\lfloor}   
+\def\rf{\right\rfloor}
+\newcommand\bbC{\mathbb{C}}
+\newcommand\bbE{\mathbb{E}}
+\newcommand\bbN{\mathbb{N}}
+\newcommand\bbP{\mathbb{P}}
+\newcommand\bbQ{\mathbb{Q}}
+\newcommand\bbR{\mathbb{R}}
+\newcommand\bbZ{\mathbb{Z}}
+\newcommand\calA{\mathcal{A}}
+\newcommand\calB{\mathcal{B}}
+\newcommand\calF{\mathcal{F}}
+\newcommand\calG{\mathcal{G}}
+\newcommand\calH{\mathcal{H}}
+\newcommand\calL{\mathcal{L}}
+\newcommand\calM{\mathcal{M}}
+\newcommand\calN{\mathcal{N}}
+\newcommand\calP{\mathcal{P}}
+\newcommand\calS{\mathcal{S}}
+\newcommand\calU{\mathcal{U}}
+\newcommand\dlt{\delta}
+\newcommand\Dlt{\Delta}
+\def\eps{\varepsilon}
+\newcommand\lmb{\lambda}
+\newcommand\Lmb{\Lambda}
+\newcommand\om{\omega}
+\newcommand\Om{\Omega}
+\newcommand\sg{\sigma}
+\newcommand\Sg{\Sigma}
+\def\t{\theta}
+\newcommand\T{\Theta}
+\newcommand\vt{\vartheta}
+\providecommand{\argmax}{\mathop{\rm argmax}}
+\providecommand{\argmin}{\mathop{\rm argmin}}
+\newcommand\cas{\stackrel{a.s.}{\goesto}}
+\newcommand\cd{\stackrel{d}{\goesto}}
+\newcommand\cp{\stackrel{P}{\goesto}}
+\newcommand\equivto{\Leftrightarrow}
+\newcommand\goesto{\rightarrow}
+\newcommand\var{\text{Var }}
+
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+\begin{document}
+\title{STATS 300C Notes}
+\author{Kenneth Tay}
+\date{\vspace{-3ex}}
+\maketitle
+
+\tableofcontents
+
+% Global Testing
+\section{Global Testing (Lec 1)}
+(Lec 1) We define the \textbf{global null} $H_0 = \dis\bigcap_{i=1}^n H_{0,i}$.
+
+\subsection{Bonferroni's method (Lec 1-2)}
+Let $p_i$ be the $p$-value for testing $H_{0,i}$. For a level $\alpha$ test: reject whenever $\dis\min_i p_i \leq \alpha/n$.
+
+\begin{itemize}
+\item (Lec 1) Size of test (i.e. probability of type 1 error under null) is $\leq \alpha$. If the hypotheses are independent, then size $\bbP_{H_0} (\text{Type I error}) \xrightarrow{n \goesto \infty} 1 - e^{-\alpha}$.
+
+\item Most suited for cases where we expect at least one of the $p$-values to be very significant.
+
+\item (Lec 2) When we are looking at $y_i \stackrel{ind}{\sim} \calN(\mu_i, 1)$ and testing $H_{0,i}: \mu_i = 0$, Bonferroni rejects if $\max y_i \geq |z(\alpha/n)|$ in the one-sided case, and if $\max y_i \geq |z(\alpha/2n)|$ in the two-sided case.
+
+\item (Lec 2) Holding $\alpha$ fixed, for large $n$,
+\[ |z(\alpha/n)| \approx \sqrt{2\log n} \left[1 - \frac{\log\log n}{4\log n} \right] \approx \sqrt{2 \log n}, \qquad \frac{\max |y_i|}{\sqrt{2 \log n}} \cp 1. \]
+\textbf{No dependence on $\alpha$!}
+
+\item (Lec 2) More accurate approximation: If $B = 2 \log (n/\alpha) - \log (2\pi)$, then $|z(\alpha/2n)| \approx \sqrt{B \left(1 - \dfrac{\log B}{B} \right)}$.
+
+\item (Lec 2) \textbf{Needle in a haystack problem:} Suppose the alternative is such that exactly one $\mu_i = \mu^{(n)} > 0$ (we don't know which one).
+\begin{enumerate}
+\item If $\mu^{(n)} = (1 + \eps)\sqrt{2 \log n}$, then Bonferroni has asymptotic full power.
+
+\item If $\mu^{(n)} = (1 - \eps)\sqrt{2 \log n}$, then Bonferroni has asymptotic powerlessness, i.e. $\bbP_{H_1}(\max y_i > |z(\alpha/n)|) \goesto \alpha$.
+
+\item If we use $\sqrt{2 \log n}$ instead of $|z(\alpha/n)|$ as the threshold for the test, then we can achieve $\bbP_{H_0}(\text{Type I Error}) \goesto 0$ and $\bbP_{H_1}(\text{Type II Error}) \goesto 0$.
+\end{enumerate}
+
+\item (Lec 2) \textbf{Optimality of Bonferroni:} When $\mu^{(n)} = (1-\eps)\sqrt{2 \log n}$, no test can do better than Bonferroni. (Proof of optimality sets up an easier ``Bayesian" decision problem and shows the optimality for that set-up.)
+
+\end{itemize}
+
+\subsection{Fisher's combination test (Lec 1)}
+Reject for large values of $T = -\dis\sum_{i=1}^n 2 \log p_i$.
+
+\begin{itemize}
+\item If $p_i \stackrel{iid}{\sim} \text{Unif}(0,1)$ under the null, then under the null, $T \sim \chi_{2n}^2$. Thus, Fisher's test rejects when $T > \chi_{2n}^2(1 - \alpha)$.
+
+\item Most suited where we expect many small effects.
+\end{itemize}
+
+\subsection{$\chi^2$ test (Lec 3)}
+
+Model $Y \sim \calN(\mu, I)$. Testing $\mu = 0$ vs. $\mu \neq 0$. Test statistic is $T = \|y\|^2 = \dis\sum_{i=1}^n y_i^2$.
+\begin{itemize}
+\item Under the null, $T \sim \chi_n^2$, so we reject when $T > \chi_n^2(1 - \alpha)$.
+
+\item Let $Z = \dfrac{T-n}{\sqrt{2n}}$ be the normalized version of the statistic, and let $\t = \dfrac{\|\mu\|^2}{\sqrt{2n}}$. Then under $H_0$, $Z \sim \calN(0,1)$ and under $H_1$, $Z \sim \calN \left(\t, 1 + \dfrac{\t}{\sqrt{n/8}} \right)$.
+
+Roughly speaking, the test is easy when $\t$ is large and difficult when $\t$ is small. Thus, the power of the $\chi^2$ test is determined by the relative size of $\|\mu\|^2$ compared to $\sqrt{n}$.
+
+\item $\t$ can be thought of as the \textbf{signal-to-noise ratio}.
+
+\item When $\t \ll 1$ ($\t \goesto 0$), the $\chi^2$ test is asymptotically powerless, but so are all other tests. (Proof uses a simpler Bayesian decision problem and shows the optimal test there is powerless.)
+
+\item As with the Fisher combination test, the $\chi^2$ test is powerful when there are many small, distributed effects but weak when there are few strong effects.
+
+\end{itemize}
+
+\subsection{Simes test (Lec 4)}
+Assume that we have $p$-values $p_i \sim \text{Unif}(0,1)$. Order them: $p_{(1)} \leq \dots \leq p_{(n)}$. The \textbf{Simes statistic} is $T_n = \min_i \left\{p_{(i)}\dfrac{n}{i} \right\}$ (i.e. smaller ones get inflated more).
+\begin{itemize}
+\item Under the global null and independence of the $p_i$, $T_n \sim \text{Unif}(0,1)$. (Proof by induction.) Hence, the test rejects if $T_n \leq \alpha$. (Equivalently, the test rejects if there is an $i$ such that $p_{(i)} \leq \dfrac{\alpha i}{n}$.
+
+\item Simes test still has level $\alpha$ under some sort of positive dependence (PRDS).
+
+\item Simes test is strictly less conservative than Bonferroni, which rejects for $p_{(1)} \leq \alpha / n$.
+
+\item Simes test is powerful for a single strong effect, but has moderate power for many mild effects.
+\end{itemize}
+
+\subsection{Tests based on empirical CDFs (Lec 4)}
+The \textbf{empirical CDF} of $p_1, \dots, p_n$ is $\widehat{F}_n(t) = \dfrac{\# \{ i: p_i \leq t \}}{n}$.
+
+Under the global null $H_0$, we have $\bbE [\widehat{F}_n(t)] = t$. If we further assume that the $p_i$'s are independent, we have that $n\widehat{F}_n(t) \sim \text{Binom}(n, t)$.
+
+\begin{itemize}
+\item \textbf{Kolmogorov-Smirnov test:} $KS = \dis\sup_t |\widehat{F}_n(t) - t|$. Reject if $KS$ rejects a certain threshold (which can be computed through simulation or asymptotic calculation).
+
+\item \textbf{Anderson-Darling test:} Let $w(t)$ be a non-negative weight function. Define $A = n \dis\int_0^1 \left(\widehat{F}_n(t) - t \right)^2 w(t) dt$.
+\begin{itemize}
+\item When $w(t) = 1$, $A^2$ is the \textbf{Cramer-von Mises statistic}.
+
+\item When $w(t) = \dfrac{1}{t(1-t)}$, $A^2$ is the \textbf{Anderson-Darling statistic}. It puts more weight on small/large $p$-values than the Cramer-von Mises statistic.
+
+\item We can write the Anderson-Darling statistic as
+\[ A^2 = -n - \sum_{i=1}^n \frac{2i-1}{n} [\log (p_{(i)}) + \log(1 - p_{(n+1-i)})].\]
+It gives more weight to $p$-values in the bulk than Fisher's combination statistic.
+\end{itemize}
+
+\item \textbf{Tukey's second-Level significance testing:} \textbf{Higher criticism statistic} $HC_n^* = \dis\max_{0 \leq t \leq \alpha_0} \dfrac{\widehat{F}_n(t) - t}{\sqrt{t(1-t)/n}}$.
+
+\end{itemize}
+
+\subsection{Sparse mixtures (Lec 4)}
+$H_0: X_i \stackrel{iid}{\sim} \calN(0,1)$, $H_1: X_i \stackrel{iid}{\sim} (1-\eps)\calN(0,1) + \eps \calN(\mu, 1)$. If we set fraction of non-nulls $\eps_n = n^{-\beta}$ for some $\beta \in (1/2,1)$ and $\mu_n = \sqrt{2r \log n}$ for some $r \in (0,1)$, then there is a threshold curve
+\[ \rho^*(\beta) = \begin{cases} \beta - 1/2 &\text{if } \frac{1}{2} \leq \beta \leq \frac{3}{4}, \\ (1 - \sqrt{1 - \beta})^2 &\text{if } \frac{3}{4} \leq \beta \leq 1, \end{cases} \]
+such that
+\begin{enumerate}
+\item If $r > \rho^*(\beta)$, we can adjust the NP test to achieve $P_0 (\text{Type I error}) + P_1 (\text{Type II error}) \goesto 0$.
+
+\item If $r < \rho^*(\beta)$, then for \textbf{any} test, $\dis\liminf_n P_0 (\text{Type I error}) + P_1 (\text{Type II error}) \geq 1$.
+\end{enumerate}
+
+For $r > \rho^*(\beta)$, the higher criticism statistic (with an appropriate threshold) has full power asymptotically.
+
+\section{Multiple Testing: Family-wise error rate (FWER) (Lec 5)}
+We have 4 types of outcomes in multiple testing:
+\begin{center}
+  \begin{tabular}{l|cc|l}
+  	& not rejected & rejected & total \\ \hline
+    true nulls & $U$ & $V$ & $n_0$  \\
+    true non-nulls & $T$ & $S$ & $n-n_0$ \\ \hline
+    total & $n-R$ & $R$ & $n$
+  \end{tabular}
+\end{center}
+
+Only $n$ and $R$ are observed random variables; $U, V, S, T, n_0$ are all unobserved.
+
+\textbf{Family-wise error rate} is defined as the probability of at least 1 false rejection, i.e. $FWER = \bbP (V \geq 1)$.
+
+A procedure controls FWER \textbf{strongly} if FWER is controlled under all configurations of true and false hypotheses. It controls FWER \textbf{weakly} if FWER is controlled under the global null.
+
+\subsection{Bonferroni's method (Lec 5)}
+Reject all $H_{0,i}$ for which $p_i \leq \alpha / n$.
+\begin{itemize}
+\item Bonferroni's method controls FWER strongly at level $\alpha$ (even when hypotheses are dependent).
+
+\item \textbf{Sidak's procedure:} Under independence, we can reject all $H_{0,i}$ for which $p_i \leq \alpha_n$, where $\alpha_n$ is slightly bigger than $\alpha/n$.
+\end{itemize}
+
+\subsection{Fisher's two-step procedure (Lec 5)}
+First, do a test for the global null. If not rejected, stop. If rejected, then test each hypothesis at level $\alpha$.
+
+This procedure only controls FWER weakly.
+
+\subsection{Holm's procedure (Lec 5)}
+Holm's procedure is a step-down procedure (from most significant $p$-value to least significant $p$-value). Order the $p$-values $p_{(1)} \leq \dots \leq p_{(n)}$, and let $H_{(i)}$ be the hypothesis corresponding to $p_{(i)}$.
+\begin{enumerate}
+\item Step 1: If $p_{(1)} \leq \alpha /n$, reject $H_{(1)}$ and go to step 2. Otherwise, stop and ``accept'' $H_{(1)}, \dots, H_{(n)}$.
+\item Step $i$: If $p_{(i)} \leq \alpha /(n-i+1)$, reject $H_{(i)}$ and go to step $i+1$. Otherwise, stop and ``accept'' $H_{(i)}, \dots, H_{(n)}$.
+\end{enumerate}
+
+Basically, stop the first time $p_{(i)}$ exceeds $\alpha_i = \alpha / (n-i+1)$ (reject everything less than $i$, ``accept'' everything $\geq i$).
+
+Holm's procedure controls FWER strongly.
+
+\subsection{Closure principle (Lec 6)}
+\begin{itemize}
+\item For $\{ H_i\}_{i=1}^n$, we can define its \textbf{closure} to be $H_I = \dis\bigcap_{i \in I} H_i$ for $I \subseteq \{ 1, \dots, n\}$.
+
+\item \textbf{Closure procedure:} Reject $H_I$ iff for all $J \supseteq I$, $H_J$ is rejected at level $\alpha$.
+
+\item \textbf{Theorem:} Closing a global test gives a procedure which controls FWER strongly.
+
+\item \textbf{Closing Bonferroni gives Holm's procedure.}
+\end{itemize}
+
+\subsection{Hochberg's procedure (Lec 6)}
+Hochberg's procedure is a step-up procedure (from least significant $p$-value to most significant $p$-value). Order the $p$-values $p_{(1)} \leq \dots \leq p_{(n)}$, and let $H_{(i)}$ be the hypothesis corresponding to $p_{(i)}$.
+
+\textbf{Hochberg procedure:} Reject $H_{(j)}$ if there is an index $j' \geq j$ such that $p_{(j')} \leq \dfrac{\alpha}{n-j'+1}$.
+
+\begin{itemize}
+\item Hochberg scans backwards, and stops as soon as a $p$-value succeeds in passing its threshold.
+
+\item \textbf{Hochberg's procedure is more conservative than the closure of Simes.}
+
+\item Hochberg's procedure requires independence of null $p$-values.
+\end{itemize}
+
+\section{Multiple Testing: False discovery rate (FDR) (Lec 7)}
+We have 4 types of outcomes in multiple testing:
+\begin{center}
+  \begin{tabular}{l|cc|l}
+  	& not rejected & rejected & total \\ \hline
+    true nulls & $U$ & $V$ & $n_0$  \\
+    true non-nulls & $T$ & $S$ & $n-n_0$ \\ \hline
+    total & $n-R$ & $R$ & $n$
+  \end{tabular}
+\end{center}
+
+Only $n$ and $R$ are observed random variables; $U, V, S, T, n_0$ are all unobserved.
+
+\textbf{False discovery proportion (FDP)} is defined to be
+\[ FDP = \frac{V}{\max(R, 1)} = \begin{cases} V/R &\text{if } R \geq 1, \\ 0 &\text{otherwise.} \end{cases} \]
+
+FDP is an unobserved variable. Instead, we control its expectation, the \textbf{false discovery rate:} $FDR = \bbE [FDP]$.
+
+\begin{itemize}
+\item Under the global null, FDR is equivalent to FWER. Thus, FDR control implies weak FWER control.
+\item $FWER \geq FDR$. Thus, controlling FWER (strongly) implies FDR control.
+\item Alternative to FDR: \textbf{false exceedence rate:} $\bbP(FDP \geq q)$.
+\item $1\{V \geq 1\} \geq FDP$.
+\end{itemize}
+
+\subsection{Benjamini-Hochberg (BHq) procedure (Lec 7)}
+Fix some level $q \in [0,1]$. Order the $p$-values: $p_{(1)} \leq \dots \leq p_{(n)}$. Let $i_0$ be the largest $i$ for which $p_{(i)} \leq \dfrac{iq}{n}$. Reject all $H_{(i)}$ with $i \leq i_0$.
+
+\begin{itemize}
+\item \textbf{Thm:} For independent test statistics ($p$-values), the BHq procedure controls the FDR at level $q$. In fact, $FDR = \dfrac{n_0 q}{n} \leq q$, where $n_0$ is the number of true nulls.
+\begin{itemize}
+\item Lec 7 has a proof where we write $FDP = \dis\sum_{i \in H_0} \dfrac{V_i}{1 \vee R}$, where $H_0$ is the set of true nulls and $V_i = 1\{ H_i \text{ rejected} \}$. To make the denominator tractable, rewrite as $\dfrac{V_i}{1 \vee R} = \dis\sum_{k=1}^n \dfrac{V_i 1\{ R=k \}}{k}$.
+
+\item From the proof in Lec 7, we see that we only need independence of the true null $p$-values among themselves and from the non-nulls. We do not require independence between the non-null $p$-values.
+
+\item Lec 8 has a martingale proof of the FDR control of BHq, where the Optional Stopping Theorem is used for $V(t)/t$, the martingale running backward in time.
+\end{itemize}
+
+\item Under the global null, BHq is Simes.
+
+\item BHq, like Hochberg's procedure, is a step-up procedure. BHq is approximately $i$ times more liberal than Hochberg's procedure (for small values of $i$). This is seen by comparing the ratio of the thresholds.
+
+\item (HW2) BHq at level $q$ does NOT control FWER at level $q$. BHq at level $q$ does control FWER at level $nq \wedge 1$.
+\end{itemize}
+
+\subsubsection{Empirical process viewpoint of BHq (Lec 8)}
+Take a fixed $t$, and consider the rule that rejects hypothesis $H_i$ iff $p_{i} \leq t$. Then we have
+\begin{center}
+  \begin{tabular}{l|cc|l}
+  	& not rejected & rejected & total \\ \hline
+    true nulls & $U(t)$ & $V(t)$ & $n_0$  \\
+    true non-nulls & $T(t)$ & $S(t)$ & $n-n_0$ \\ \hline
+    total & $n-R(t)$ & $R(t)$ & $n$
+  \end{tabular}
+\end{center}
+
+We have $FDP(t) = \dfrac{V(t)}{1 \vee R(t)}$ and $FDR(t) = \bbE \left[ \dfrac{V(t)}{1 \vee R(t)} \right]$.
+
+\begin{itemize}
+\item If we have an estimate $\widehat{FDR}(t)$ for $FDR(t)$, we can take the threshold $\tau = \sup\{t\leq 1: \widehat{FDR}(t) \leq q \}$. This defines the most liberal thresholding cut-off.
+
+\item A conservative estimate takes $\bbE [V(t)] = n_0t \leq nt$. This gives $\widehat{FDR}(t) = \dfrac{nt}{1 \vee R(t)} = \dfrac{t}{\hat{F}_n(t) \vee 1/n}$.
+
+\item \textbf{The above is exactly what BHq is doing.} We stop at $p^* = \max \left\{ t \in \{ p_1, \dots, p_n\}: \dfrac{t}{q} \leq \hat{F}_n(t) \right\}$. Thus, if we write
+\[ \tau_{BH} = \max \left\{ t: \frac{t}{\hat{F}_n(t) \vee 1/n} \leq q \right\}, \]
+then the BH procedure rejects all hypotheses with $p_i \leq \tau_{BH}$. We also have $\tau_{BH} \geq q/n$.
+
+\item To improve on BHq, we can try a less conservative estimate of $\widehat{FDR}(t)$, which amounts to a less conservative estimate of $\pi_0 = \dfrac{n_0}{n}$ (fraction of true nulls). For example, we could try $\pi_0^\lmb = \dfrac{n - R(\lmb)}{(1-\lmb)n}$.
+
+\end{itemize}
+
+\subsubsection{BHq under dependence (Lec 9)}
+\begin{itemize}
+\item There are joint distributions of $p$-values for which the FDR of the BHq procedure is at least $q \cdot S(n) \wedge 1$, where $S(n) = 1 + \dfrac{1}{2} + \dfrac{1}{3} + \dots + \dfrac{1}{n} \approx \log n + 0.577$.
+
+\item More generally, if we have a BH($\alpha$) procedure where the critical values are $0 \leq \alpha_1 \leq \dots \leq \alpha_n \leq 1$, there is a joint distribution of $p$-values for which the FDR of the BHq procedure is at least $\left( \dis\sum_{k=1}^n \frac{n(\alpha_k - \alpha_{k-1})}{k} \right) \wedge 1$.
+
+\item On the flip-side, we can show that under dependence, the BHq procedure controls FDR at level $q \cdot S(n)$. In fact, $FDR \leq q \cdot S(n) \cdot \dfrac{n_0}{n}$. (Proof uses the trick of decomposing FDP into a sum of $\dfrac{V_i}{1 \vee R}$.)
+
+\item A set $D \in \bbR^n$ is \textbf{increasing} if $x \in D$ and $y \geq x$ (component-wise) implies $y \in D$. (These sets have no boundaries in the northeast directions.)
+
+\item A family of random variables $(X_1, \dots, X_n)$ is \textbf{PRDS (positive regression dependence on subset)} on $I_0$ if for any increasing set $D \in \bbR^n$ and each $i \in I_0$, $\bbP ((X_1, \dots, X_n) \in D \mid X_i = x)$ is an increasing function of $x$.
+\begin{itemize}
+\item The PRDS property is invariant by co-monotone transformations: If $Y_i = f_i(X_i)$, where all the $f_i$'s are either increasing or decreasing, then $X$ is PRDS implies that $Y$ is PRDS.
+
+\item $D$ is increasing iff $D^c$ is decreasing. Thus, $X$ is PRDS iff for any decreasing $C$, $\bbP(X \in C \mid X_i = x)$ is decreasing in $x$.
+
+\item Because CDFs are monotone, if test statistics $\{ X_i\}$ are PRDS on $I_0$ (set of true nulls), then the one-sided $p$-values are both PRDS. However, the two-sided $p$-values may not be PRDS.
+
+\item \textbf{Multivariate normal:} Let $X = (X_1, \dots, X_n) \sim \calN(\mu, \Sg)$. If $\Sg_{ij} \geq 0$ for all $i \in I_0$ and all $j$, then $X$ is PRDS on $I_0$. (The converse also holds.)
+\end{itemize}
+
+\item If the joint distribution of the $p$-values/statistics is PRDS on the set of true nulls, then BHq controls the FDR at level $\dfrac{qn_0}{n}$. (Note: BHq may become conservative under positive dependence.) (Proof uses the usual decomposition of FDP and integration by parts.)
+\begin{itemize}
+\item In this setting, if $i$ is a null and $D$ is an increasing set, then for $t \leq t'$, we have $\bbP(D \mid p_i \leq t) \leq \bbP(D \mid p_i \leq t')$.
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Bayesian FDR (Lec 11)}
+\begin{itemize}
+\item We have $n$ hypotheses, which are null ($H = 0$) with probability $\pi_0$, and non-null ($H = 1$) with probability $\pi_1 = 1 - \pi_0$.
+
+\item Let our test statistics be $z \sim f_0$ with CDF $F_0$ if $H=0$, and $z \sim f_1$ with CDF $F_1$ if $H=1$. (Marginally, $f(z) = \pi_0 f_0(z) + \pi_1 f_1(z)$.)
+
+\item For a set $A$, let $F_0(A) = \dis\int_A f_0(z)dz$, $F(A) = \dis\int_A f(z) dz$.
+
+\item Think of $A$ as a rejection region. If I observe $z \in A$, I will reject the corresponding hypothesis. In practice, $A$ is of one of the following forms: $[z_c, \infty)$, $(-\infty, -z_c]$ or $(-\infty, -z_c] \cup [z_c, \infty)$.
+
+\item \textbf{Bayes false discovery rate (BFDR)} is defined to be $\varphi (A) = \bbP(H = 0 \mid z \in A) = \dfrac{\pi_0 F_0(A)}{F(A)}$. (If we report $z \in A$ as a non-null, $\varphi(A)$ is the probability that we've made a false discovery.)
+
+\item We can distinguish between global BFDR ($\varphi((-\infty, z_c])$) and local BFDR $\varphi(\{z_c\})$. See Lec 11 for details.
+
+\end{itemize}
+
+\subsubsection{Empirical Bayes estimation of BFDR}
+\begin{itemize}
+\item To compute BFDR, we need to know $\pi_0$, $F_0$ and $F$. In the following, we assume that $f_0$ is known (and assumed to be $\calN(0,1)$), $\pi_0 \approx 1$ (true for most applications), and $f_1$ is unknown.
+
+\item Estimate $\widehat{F}(A) = \dfrac{\# \{ z_i \in A\}}{n}$, $\widehat{BFDR} = \dfrac{\pi_0 F_0(A)}{\widehat{F}(A)}$.
+
+\item Let $N_0(A) = \#\{i: H_i \text{ is true null and } z_i \in A \}$, $N_+(A) = \# \{ i: z_i \in A\}$, $e_0(A) = \bbE N_0(A)$, $e_+(A) = \bbE N_+(A)$. In this notation,
+\[ BFDR = \frac{e_0(A)}{e_+(A)}, \qquad \widehat{BFDR} = \frac{e_0(A)}{N_+(A)}. \]
+
+\item \textbf{Lemma:} If we let $\gamma(A)$ denote the squared coefficient of variation of $N_+(A)$, i.e. $\gamma(A) = \dfrac{\var N_+(A)}{[e_+(A)]^2}$, then $\dfrac{\widehat{BFDR}}{BFDR}$ has mean approximately $1 + \gamma$ and variance $\gamma$.
+
+\item $\widehat{BFDR}$ is a reasonably accurate estimator if $e_+$ is large.
+
+\item The empirical Bayes formulation of BHq is to reject $H_i$ for all $i \leq i_0$, where $i_0$ is the largest index such that $\widehat{BFDR}((-\infty, z_{(i_0)}]) \leq q$. Assuming independence of statistics, the FDR is at most $q$.
+
+\end{itemize}
+
+\section{Knockoffs (Lec 12)}
+\subsection{Regression setting (Lec 12)}
+We have a linear model $Y = X\beta + \eps$, $\eps \sim \calN(0, I)$. We wish to control the FDR when testing $H_j: \beta_j = 0$, $j = 1, \dots, p$.
+
+Suppose we have the full lasso path, i.e. for each $\lmb$ we compute $\hat{\beta}(\lmb) = \text{argmin}_{b \in \bbR^p} \dfrac{1}{2}\|y - Xb \|_2^2 + \lmb \|b\|_1$. We look at when each $\beta_j$ enters the lasso path: $Z_j = \sup \{ \lmb: \hat{\beta}_j(\lmb) \neq 0 \}$. Our idea is to reject all $H_j$ for which $Z_j \geq T$. We need some principled way to determine the threshold $T$.
+
+\begin{itemize}
+\item We create \textbf{knockoffs} with 3 requirements, the first two being the most important (See Lec 12 for construction):
+\begin{enumerate}
+\item For all $j, k$, $\widetilde{X}_j' \widetilde{X}_k = X_j' X_k$.
+\item For all $j \neq k$, $\widetilde{X}_j' X_k = X_j' X_k$.
+\item For all $j$, $\widetilde{X}_j' X_j$ is as small as possible.
+\end{enumerate}
+
+\item The knockoffs are not unique.
+
+\item \textbf{Pairwise exchangeability:} For any subset $S$ of nulls, $\begin{bmatrix} X & \widetilde{X} \end{bmatrix}'_{swap(S)}y \stackrel{d}{=} \begin{bmatrix} X & \widetilde{X} \end{bmatrix}' y$, where $\begin{bmatrix} X & \widetilde{X} \end{bmatrix}_{swap(S)}$ means that columns $X_j$ and $\widetilde{X}_j$ have been swapped for every $j \in S$.
+
+\item Compute the lasso estimates for the regression $y = X\beta + \widetilde{X}\widetilde{\beta} + \eps$. Look at where the original and knockoff variables first enter the lasso path, i.e. $Z_j = \sup \{ \lmb: \beta_j(\lmb) \neq 0 \}$, $\widetilde{Z}_j = \sup \{ \lmb: \widetilde{\beta}_j(\lmb) \neq 0 \}$.
+
+\item Consider the test statistic (for hypothesis $H_j$)
+\[ W_j = \max(Z_j, \widetilde{Z}_j) \cdot \text{sign}(Z_j - \widetilde{Z}_j). \]
+
+If $W_j$ is large and positive, it provides good evidence that $X_j$ is non-null.
+
+\item \textbf{Theorem 1:} Given a target FDR $q$, reject all $Z_j$ which are greater than or equal to
+\[ T = \min \left\{ t: \frac{\#\{j: W_j \leq -t\}}{\#\{j: W_j \geq t\} \vee 1} \leq q \right\}. \]
+
+This gives $\bbE \left[\dfrac{V}{R + q^{-1}} \leq q \right]$. (Note: The fraction in the stopping time is the estimate $\widehat{FDP}(t)$.)
+
+\item \textbf{Theorem 2:} Given a target FDR $q$, reject all $Z_j$ which are greater than or equal to
+\[ T = \min \left\{ t: \frac{1 + \#\{j: W_j \leq -t\}}{\#\{j: W_j \geq t\} \vee 1} \leq q \right\}. \]
+
+We get exact FDR control: $\bbE \left[\dfrac{V}{R \vee 1} \leq q \right]$.
+
+\item See HW4 Qn1 for the general technique of proof.
+
+\end{itemize}
+
+\subsection{Model-free knockoffs (Lec 13)}
+Model assumptions:
+\begin{itemize}
+\item We have $n$ samples $(X^{(i)}, Y^{(i)})$ i.i.d. sampled from some joint distribution $F_{XY}$.
+\item The distribution $F_X$ of $X$ is known.
+\item The conditional distribution $F_{Y \mid X}$ of $Y$ given $X$ is completely unknown.
+\end{itemize}
+
+We construct knockoff variables $X = (\widetilde{X}_1, \dots, \widetilde{X}_p)$ such that for any subset $\mathcal{T} \subseteq \{1,2, \dots, p \}$, we have $(X, \widetilde{X})_{swap(\mathcal{T})} \stackrel{d}{=} (X, \widetilde{X})$. (That is, swapping any subset of variables with their knockoffs does not change the joint distribution.) We also require that the knockoffs be constructed without any knowledge of $Y$.
+
+\begin{itemize}
+\item \textbf{Multivariate normal:} If $X \sim \calN(\mu, \Sg)$, we can simply sample $\widetilde{X}$ so that the joint distribution of $X$ and $\widetilde{X}$ is
+\[ \begin{pmatrix} X \\ \widetilde{X} \end{pmatrix} \sim \calN \left( \begin{pmatrix} \mu \\ \mu \end{pmatrix}, \begin{pmatrix} \Sg & \Sg - \text{diag}(s) \\ \Sg - \text{diag}(s) & \Sg \end{pmatrix} \right), \]
+where $s$ is chosen so that the covariance matrix is positive semidefinite.
+
+\item (Lec 14) \textbf{General construction (Sequential Conditional Independent Pairs (SCIP):} Let $j = 1$. While $j \leq p$, sample $\widetilde{X}_j$ from the law of $X_j \mid X_{-j}, \widetilde{X}_{1:j-1}$, and increment $j$. (In general, not a practical algorithm.)
+
+\item See Lec 14 for construction of knockoffs for Markov chains and hidden Markov models.
+\end{itemize}
+
+After constructing the knockoffs, we run a procedure on the original with the knockoff variables serving as controls (no assumption on what the procedure is). From this procedure, we get $Z_i$ for each variable which signals the importance of variable $i$ in the model. We also construct these important statistics $\widetilde{Z}_i$ for the knockoff features.
+\begin{itemize}
+\item If we write $(Z_1, \dots, Z_p, \widetilde{Z}_1, \dots, \widetilde{Z}_p) = z((X, \widetilde{X}), Y)$, then we require that swapping the original variables with their knockoffs simply swaps the test statistics, i.e. $(Z, \widetilde{Z})_{swap(\mathcal{T})} = z((X, \widetilde{X})_{swap(\mathcal{T})}, Y)$ for any subset $\mathcal{T}$.
+
+\item \textbf{Theorem:} For any subset $T \subseteq \calH_0$ of nulls, we always have $(Z, \widetilde{Z})_{swap(T)} \stackrel{d}{=} (Z, \widetilde{Z})$.
+\end{itemize}
+
+Next, we combine $Z_j$ and $\widetilde{Z}_j$ into a single test statistic $W_j$, i.e. $W_j = w_j (Z_j, \widetilde{Z}_j)$. We require that $w_j$ is \textbf{anti-symmetric}.
+
+\begin{itemize}
+\item We have an estimate for FDP: $\widehat{FDP}(t) = \dfrac{\#\{W_j \leq -t\}}{\#\{W_j \geq t\} \vee 1}$.
+
+\item \textbf{Theorem:} Set $N^\pm(t) = \# \{ j: |W_j| \geq t \text{ and } \text{sign}(W_j) = \pm \}$, $T_{0/1} = \min \left\{ t: \widehat{FDP}(t) = \dfrac{0/1 + N^-(t)}{1 \vee N^+(t)} \leq q \right\}$. Select variables $\hat{\mathcal{S}} = \{ W_j > T\}$.
+
+With $T = T_0$, we have $\bbE \left[\dfrac{V}{R + q^{-1}} \leq q \right]$. With $T = T_1$, we have exact FDR control: $\bbE \left[\dfrac{V}{R \vee 1} \right] \leq q$.
+\end{itemize}
+
+\section{Selective Inference (Lec 15)}
+Say we have $n$ parameters $\t_1, \dots, \t_n$ with corresponding statistics $T_1, \dots, T_n$. Assume that we have $\alpha$-level confidence intervals $CI_i(\alpha)$ for each $\t_i$.
+
+\begin{itemize}
+\item \textbf{Marginal coverage:} $\bbP (\t_i \in CI_i(\alpha)) \geq 1 - \alpha$.
+
+\item \textbf{Simultaneous coverage:} $\bbP ((\t_1, \dots, \t_n) \in CI(\alpha)) \geq 1 - \alpha$. (This can be achieved by doing Bonferroni correction on Wald intervals.)
+\end{itemize}
+
+Say we have selected a subset $\calS$ of parameters. Then marginal confidence intervals (e.g. Wald intervals) will not have the desired coverage. \textbf{Conditional coverage} is $\bbP_\t (\t_i \in CI_i(\alpha) \mid i \in \calS) \geq 1 - \alpha$. (In general cannot be achieved.)
+
+\subsection{False coverage rate (Lec 15)}
+\begin{itemize}
+\item Define \textbf{false coverage rate} to be $FCR = \bbE \left[\dfrac{V_{CI}}{R_{CI} \vee 1} \right]$, where $R_{CI}$ is the number of selected parameters and $V_{CI}$ is the number of constructed intervals not covering the parameter (out of the selected ones).
+\begin{itemize}
+\item Without selection, the marginal CIs control FCR.
+
+\item Bonferroni CIs do control FCR (in the same way Bonferroni's procedure controls FDR).
+\end{itemize}
+
+\item Consider the following procedure:
+\begin{enumerate}
+\item Apply some subsection rule $\calS(T)$, where $T$ are the statistics $T_1, \dots, T_n$ for parameters $\t_1, \dots, \t_n$.
+
+\item For each $i \in \calS$, let $R_{min}(T^{(i)}) = \min_t \left\{ |\calS(T^{(i)}, t)|: i \in \calS(T^{(i)}, t) \right\}$, where $T^{(i)} = T \setminus \{ T_i\}$. That is, the size of the smallest possible set which can be selected such that (i) it still selects $i$, and (ii) statistics $T^{(i)}$ are fixed as before.
+
+\item For each $i \in \calS$, the FCR-adjusted confidence interval is $CI_i \left( \dfrac{R_{min}(T^{(i)})\alpha}{n} \right)$.
+\end{enumerate}
+
+If the $T_i$'s are independent, then for any selection procedure, the FCR of the adjusted CI's obey $FCR \leq \alpha$.
+
+\end{itemize}
+
+\subsection{Post selection inference (POSI) and selective inference for LASSO}
+See Lec 16 for details.
+
+\subsection{Selective hypothesis testing}
+See Lec 17 for details.
+
+\section{Estimation of Multivariate Normal Mean (Lec 18)}
+Consider the problem of estimating $\mu$ in the model $X \sim \calN(\mu, \sg^2 I)$ under loss function $\ell(\mu, \hat{\mu}) = \|\mu - \hat{\mu}\|^2$ (i.e. squared error loss).
+
+\begin{itemize}
+\item The most natural estimator, also the MLE, is $X$ itself. This estimator has constant risk $R(\hat{\mu}_{MLE}, \mu) = p\sg^2$.
+
+\item For $p = 1,2$, the MLE is admissible. However, it is inadmissible for $p \geq 3$!
+
+\item \textbf{James-Stein estimator:} $\hat{\mu}_{JS} = \left(1 - \dfrac{(p-2)\sg^2}{\|X\|^2}\right)X$. It is non-linear, biased, and shrinks the MLE towards $0$. It dominates the MLE everywhere in terms of MSE.
+
+\begin{itemize}
+\item $\hat{\mu}_{JS}$ is itself inadmissible: $\hat{\mu}_{JS}^+ = \left(1 - \dfrac{(p-2)\sg^2}{\|X\|^2}\right)_+ X$ dominates it.
+\end{itemize}
+
+\item \textbf{Stein's unbiased risk estimate (SURE):} Suppose $X \sim \calN(\mu, \sg^2 I)$, and that estimator $\hat{\mu} = X + g(X)$, where $g$ is almost-differentiable, and $\bbE \left[ \dis\sum_{i=1}^p |\partial_i g_i (X)| \right] < \infty$. (Almost-differentiable means there exist $h_i$ such that $g_i(x+z) - g_i(x) = \dis\int_0^1 \langle h_i(x + tz), z \rangle dt$. We usually write $h_i = \nabla g_i$.) Then
+\begin{align*}
+\bbE \|\mu - \hat{\mu}\|^2 &= p\sg^2 + \bbE \left[ \| g(X)\|^2 + 2\sg^2 \sum_i \partial_i g_i (X) \right], \\ 
+SURE(\hat{\mu}) &= p\sg^2 + \|g(X)\|^2 + 2\sg^2 \text{div } g(X),
+\end{align*}
+i.e. we have an expression which is unbiased for the estimator's risk.
+
+\end{itemize}
+
+\subsection{Empirical Bayes interpretation (Lec 19)}
+Consider the Bayes model $\mu_i \stackrel{iid}{\sim} \calN(0, \tau^2)$, $X \mid \mu \sim \calN(\mu, \sg^2 I)$.
+
+\begin{itemize}
+\item Posterior distribution is $\Lmb(\mu \mid X) \sim \calN \left( \dfrac{\tau^2}{\tau^2 + \sg^2}X, \dfrac{\tau^2 \sg^2}{\tau^2 + \sg^2} I \right)$, so Bayes estimate would be $\hat{\mu}_B = \left(1 - \dfrac{\sg^2}{\sg^2 + \tau^2} \right) X$.
+
+\item Bayes risk can be computed to be $\bbE \|\hat{\mu}_B - \mu^2 \| = R_{MLE}\dfrac{\tau^2}{\tau^2 + \sg^2}$. (See Lec 19 for details.)
+
+\item In practice, we don't know $\tau$. We can estimate $\tau$ from the fact that $\|X \|^2 \sim (\tau^2 + \sg^2) \chi_p^2$, so an unbiased estimate for $\dfrac{\sg^2}{\sg^2 + \tau^2}$ is $\dfrac{(p-2)\sg^2}{\|X\|^2}$. Plugging this into the Bayes estimate, we recover the James-Stein estimator.
+\end{itemize}
+
+\subsection{Extensions of James-Stein phenomenon (Lec 19)}
+\textbf{Extension 1:} The James-Stein phenomenon exists with any multivariate normal $X \sim \calN(\mu, \Sg)$, as long as the effective dimension is sufficiently large.
+\begin{itemize}
+\item The MLE is still $X$ in this case.
+
+\item Let $\hat{\mu}_{JS} = \left(1 - \dfrac{(\tilde{p}-2)\sg^2}{X^T \Sg^{-1} X}\right)X$, where $\tilde{p} = \dfrac{\text{tr}(\Sg)}{\lmb_{\max}(\Sg)}$ is the \textbf{effective dimension}. If $\tilde{p} > 2$, then $R(\hat{\mu}_{JS}, \mu) < R(\hat{\mu}_{MLE}, \mu)$ for all $\mu \in \bbR^p$.
+
+\item \textbf{Linear regression context:} Consider the model $y = X\beta + \eps$, where $\eps \sim \calN(0, \sg^2 I)$. If $X$ has full column rank, then the James-Stein estimator $\hat{\beta}_{JS} = \left(1 - \dfrac{c}{\hat{\beta}_{MLE}^T X^T X \hat{\beta}_{MLE}}\right)X$ will dominate the MLE for MSE.
+\end{itemize}
+
+\textbf{Extension 2:} There is nothing special about shrinking to $0$.
+\begin{itemize}
+\item Shrinking towards an arbitrary $\mu_0$, i.e. $\hat{\mu}_{JS} = \mu_0 + \left(1 - \dfrac{(p-2)\sg^2}{\|X - \mu_0\|^2}\right)(X-\mu_0)$ will also dominate the MLE.
+
+\item Instead of an arbitrary $\mu_0$, we often use $\bar{X}$.
+\end{itemize}
+
+\section{Model Selection (Lec 20)}
+Say we have the linear model $y = X\beta + z$, where $y \in \bbR^{n \times 1}$ observed, $X \in \bbR^{n \times p}$ is known, and $\beta \in \bbR^{p \times 1}$ is to be estimated. Assume $z_i \stackrel{iid}{\sim} \calN(0, \sg^2)$. We want to figure out which covariates to keep in our model.
+
+\begin{itemize}
+\item If $y_i^*$ is the new observation at covariate value $x_i$, then the prediction error on observation $i$ can be computed to be $\bbE [(y_i^* - \hat{y}_i)^2] = \bbE \left[ \left(x_i^T \beta - x_i^T \hat{\beta} \right)^2 \right] + \sg^2$.
+
+\item Adding up across observations, we get \textbf{predictive risk} $PE = \dis\sum_{i=1}^n \left[ \bbE \left[ \left(x_i^T \beta - x_i^T \hat{\beta} \right)^2 \right] + \sg^2 \right] = \bbE \|X\beta - X\hat{\beta}\|^2 + n\sg^2$.
+
+\item \textbf{Training error} is simply the residual sum of squares, i.e. $RSS = \|y - X\beta \|^2$. (``How well do I predict on the training set?")
+
+\item \textbf{Theorem:} $\bbE [RSS] < PE$. In fact, $\bbE [RSS] - PE = - 2 \dis\sum_{i=1}^n \text{Cov}(\hat{y}_i, y_i)$.
+\end{itemize}
+
+\subsection{Linear estimation and $C_p$ statistic (Lec 20)}
+Assume that our predictor is linear, i.e. $\hat{y} = My$ for some matrix $M$.
+\begin{itemize}
+\item Linear regression, ridge regression and smoothing splines are linear. LASSO is not linear.
+
+\item In this setting, $\bbE [RSS] - PE = -2\sg^2 \text{tr}(M)$, i.e. $PE = \bbE [RSS] + 2\sg^2 \text{tr}(M)$. This implies that $RSS + 2\sg^2 \text{tr}(M)$ is an unbiased estimate for prediction risk.
+
+\item When we select only a subset $S$ of features, we get the OLS estimate $\hat{\beta}[S]$ and corresponding fitted values $\hat{y} = My$, where $M = X_S(X_S^T X_S)^{-1}X_S^T$. We can compute $\text{tr}(M) = |S|$, thus giving the unbiased estimate for prediction risk: $RSS + 2|S|\sg^2$.
+
+\item If we have an unbiased estimator for the variance, the \textbf{$C_p$ statistic} is define as $C_p = RSS + 2\hat{\sg}^2 |S|$ (i.e. unbiased estimator for prediction risk.)
+
+\item An equivalent formulation of the $C_p$ statistic is $\dfrac{RSS}{\hat{\sg}^2} - n + 2|S|$.
+
+\item We can compute an unbiased estimate of prediction risk for ridge regression. See Lec 20 for details.
+
+\end{itemize}
+
+\subsection{Model selection with $C_p$ (Lec 21)}
+\begin{itemize}
+\item \textbf{CAUTION:} If we do model selection with $C_p$: i.e. choose $S^* = \text{argmin}_S C_p(S)$, we run into trouble. Even though $C_p$ is unbiased for the PE of each fixed model, $C_p(S^*)$ is NOT unbiased for $PE(S^*)$.
+
+\item Finding the best $C_p$ model is equivalent to finding the estimate which solves $\text{argmin}_{\hat{\beta}} \|y - X\hat{\beta} \|^2 + 2\sg^2 \|\hat{\beta}\|_0$. (Generally computationally intractable.)
+
+\item Consider the special case where $X$ is orthogonal: $X^T X = I$. In this case, solving for the best $C_p$ model reduces to minimizing $\dis\sum_{i=1}^n (y_i - \hat{\beta}_i)^2 + 2\sg^2 \|\hat{\beta}\|_0$. We can look at it coordinate by coordinate to obtain the solution
+\[ \hat{\beta}_i = \begin{cases} 0 &\text{if } |y_i| \leq \sqrt{2}\sg, \\ y_i &\text{if } |y_i| > \sqrt{2}\sg. \end{cases} \]
+This is a \textbf{hard-thresholding rule}.
+
+\end{itemize}
+
+\subsection{Model selection with the LASSO (Lec 22)}
+\begin{itemize}
+\item Finding the best $C_p$ model was equivalent to solving $\text{argmin}_{\hat{\beta}} \|y - X\hat{\beta} \|^2 + \lmb^2\sg^2 \|\hat{\beta}\|_0$ with $\lmb^2 = 2$.
+
+\item We could be interested in other values of $\lmb$. The LASSO is a relaxation of this problem: $\text{argmin}_{\hat{\beta}} \|y -X\hat{\beta} \|^2 + \lmb\sg \|\hat{\beta}\|_1$.
+
+\item \textbf{$\ell_0-\ell_1$ equivalence:} Under broad conditions, the minimizers of $\min \|\beta\|_{\ell_0}$ subject to $X\beta = y$ and $\min \|\beta\|_{\ell_1}$ subject to $X\beta = y$ are equal!
+
+\item \textbf{Solving the LASSO:} If we define $C = \{ z \in \bbR^n: \|X^T z \|_\infty \leq \lmb \}$ and let $\Pi_C$ be the projection operator onto $C$, then we have $\hat{\mu} = y - \Pi_C(y)$ and $\hat{\beta} = X^\dagger \hat{\mu}$, where $X^\dagger$ is the pseudo-inverse of $X$.
+
+\item For the LASSO, we have $SURE = RSS + 2\sg^2[n - \text{div }(\Pi_C(y))]$. Note that $\text{div }(\Pi_C(y))$ is simply the dimension of the affine space projected onto. Thus, $SURE(\lmb) = RSS(\lmb) + 2\sg^2|\{j: \hat{\beta}_j(\lmb) \neq 0 \}|$.
+
+\end{itemize}
+
+\subsection{Oracle inequalities (Lec 23)}
+We have a model $y = X\beta + z$ and we want to choose the ``best'' submodel among $S \subseteq \{1,2,\dots, p \}$. For each subset $S$, let $\hat{\beta}[S]$ be the OLS regression coefficients and let $\hat{mu}[S] = X\hat{\beta}[S]$.
+
+\begin{itemize}
+\item Risk can be computed to be $R(\mu, \hat{\mu}[S]) = \| P_S \mu - \mu \|^2 + |S|\sg^2$, where $P_S$ is the projection operator onto the subspace spanned by covariates in $S$. (Note that $\hat{\mu}[S] - P_S \mu$ is orthogonal to $P_S \mu - \mu$.)
+
+\item \textbf{Ideal risk} is defined as $R^I(\mu) = \dis\min_S R(\mu, \hat{\mu}[S])$.
+
+\item If $\beta$ is $k$-sparse (i.e. $\|\beta\|_0 \leq k$), then $R^I(\mu) \leq k\sg^2$.
+
+\item In the case where $X = I$, i.e. $y \sim \calN(\mu, \sg^2 I)$, the risk of model $S$ is $R(\mu, \hat{\mu}[S]) = \dis\sum_{i \notin S} \mu_i^2 + |S|\sg^2$.
+
+This is easy to minimize. From this we obtain $R^I(\mu) = \sum \min(\mu_i^2, \sg^2)$, achieved when $\hat{\mu}_i^I = y_i$ if $|\mu_i| > \sg$, $0$ otherwise.
+
+\item \textbf{Can get estimator whose risk is close to ideal risk:} Suppose that we minimize 
+\[\min \| y - X\hat{\beta} \|^2 + \lmb_p^2 \sg^2 \|\hat{\beta}\|_0.\]
+If $\lmb_p^2$ is on the order of $2 \log p$, then for all $\mu \in \bbR^n$,
+\[ R(\mu, \hat{\mu}) \leq C_0 (2 \log p) [\sg^2 + R^I(\mu)], \]
+where $C_0$ is a constant that can be computed explicitly.
+
+\item \textbf{Theorem:} Suppose $Y \sim \calN(\mu, \sg^2 I)$. Let $\hat{\mu}$ be either a soft or hard thresholding estimator with $\lmb = \sg \sqrt{2 \log p}$. Then
+\[ \bbE \|\mu - \hat{\mu}\|^2 \leq (2 \log p + \dlt) \left[ \sg^2 + \underbrace{\sum_i \min(\mu_i^2, \sg^2}_{R^I(\mu)}) \right], \]
+with $\dlt = 1$ for soft thresholding, $\dlt = 1.2$ for hard thresholding. This inequality is not asymptotic, and it holds for any $\mu$.
+
+\item \textbf{Risk inflation criterion:} Minimax result: Suppose $Y \sim \calN(\mu, \sg^2 I)$. For all estimators,
+\[ \inf_{\hat{\mu}} \sup_{\mu} \frac{R(\mu, \hat{\mu})}{\sg^2 + R^I (\mu)}  \geq (2 \log p)(1 + o_p(1)). \]
+
+\end{itemize}
+
+\subsection{FDR thresholding (Lec 25)}
+As before, we have $y = X\mu + z$, $z \sim \calN(0, \sg^2I)$. We wish to estimate $\mu$, where $\mu \in \bbR^p$.
+\begin{itemize}
+\item \textbf{FDR hard thresholding estimator} is
+\[ \hat{\mu}_{(i)} = \begin{cases} y_{(i)} &\text{if } |y_{(i)}| > t_{FDR}, \\ 0 &\text{otherwise.} \end{cases} \]
+
+\item The FDR hard thresholding estimator achieves near optimal guarantees: Under $X = I$, $\mu \in \ell_0(\eps_n)$ with $\eps_n \in \left[ n^{-1}(\log n)^\dlt, n^{-\dlt} \right]$, the FDR estimator has the guarantee $\sup_{\mu \in \ell_0(\eps)} \bbE \|\hat{\mu} - \mu\|^2 = \left( 1 + \dfrac{(2q-1)_+}{1-q} + o_n(1) \right)R^*(\ell_0(\eps))$.
+
+\item \textbf{SLOPE algorithm:} See Lec 25 for details.
+
+\end{itemize}
+
+
+\end{document}

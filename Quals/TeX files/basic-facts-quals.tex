@@ -1,0 +1,1355 @@
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,amssymb,graphicx,mathtools,flexisym, float, enumitem}
+
+% for links
+\usepackage{color,hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    linktoc=all
+}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+%
+% Macros for shortcuts
+%
+\newcommand{\dis}{\displaystyle}
+\def\lc{\left\lceil}   
+\def\rc{\right\rceil}
+\def\lf{\left\lfloor}   
+\def\rf{\right\rfloor}
+\newcommand\bbC{\mathbb{C}}
+\newcommand\bbE{\mathbb{E}}
+\newcommand\bbH{\mathbb{H}}
+\newcommand\bbN{\mathbb{N}}
+\newcommand\bbP{\mathbb{P}}
+\newcommand\bbQ{\mathbb{Q}}
+\newcommand\bbR{\mathbb{R}}
+\newcommand\bbZ{\mathbb{Z}}
+\newcommand\calA{\mathcal{A}}
+\newcommand\calB{\mathcal{B}}
+\newcommand\calF{\mathcal{F}}
+\newcommand\calG{\mathcal{G}}
+\newcommand\calL{\mathcal{L}}
+\newcommand\calM{\mathcal{M}}
+\newcommand\calN{\mathcal{N}}
+\newcommand\calP{\mathcal{P}}
+\newcommand\dlt{\delta}
+\def\eps{\varepsilon}
+\newcommand\lmb{\lambda}
+\newcommand\Lmb{\Lambda}
+\newcommand\om{\omega}
+\newcommand\Om{\Omega}
+\newcommand\sg{\sigma}
+\newcommand\Sg{\Sigma}
+\def\t{\theta}
+\newcommand\T{\Theta}
+\newcommand\equivto{\Leftrightarrow}
+\newcommand\goesto{\rightarrow}
+\newcommand\var{\text{Var }}
+
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+\begin{document}
+\title{Basic Facts for Quals Preparation}
+\author{Kenneth Tay}
+\date{\vspace{-3ex}}
+\maketitle
+
+\tableofcontents
+
+% PROB & STATS
+\section{General Probability/Statistics Definitions and Facts}
+\begin{itemize}
+\item $X \sim F$ (cdf), then $F(X) \sim \text{Unif}(0,1)$.
+
+\item For any $X$, $X'$ i.i.d., $\var X = \dis\frac{1}{2}\bbE[(X- X')^2]$.
+
+\item (300B HW5) $\var X = \inf_t \bbE [(Y - t)^2]$.
+
+\item \textbf{Conditional covariance decomposition:} $\text{Cov } X = \text{Cov} (\bbE [X \mid Y]) + \bbE[\text{Cov} (X \mid Y)]$. Since $\bbE[\text{Cov} (X \mid Y)] \succeq 0$, thus $\text{Cov} (\bbE [X \mid Y]) \preceq \text{Cov } X$.
+
+\item $\bbE [X^n]$ is the $n^{th}$ \textbf{raw moment}, sometimes denoted $\mu_n'$. $\bbE [(X-\mu)^n]$ is the $n^{th}$ \textbf{central moment}, sometimes denoted $\mu_n$. $\displaystyle\frac{\bbE [(X-\mu)^n]}{\sg^n}$ is the \textbf{normalized $n^{th}$ central moment}.
+
+\item \textbf{Skewness} $\gamma := \displaystyle\frac{\bbE [(X-\mu)^3]}{\sg^3}$, \textbf{kurtosis} $\kappa := \displaystyle\frac{\bbE [(X-\mu)^4]}{\sg^4}$, \textbf{excess kurtosis} $= \kappa - 3$.
+
+\item If $M_X$ and $\phi_X$ are the MGF and characteristic functions of $X$ respectively, then $\bbE [X^k] = M_X^{(k)}(0) = \displaystyle\frac{1}{i^k} \phi_X^{(k)}(0)$ (if it exists).
+
+\item \textbf{Fisher information}: Let $f_\t(x)$ be the probability density function of $X$ conditional on the value of $\t$.
+\begin{itemize}
+\item For all $\t$, $\bbE_\t \left[ \displaystyle\frac{\partial}{\partial \t} \log f_\t (X) \right] = 0$.
+\item Fisher information $I(\t) := \bbE_\t \left[ \left(\displaystyle\frac{\partial}{\partial \t} \log f_\t (X)\right)^2 \right] = - \bbE_\t \left[ \displaystyle\frac{\partial^2}{\partial \t^2} \log f_\t (X) \right]$.
+\item (300B Lec 4) For a normal location family (i.e. only mean unknown), Fisher information is $\dis\frac{1}{\sg^2}$.
+
+\item (300B Lec 5) In an exponential family with density $p_\t(x) = h(x) \exp \left[ \t^T T(x) - A(\t) \right]$, Fisher information $I(\t) = \nabla^2 A(\t)$.
+\end{itemize}
+
+\item \textbf{Information Inequality}:
+\begin{itemize}
+\item (TPE Thm 2.5.10 p120) Information Inequality: Suppose $p_\t$ is family of densities w.r.t. dominating measure $\mu$ and $I(\t) > 0$. Let $\dlt$ be any statistic with $\bbE_\t (\dlt^2) < \infty$ and such that the derivative of $\bbE_\t (\dlt)$ w.r.t. $\t$ exists and can be differentiated under the integral sign. Then
+\begin{equation*}
+\text{Var}_\t (\dlt) \geq \frac{\left[\frac{\partial}{\partial \t} \bbE_\t (\dlt) \right]^2}{I(\t)},
+\end{equation*}
+with equality iff $\dlt = a \left[ \displaystyle\frac{\partial}{\partial \t} \log p_\t(x) \right] + b$, where $a$ and $b$ are constants (which may depend on $\t$).
+
+\item (Stephen's version) Let $\dlt$ be an estimator for $g(\t)$, and let $\bbE_\t (\dlt) = g(\t) + b(\t)$. Then
+\begin{equation*}
+\text{Var}_\t (\dlt(X)) \geq \frac{(b'(\t) + g'(\t))^2}{I(\t)}.
+\end{equation*}
+\end{itemize}
+
+\item For i.i.d. samples $X_1, \dots, X_n$, $\bar{X}$ is an unbiased estimator of the mean and $\dis\frac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X})^2$ is an unbiased estimator for the variance.
+
+\item (TPE Prob 2.2.15 p133, 310A HW3 Qn 2) For i.i.d. bivariate samples, $\dis\frac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X})(Y_i - \bar{Y})$ is an unbiased estimator for $\text{Cov}(X,Y)$.
+
+\item (310A HW8) \textbf{Total variation distance} for 2 probability measures is $\|\mu - \nu\|_{TV} = \dis\sup_{A \in \calF} |\mu(A) - \nu(A)|$.
+\begin{itemize}
+\item $\|\cdot\|_{TV}$ is a metric.
+\item $\|\mu - \nu\|_{TV} = \dis\frac{1}{2}\sup_{\|f\|_\infty \leq 1} |\bbE_\mu (f) - \bbE_\nu (f)|$.
+\item If $\mu$ and $\nu$ have densities $f_\mu$ and $f_\nu$ w.r.t. some base measure $\lmb$, then $\|\mu - \nu\|_{TV} = \dis\frac{1}{2}\int |f_\mu(\om) - f_\nu(\om)| \lmb (d\om)$.
+\end{itemize}
+
+(300B HW8) For 2 distributions $P$ and $Q$ with densities $p$ and $q$ w.r.t. $\mu$,
+\begin{itemize}
+\item $2 \|P-Q\|_{TV} = \int (p-q)_+ d\mu + \int (q-p)_+ d\mu$.
+\item $\|P-Q\|_{TV} = \int (p \vee q) d\mu - 1$.
+\item $\|P-Q\|_{TV} = 1 - \int (p \wedge q)d\mu$.
+\end{itemize}
+
+\end{itemize}
+
+
+\section{Distributions}
+% ARCSINE
+\subsection{Arcsine Distribution}
+Let $X \sim \text{Arcsine}(a, w)$. $a \in \bbR$ location parameter, $w > 0$ scale parameter.
+\begin{itemize}
+\item PDF $p(x) = \dis\frac{1}{\pi \sqrt{(x-a)(a+w-x)}}$, $x \in (a, a+w)$.
+
+\item CDF $\bbP (X \leq x) = \dis\frac{2}{\pi} \arcsin \left( \sqrt{\frac{x-a}{w}}\right)$.
+
+\item $\bbE X = \text{ Median } = a + \dis\frac{w}{2}$, $\var X = \dis\frac{w^2}{8}$.
+
+\item MGF $\bbE [e^{tX}] = e^{at} \dis\sum_0^\infty \left(\prod_{j=0}^{n-1}\frac{2j+1}{2j+2} \right)\frac{w^n t^n}{n!}$.
+
+\item Moments $\bbE [X^n] = w^n \dis\prod_{j=0}^{n-1}\frac{2j+1}{2j+2}$.
+
+\item The standard arcsine distribution ($a = 0$, $w = 1$) is $\text{Beta}(1/2, 1/2)$.
+
+\item If $X \sim \text{Arcsine}(a,w)$, then $c + dX \sim \text{Arcsine}(c+ad,dw)$.
+
+\item If $U \sim \text{Unif}(0,1)$, then $a + w \sin^2 (\pi U / 2) \sim \text{Arcsine}(a,w)$.
+
+\end{itemize}
+
+% BERNOULLI
+\subsection{Bernoulli Distribution}
+If $X \sim \text{Ber}(p)$, then $\bbP(X = 1) = p$, $\bbP(X = 0) = 1-p = q$.
+\begin{itemize}
+\item $\bbE X = p$, $\var X = p(1-p)$.
+
+\item MGF $\bbE [e^{tX}] = q + pe^t$.
+
+\item Characteristic function $\bbE [e^{itX}] = q + pe^{it}$.
+
+\item Fisher information: $\displaystyle\frac{1}{p(1-p)}$.
+\end{itemize}
+
+% BETA
+\subsection{Beta Distribution}
+\begin{itemize}
+\item \textbf{Beta function:} For $a, b > 0$, $B(a,b) = \displaystyle\int_0^1 u^{a-1}(1-u)^{b-1} du$.
+
+\item $B(a,b) = B(b,a)$, $B(a,1) = \displaystyle\frac{1}{a}$.
+
+\item $B(a,b) = \displaystyle\frac{\Gamma (a) \Gamma (b)}{\Gamma(a + b)}$.
+
+\item $B(x,y) \cdot B(x+y, 1-y) = \dfrac{\pi}{x \sin(\pi y)}$.
+
+\item For large $x$ and large $y$, $B(x,y) \sim \sqrt{2\pi} \dfrac{x^{x-1/2}y^{y-1/2}}{(x+y)^{x+y - 1/2}}$ (Stirling's formula). For large $x$ and fixed $y$, $B(x,y) \sim \Gamma(y) x^{-y}$.
+
+\end{itemize}
+
+Let $X \sim \text{Beta}(\alpha, \beta)$, with $\alpha, \beta > 0$. Support of $X$ is $[0,1]$ or $(0,1)$.
+\begin{itemize}
+\item PDF $p(x) = \displaystyle\frac{\Gamma (\alpha + \beta)}{\Gamma (\alpha) \Gamma (\beta)} x^{\alpha-1} (1-x)^{\beta-1}$.
+
+\item $\bbE X = \displaystyle\frac{\alpha}{\alpha + \beta}$, $\var X = \displaystyle\frac{\alpha \beta}{(\alpha + \beta)^2 (\alpha + \beta + 1)}$, Mode $= \frac{\alpha - 1}{\alpha + \beta - 2}$.
+
+\item MGF $\bbE [e^{tX}] = 1 + \displaystyle\sum_{k=1}^\infty \left( \prod_{r=0}^{k-1} \frac{\alpha + r}{\alpha + \beta + r} \right) \frac{t^k}{k!}$.
+
+\item Moments: If $k \geq 0$, then $\bbE [X^k] = \displaystyle\frac{B(\alpha + k, \beta)}{B(\alpha, \beta)}$.
+
+\item $\bbE \left[ \dfrac{1}{X} \right] = \dfrac{\alpha + \beta - 1}{\alpha - 1}$, $\bbE \left[ \dfrac{1}{1-X} \right] = \dfrac{\alpha + \beta - 1}{\beta - 1}$, $\bbE \left[ \dfrac{X}{1-X} \right] = \dfrac{\alpha}{\beta - 1}$.
+
+\item $\text{Beta}(1,1) \stackrel{d}{=} U(0,1)$.
+
+\item $\text{Beta}\left(\frac{1}{2}, \frac{1}{2} \right)$ is called the arcsine distribution, PDF $p(x) = \displaystyle\frac{1}{\pi \sqrt{x(1-x)}}$.
+
+\item If $X \sim \text{Beta}(\alpha, \beta)$, then $1-X \sim \text{Beta}(\beta, \alpha)$.
+
+\item If $X \sim \text{Beta}(\alpha, 1)$, then $- \log X \sim \text{Exp}(\alpha)$.
+
+\item Suppose $X$ and $Y$ are independent gamma RVs with $X \sim \Gamma(a, r)$ and $Y \sim \Gamma(b, r)$ (shape and rate). Let $U = X+Y$ and $V = \displaystyle\frac{X}{X+Y}$. Then $U$ and $V$ are independent, with $U \sim \Gamma(a+b, r)$ and $V \sim \text{Beta}(a, b)$. (Proof: Look at joint PDF of $X$ and $Y$, change of variables to $U$ and $V$.)
+
+\item If $X \sim F_{n, d}$, then $\displaystyle\frac{(n/d)X}{1 + (n/d)X} \sim \text{Beta}\left( \frac{n}{2}, \frac{d}{2} \right)$. Conversely, if $X \sim \text{Beta}\left( \frac{n}{2}, \frac{d}{2} \right)$, then $\dfrac{dX}{n(1-X)} \sim F_{n,d}$.
+
+\item Let $X_1, \dots, X_n$ be independent $U(0,1)$ variables. Then the $k$th order statistic $X_{(k)} \sim \text{Beta}(k, n-k+1)$.
+
+\item $\dis\lim_{n \goesto \infty} \text{Beta}(k, n) = \text{Gam}(k, 1)$.
+
+\end{itemize}
+
+
+% BINOMIAL
+\subsection{Binomial Distribution}
+Let $X \sim \text{Bin}(n,p)$.
+\begin{itemize}
+\item PMF $\bbP(X = x) = \binom{n}{p}p^x(1-p)^{n-x}$, $x \in \{ 0, 1, \dots, n\}$.
+
+\item CDF can be written in the form $F(k) = \bbP(X \leq k) = \displaystyle\frac{n!}{(n-k-1)!k!} \int_0^{1-p} x^{n-k-1}(1-x)^k dx$, $k \in \{ 0, 1, \dots, n\}$. (Proof: Integration by parts and induction.)
+
+\item $\bbE X = np$, $\var X = npq$. Median is $\lf np \rf$ or $\lc np \rc$, mode is $\lf (n+1)p \rf$ or $\lf (n+1)p \rf - 1$.
+
+\item MGF $\bbE [e^{tX}] = (1 - p + pe^t)^n$.
+
+\item MGF $\bbE [e^{itX}] = (1 - p + pe^{it})^n$.
+
+\item Fisher information: $\displaystyle\frac{n}{p(1-p)}$. (Proof: Consider binomial as sum of $n$ independent Bernoulli RVs.)
+
+\item Poisson Approximation: If $np_n \goesto r \in (0, \infty)$ as $n \goesto \infty$, then $\text{Bin}(n, p_n)$ converges to $\text{Pois}(r)$.
+
+\item Normal Approximation: General rule of thumb is $np \geq 5$ and $n(1-p) \geq 5$.
+
+\item If $X \sim \text{Bin}(n,p)$ and $Y \mid X \sim \text{Bin}(X, q)$, then $Y \sim \text{Bin}(n, pq)$.
+
+\item If $X \sim \text{Bin}(a,p)$ and $Y \sim \text{Bin}(b,p)$ are independent, then $\bbP(X = k \mid X+Y = m) = \dfrac{\binom{a}{k}\binom{b}{m-k}}{\binom{a+b}{m}}$, i.e. is hypergeometric.
+
+\item (Theory Add Ex 12) If $Y \sim \text{Bin}(n,p)$, then $\bbE \left[\dfrac{Y}{1+n-Y} \right] \leq \dfrac{p}{1-p}$.
+
+\end{itemize}
+
+% CAUCHY
+\subsection{Cauchy Distribution}
+\subsubsection{Standard Cauchy Distribtion}
+\begin{itemize}
+\item If $X$ has standard Cauchy distribution, PDF $p(x) = \displaystyle\frac{1}{\pi (1+x^2)}$, CDF $\bbP(X \leq x) = \frac{1}{2} + \frac{1}{\pi}\arctan x$.
+
+\item $\bbE X$ does not exist.
+
+\item The standard Cauchy distribution is the same as $t_1$.
+
+\item If $Z$, $W$ are standard normal RVs, then $\displaystyle\frac{Z}{W}$ has standard Cauchy distribution.
+
+\item If $X$ has standard Cauchy distribution, so does $\displaystyle\frac{1}{X}$.
+
+\end{itemize}
+
+\subsubsection{General Cauchy Distribution}
+\begin{itemize}
+\item If $X$ has standard Cauchy distribution, then $Y = a + bX$ has Cauchy distribution with location parameter $a$ and scale parameter $b$.
+\item PDF $p(y) = \displaystyle\frac{b}{\pi [b^2 + (x-a)^2]}$, CDF $\bbP (Y \leq y) = \displaystyle\frac{1}{\pi} \arctan \left( \frac{x-a}{b} \right) + \frac{1}{2}$.
+
+\item MGF does not exist. Characteristic function $\bbE [e^{itY}] = \exp (ait - b |t|)$.
+
+\item If $X_1, \dots, X_n$ are independent Cauchy variables with location and scale parameters $a_i$ and $b_i$, then $X_1 + \dots + X_n$ has Cauchy distribution with location and scale parameters $\sum a_i$ and $\sum b_i$. In particular, if $a_i = a$ and $b_i = b$, $\bar{X}$ has the same distribution as the $X_i$'s.
+
+\item (300B HW3) When $b = 1$ and $a = \t$, Fisher information is $I(\t) = \dfrac{1}{2}$.
+
+\end{itemize}
+
+% CHI-SQUARED
+\subsection{Chi-Squared Distribution}
+Let $X \sim \chi_k^2$, for $k$ positive integer.
+
+\begin{itemize}
+\item PDF $p(x) = \displaystyle\frac{1}{2^{k/2}\Gamma(k/2)} x^{k/2 - 1} e^{-x/2}$, for $x \geq 0$. The PDF satisfies the differential equation $2x f'(x) + f(x) (-k + x + 2) = 0$.
+
+\item $\bbE X = k$, $\text{Median} \approx k \left(1 - \frac{2}{9k} \right)^3$, $\text{Mode} = \max(k-2, 0)$, $\var X = 2k$.
+
+\item MGF $\bbE [e^{tX}] = (1-2t)^{-k/2}$ for $t < \frac{1}{2}$. Characteristic function $\bbE [e^{itX}] = (1 - 2it)^{-k/2}$.
+
+\item Moments: If $X \sim \chi_n^2$, then for $k > -n/2$, $\bbE [X^k] = 2^k \displaystyle\frac{\Gamma (n/2 + k)}{\Gamma (n/2)}$. For $k \leq -m/2$, $\bbE [X^k] = \infty$.
+
+\item In particular, if $X \sim \chi_n^2$ for $n \geq 3$, then $\bbE [1/X] = \dfrac{1}{n-2}$.
+
+\item If $Z_1, \dots, Z_k$ are independent $\calN(0,1)$ RVs, then $Z_1^2 + \dots + Z_k^2 \sim \chi_k^2$.
+
+\item If $X_1, \dots X_n$ are i.i.d. $\chi_{k_n}^2$ RVs, then $X_1 + \dots + X_n$ is $\chi^2$ with $k_1 + \dots + k_n$ degrees of freedom.
+
+\item If $Y \sim \calN(\mu, \Sg) \in \bbR^p$, where $\Sg$ is non-singular, then $(Y - \mu)^T \Sg^{-1} (Y - \mu) \sim \chi_k^2$.
+
+\item $\chi_\nu^2 \stackrel{d}{=} \text{Gam}(\nu/2, \t = 2)$.
+
+\item If $X \sim \text{Gam}(k, b)$ (shape, scale), then $Y = \frac{2}{b} X \sim \chi_{2k}^2$.
+
+\item $\chi_2^2 \stackrel{d}{=} \text{Exp}(1/2)$.
+
+\item Let $f_n$ denote the density of $\chi_n^2$. Then $f_{n+2}(x) = \displaystyle\frac{x}{n}f_n(x)$.
+
+\item If $X \sim F_{\nu_1, \nu_2}$, then $Y = \dis\lim_{\nu_2 \goesto \infty} \nu_1 X \stackrel{d}{=} \chi_{\nu_1}^2$.
+\end{itemize}
+
+% Non-central CHI-SQUARED
+\subsubsection{Non-Central Chi-Squared Distribution}
+Suppose $X_1, \dots, X_n$ are independent RVs, where $X_k \sim \calN(\mu_k, 1)$. Then $Y = X_1^2 + \dots + X_n^2$ is the non-central chi-squared distribution with $n$ degrees of freedom and non-centrality parameter $\lmb = \mu_1^2 + \dots + \mu_n^2$.
+
+\begin{itemize}
+\item PDF of $\chi_n^2(\lmb)$ is $p(x; \lmb) = e^{-\lmb/2} \displaystyle\sum_{k=0}^\infty \displaystyle\frac{(\lmb/2)^k}{k!}\frac{x^{n/2 - 1 + k}e^{-x/2}}{2^{k + n/2} \Gamma(k + n/2)}$.
+\item $\bbE  Y = n + \lmb$, $\var Y = 2(n + 2\lmb)$.
+
+\item MGF $\bbE [e^{tY}] = (1-2t)^{-n/2} \exp \left( \displaystyle\frac{\lmb t}{1 - 2t} \right)$, for $t < 1/2$. Characteristic function $\bbE [e^{itY}] = (1-2it)^{-n/2} \exp \left( \displaystyle\frac{\lmb it}{1 - 2it} \right)$.
+
+\item If $J \sim \text{Pois}(\lmb)$, then $\chi_{k + 2J}^2 \sim \chi_k^{\prime 2}(\lmb)$.
+\end{itemize}
+
+% DIRICHLET
+\subsection{Dirichlet Distribution}
+Let $K \geq 2$ be the number of categories. Let $X \sim \text{Dirichlet}(\alpha_1, \dots, \alpha_K)$, $\alpha_i > 0$ for all $i$. Let $\alpha_0 = \alpha_1 + \dots + \alpha_K$.
+
+\begin{itemize}
+\item Support of $X$ is $(x_1, \dots, x_K)$, where $x_i \in (0,1)$ and $\displaystyle\sum_{i=1}^K x_i = 1$.
+
+\item PDF $p(x) = \displaystyle\frac{1}{B(\alpha)}\prod_{i=1}^K x_i^{\alpha_i - 1}$, where $B(\alpha) = \displaystyle\frac{\Gamma(\alpha_1)\dots \Gamma(\alpha_K)}{\Gamma(\alpha_1 + \dots + \alpha_K)}$.
+
+\item $\bbE X_i = \displaystyle\frac{\alpha_i}{\alpha_0}$, mode for $X_i$ is $\dfrac{\alpha_i - 1}{\alpha_0 - K}$ ($\alpha_i > 1$).
+
+\item $\var X_i = \displaystyle\frac{\alpha_i(\alpha_0 - \alpha_i)}{\alpha_0^2 (\alpha_0 + 1)}$, $\text{Cov}(X_i, X_j) = \displaystyle\frac{-\alpha_i \alpha_j}{\alpha_0^2 (\alpha_0 + 1)}$ for $i \neq j$.
+
+\item Moments $\bbE \left[ \displaystyle\prod_{i=1}^K X_i^{\beta_i} \right] = \displaystyle\frac{B(\alpha + \beta)}{B(\alpha)} = \frac{\Gamma(\alpha_0)}{\Gamma(\alpha_0 + \beta_0)}\prod_{i=1}^K \frac{\Gamma(\alpha_i + \beta_i)}{\Gamma(\alpha_i)}$.
+
+\item The marginal distributions are beta distributions: $X_i \sim \text{Beta}(\alpha_i, \alpha_0 - \alpha_i)$.
+
+\item If $Y_i \stackrel{ind}{\sim} \text{Gam}(\alpha_i, \t)$, then $V = \sum Y_i \sim \text{Gam}\left(\sum \alpha_i, \t \right)$, and $\left(\displaystyle\frac{Y_1}{V}, \dots, \frac{Y_K}{V} \right) \sim \text{Dirichlet}(\alpha_1, \dots, \alpha_K)$.
+
+\end{itemize}
+
+% EXPONENTIAL
+\subsection{Exponential Distribution}
+Let $X \sim \text{Exp}(\lmb)$, $\lmb > 0$ (rate).
+\begin{itemize}
+\item PDF $p(x) = \lmb e^{-\lmb x}$ for $x \geq 0$, CDF $\bbP(X \leq x) = 1 - e^{-\lmb x}$.
+
+\item $\bbE X = \displaystyle\frac{1}{\lmb}$, Median $= \displaystyle\frac{\log 2}{\lmb}$, Mode = 0. $\var X = \displaystyle\frac{1}{\lmb^2}$.
+
+\item Skewness is 2, excess kurtosis is 6.
+
+\item MGF $\bbE [e^{tX}] = \displaystyle\frac{\lmb}{\lmb - t}$ for $t < \lmb$. Characteristic function $\bbE [e^{itX}] = \displaystyle\frac{\lmb}{\lmb - it}$.
+
+\item Moments $\bbE X^k = \displaystyle\frac{k!}{\lmb^k}$. (Proof: Integration by parts.)
+
+\item Fisher information: $\displaystyle\frac{1}{\lmb^2}$.
+
+\item \textbf{Memoryless property:} For exponentially distributed $X$, $\bbP(X > s + t \mid X > s) = \bbP(X > t)$ for all $s,t \geq 0$.
+
+\item If $X_1, \dots, X_n$ are independent exponential RVs with rates $\lmb_1, \dots, \lmb_n$, then $\min \{ X_1, \dots, X_n\} \sim \text{Exp}(\lmb_1 + \dots + \lmb_n)$. The maximum is NOT exponentially distributed.
+
+\item If $X_1, \dots, X_n$ are independent $\text{Exp}(1)$ random variables, then the $k^{th}$ order statistic $T_{(k)} \sim \dis\sum_{i=1}^k\frac{1}{n-i+1} \text{Exp}(1)$. (Proof uses memoryless property, see Prob Qual 2013-1.)
+
+\item If $X \sim \text{Exp}(\lmb)$, then $kX \sim \text{Exp}(\lmb / k)$.
+
+\item If $X \sim \text{Exp}(1/2)$, then $X \sim \chi_2^2$.
+
+\item $\text{Exp}(\lmb) = \text{Gam}(1, \lmb)$ (shape-rate parametrization).
+
+\item If $U \sim \text{Unif}(0,1)$, then $- \log U \sim \text{Exp}(1)$.
+
+\item If $X \sim \text{Exp}(\lmb)$, then $e^{-X} \sim \text{Beta}(\lmb, 1)$.
+
+\item If $X \sim \text{Exp}(a)$ and $Y \sim \text{Exp}(b)$ and are independent, then $\bbP(X < Y) = \displaystyle\frac{a}{a+b}$. Extending the set-up to $n$ RVs: $\bbP (X_i < X_j \text{ for all } j \neq i) = \displaystyle\frac{\lmb_i}{\sum_{j=1}^n \lmb_j}$, and $\bbP (X_1 < \dots < X_n) = \prod_{i=1}^n \frac{\lmb_i}{\sum_{j=i}^n \lmb_j}$.
+
+\end{itemize}
+
+% SHIFTED EXPONENTIAL
+\subsubsection{Shifted Exponential Distribution}
+(Notation from TPE p18) Let $X \sim E(a,b)$ ($-\infty < a < \infty$, $b > 0$). $a$ is shift parameter, $b$ is scale parameter.
+\begin{itemize}
+\item PDF $p(x) = \displaystyle\frac{1}{b}e^{-(x-a)/b}$ if $x \geq a$, 0 otherwise. CDF $\bbP (X \leq x) = 1 - \exp [-(x-a)/b]$ for $x \geq a$, 0 otherwise.
+
+\item $\bbE X = a+b$, $\var X = b^2$.
+
+\item If $X_1, \dots, X_n \stackrel{iid}{\sim} E(a,b)$, then smallest order statistic $X_{(1)} \sim E (a, b/n)$.
+
+\item (TPE Eg 1.6.24 p43) If $X_1, \dots, X_n \stackrel{iid}{\sim} E(a,b)$, let $T_1 = X_{(1)}$, $T_2 = \sum [X_i - X_{(1)}]$. Then $T_1$ and $T_2$ are independent (Basu's Theorem), and $T_1 \sim E(a, b/n)$ and $T_2 \sim \dis\frac{b}{2} \chi_{2n-2}^2$.
+\end{itemize}
+
+% F
+\subsection{F Distribution}
+Let $F \sim F_{n,m}$, $n, m > 0$.
+\begin{itemize}
+\item PDF $p(x) = \displaystyle\frac{1}{x B(n/2, m/2)} \sqrt{\displaystyle\frac{(nx)^n m^m}{(nx +m)^{n+m}}}$ for $x > 0$, where $B$ is the beta function. (PDF also defined at $x = 0$ for $n \geq 2$.)
+
+\item $\bbE X = \displaystyle\frac{m}{m-2}$ for $m > 2$ ($\infty$ if $m \leq 2$), mode $= \displaystyle\frac{n-2}{n}\frac{m}{m+2}$ for $n > 2$, $\var X = \displaystyle\frac{2m^2(n+m-2)}{n(m-2)^2 (m-4)}$ for $m > 4$ (undefined for $m \leq 2$, $\infty$ for $2 < m \leq 4$).
+
+\item MGF does not exist.
+
+\item $k$th moment only exists when $2k < m$. In that case, $\bbE X^k = \left(\displaystyle\frac{m}{n}\right)^k \displaystyle\frac{\Gamma(n/2 + k)}{\Gamma(n/2)}\frac{\Gamma(m/2 - k)}{\Gamma(m/2)}$.
+
+\item If $X_1, \dots, X_n$ and $Y_1, \dots, Y_m$ are independent $\calN(0,1)$ random variables,
+\begin{equation*}
+F = \frac{(X_1^2 + \dots + X_n^2)/n}{(Y_1^2 + \dots + Y_m^2)/m} \sim F_{n,m} \stackrel{d}{=} \frac{\chi_n^2 / n}{\chi_m^2 / m}.
+\end{equation*}
+
+\item If $X \sim \text{Beta}(n/2, m/2)$, then $\displaystyle\frac{mX}{n(1-X)} \sim F_{n,m}$. Conversely, if $X \sim F_{n,m}$, then $\dfrac{nX/m}{1+nX/m} \sim \text{Beta}(n/2, m/2)$.
+
+\item If $X \sim F_{n,m}$, then $\displaystyle\frac{1}{X} \sim F_{m,n}$.
+
+\item If $X \sim t_n$, then $X^2 \sim F_{1,n}$.
+
+\item If $X, Y \sim \text{Exp}(\lmb)$ independent, then $\displaystyle\frac{X}{Y} \sim F_{2,2}$.
+
+\item As $m \goesto \infty$, $F_{n,m} \stackrel{d}{\goesto} \chi_n^2/n$.
+\end{itemize}
+
+\subsubsection{Non-Central F Distribution}
+This is defined by a non-central $\chi^2$ distribution divided by a central $\chi^2$ distribution, i.e. $\displaystyle\frac{\chi^{\prime 2}_{n_1} (\lmb) / n_1}{\chi_{n_2}^2 / n_2}$.
+
+\begin{itemize}
+\item $\bbE F = \displaystyle\frac{n_2(n_1 + \lmb)}{n_1(n_2 - 2)}$ if $n_2 > 2$, does not exist if $n_2 \leq 2$. $\var F = 2\displaystyle\frac{(n_1 + \lmb)^2 + (n_1 + 2\lmb)(n_2 - 2)}{(n_2 - 2)^2(n_2 - 4)} \left( \frac{n_2}{n_1}\right)^2$ if $n_2 > 4$, does not exist if $n_2 \leq 4$.
+\end{itemize}
+
+\subsubsection{Doubly Non-Central F Distribution}
+This is defined by the ratio of 2 non-central $\chi^2$ distributions, i.e. $\displaystyle\frac{\chi^{\prime 2}_{n_1} (\lmb_1) / n_1}{\chi^{\prime 2}_{n_2} (\lmb_1) / n_2}$.
+
+
+% GAMMA FUNCTION
+\subsection{Gamma Function}
+For $z \in \bbC$ with $\text{Re}(z) > 0$, the gamma function is defined by $\Gamma(z) = \displaystyle\int_0^\infty x^{z-1}e^{-x} dx$.
+
+\begin{itemize}
+\item $\Gamma(z+1) = z \Gamma (z)$ for all $z$.
+
+\item $\Gamma(z) \Gamma (1 - z) = \displaystyle\frac{\pi}{\sin (\pi z)}$ for all $z \notin \bbZ$.
+
+\item If $n$ is a positive integer, $\Gamma (n) = (n-1)!$.
+
+\item $\Gamma \left( \frac{1}{2} \right) = \sqrt{\pi}$.
+
+\item If $n$ is an even positive integer, $\Gamma(n/2) = (n/2 - 1)!$. If $n$ is an odd positive integer, $\Gamma (n/2) = \displaystyle\frac{(n-1)!}{2^{n-1}(n/2 - 1/2)!} \sqrt{\pi}$.
+
+\item (Rudin Thm 8.18) $\log \Gamma$ is convex on $(0 , \infty)$.
+
+\item For $\alpha \in \bbR$, $\dis\lim_{n \goesto \infty} \dfrac{\Gamma(n+\alpha)}{\Gamma(n)n^\alpha} = 1$.
+\end{itemize}
+
+
+% GAMMA
+\subsection{Gamma Distribution}
+The Gamma distribution is often parametrized in 2 different ways: $X \sim \text{Gam}(k, \t)$ (shape, scale) or $X \sim \text{Gam}(\alpha, \beta)$ (shape, rate). All parameters are positive, and $k = \alpha$, $\t = \frac{1}{\beta}$ represent the same distribution.
+
+Rate interpretation: $\Gamma(\alpha, \beta) = \dis\frac{\Gamma(\alpha)}{\beta}$. (BDA3 uses shape-rate parametrization.)
+
+\begin{itemize}
+\item PDF $p(x) = \displaystyle\frac{1}{\Gamma (k) \t^k} x^{k-1} e^{-x/\t}$ for $x > 0$.
+
+\item $\bbE X = k\t$, Mode $= (k-1)\t$ for $k \geq 1$, $\var X = k \t^2$.
+
+\item MGF $\bbE [e^{tX}] = (1 - \t t)^{-k}$ for $t < \displaystyle\frac{1}{\t}$. Characteristic function $\bbE [e^{itX}] = (1 - \t i t)^{-k}$.
+
+\item Moments $\bbE [X^a] = \displaystyle\frac{\t^a \Gamma(a + k)}{\Gamma(k)}$ for $a > -k$.
+
+\item If $X \sim \text{Gam}(k, \t)$, then for any $c > 0$, $cX \sim \text{Gam}(k, c\t)$.
+
+\item $\text{Gam}(1,\lmb) = \text{Exp}(\lmb)$.
+
+\item $\text{Gam}(\nu/2, \t = 2) = \chi_\nu^2$. Conversely, if $Q \sim \chi_\nu^2$ and $c > 0$, then $cQ \sim \text{Gam}(\nu/2, 2c)$.
+
+\item If $X \sim \text{Gam}(\alpha, \t)$ independent of $Y \sim \text{Gam}(\beta, \t)$, then $X + Y \sim \text{Gam}(\alpha + \beta, \t)$ and $\displaystyle\frac{X}{X+Y} \sim \text{Beta}(\alpha, \beta)$.
+
+\item If $X_i \sim \text{Gam}(\alpha_i, 1)$ independent and $S = X_1 + \dots + X_n$, then $(X_1/S, \dots, X_n/S) \sim \text{Dirichlet}(\alpha_1, \dots, \alpha_n)$. (Proof: Compute joint density of $(S, X_1/S, \dots, X_{n-1}/S)$ via change of variables.)
+
+\end{itemize}
+
+
+% GEOMETRIC
+\subsection{Geometric Distribution}
+Let $X \sim \text{Geom}(p)$ ($p$ is probability of success).
+\begin{itemize}
+\item $\bbP(X = k)$ is the probability that the 1st success occurs on the $k$th trial. $\bbP(X = k) = p (1-p)^{k-1}$, $k \in \{1, 2, \dots \}$.
+
+\item CDF $\bbP(X \leq k) = 1 - (1-p)^k$.
+
+\item $\bbE X = \displaystyle\frac{1}{p}$, $\var X = \displaystyle\frac{q}{p^2}$, Mode = 1.
+
+\item MGF $\bbE [e^{tX}] = \displaystyle\frac{pe^t}{1 - (1-p)e^t}$ for $t < - \log (1-p)$. Characteristic function $\bbE [e^{itX}] = \displaystyle\frac{pe^{it}}{1 - (1-p)e^{it}}$.
+
+\item \textbf{Memoryless property:} For $m, n \in \bbN$, $\bbP (X > n + m \mid X > m) = \bbP (X > n)$.
+
+\item If $X_1, \dots, X_r$ are independent $\text{Geom}(p)$ RVs, then their sum has distribution $\text{NegBin}(r, p)$.
+
+\item If $X_1, \dots, X_r$ are independent $\text{Geom}(p_r)$ RVs (possibly different parameters), then $\min X_i$ is Geometric with parameter $p = 1 - \displaystyle\prod_i (1-p_i)$.
+
+\item Exponential approximation (Dembo Eg 3.2.5): Let $Z_p \sim \text{Geom}(p)$. Then as $p \goesto 0$, $p Z_p \stackrel{d}{\goesto} \text{Exp}(1)$.
+
+\end{itemize}
+
+% GUMBEL
+\subsection{Gumbel Distribution}
+Location parameter $\mu \in \bbR$, scale parameter $\beta > 0$. Standard Gumbel distribution has $\mu = 0$, $\beta = 1$.
+
+\begin{itemize}
+\item PDF $p(x) = \frac{1}{\beta} \exp \left[ - (z + e^{-z}) \right]$, where $z = (z-\mu)/\beta$.
+
+\item CDF $P (X \leq x) = \exp \left( - e^{-(x-\mu)/ \beta} \right)$.
+
+\item $\bbE X = \mu + \beta \gamma$, where $\gamma$ is the Euler-Mascheroni constant, Median = $\mu - \beta \log \log 2$, Mode = $\mu$, $\var X = \displaystyle\frac{\pi^2 \beta^2}{6}$.
+
+\item MGF $\bbE [e^{tX}] = \Gamma(1 - \beta t)e^{\mu t}$. Characteristic function $\bbE [e^{itX}] = \Gamma (1 - i \beta t) e^{i \mu t}$.
+
+\item The standard Gumbel distribution is the limit of the maximum of $n$ i.i.d. RVs (whose distribution falls in a certain class). This is true for exponential distribution, normal distribution.
+
+\item (Gumbel Max Trick) Let $\eps_1, \dots, \eps_k$ be i.i.d. standard Gumbel RVs. Then for any $\alpha_1, \dots, \alpha_k$,
+\begin{equation*}
+P \left\{ \text{argmax}_{1 \leq i \leq k} \alpha_i + \eps_i = r \right\} = \frac{e^{\alpha_r}}{\sum_{i=1}^k e^{\alpha_i}}.
+\end{equation*}
+
+\end{itemize}
+
+% HYPERGEOMETRIC
+\subsection{Hypergeometric Distribution}
+The hypergeometric distribution describes the probability of $k$ successes in $n$ draws, without replacement, from a finite population of size $N$ that contains exactly $K$ successes (each draw is either a success or a failure).
+
+\begin{itemize}
+\item Support is $k \in \bbN$ such that $\max(0, n + K - N) \leq k \leq \min(K, n)$.
+
+\item PMF $\bbP(Y = k) = \displaystyle\frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}$.
+
+\item $\bbE Y = \displaystyle\frac{nK}{N}$, $\var Y = \displaystyle\frac{nK(N-K)(N-n)}{N^2(N-1)}$.
+
+\item Let $X_i = 1$ if draw $i$ is a success, 0 otherwise. Then $Y = \displaystyle\sum_{i=1}^n X_i$.
+
+\item Let $Y \sim \text{Hypergeom(n, N, K)}$.  $\bbE [Y^k] = \displaystyle\frac{nK}{N}\bbE \left[ (Z + 1)^{k-1} \right]$, where $Z \sim \text{Hypergeom(n-1, N-1, K-1)}$. (Proof by combinatorial identities.)
+
+\item Let $Y \sim \text{Hypergeom(n, N, K)}$, and let $p = K/N$. If $N$ and $K$ are large compared to $n$, and $p$ is not close to $0$ or $1$, then $Y \dot{\sim} \text{Binom}(n,p)$.
+
+\end{itemize}
+
+% INVERSE GAUSSIAN
+\subsection{Inverse Gaussian Distribution}
+Let $X \sim \text{IG}(\mu, \lmb)$ with $\mu, \lmb > 0$.
+\begin{itemize}
+\item Support is $x \in (0, \infty)$.
+
+\item PDF $p(x) = \sqrt{\dfrac{\lmb}{2\pi x^3}} \exp \left[\dfrac{-\lmb(x-\mu)^2}{2\mu^2 x} \right]$. CDF $\bbP(X \leq x) = \Phi \left[ \sqrt{\dfrac{\lmb}{x}}\left(\dfrac{x}{\mu} - 1 \right) \right] + \exp \left(\dfrac{2\lmb}{\mu}\right)\Phi \left[ -\sqrt{\dfrac{\lmb}{x}}\left(\dfrac{x}{\mu} + 1 \right) \right]$.
+
+\item $\bbE X = \mu$, Mode $= \mu \left[\sqrt{1 + \dfrac{9\mu^2}{2\lmb^2}} - \dfrac{3\mu}{2\lmb} \right]$. $\var X = \dfrac{\mu^3}{\lmb}$.
+
+\item $\bbE [1/X] = 1/\mu + 1/\lmb$, $\var (1/X) = \dfrac{1}{\mu\lmb} + \dfrac{2}{\lmb^2}$.
+
+\item MGF $\bbE [e^{tX}] = \exp \left[\dfrac{\lmb}{\mu} \left(1 - \sqrt{1 - \dfrac{2\mu^2 t}{\lmb}} \right) \right]$. Characteristic function $\bbE [e^{itX}] = \exp \left[\dfrac{\lmb}{\mu} \left(1 - \sqrt{1 - \dfrac{2\mu^2 it}{\lmb}} \right) \right]$.
+
+\item If $\{X_t \}$ is the Brownian motion with drift $\nu$, i.e. $X_t = \nu t + \sg W_t$, then for a fixed level $\alpha > 0$, the first passage time is an inverse-Gaussian: $T_\alpha = \inf\{t > 0: X_t = \alpha \} \sim IG \left(\dfrac{\alpha}{\nu}, \dfrac{\alpha^2}{\sg^2} \right)$.
+
+\item If $X \sim IG(\mu, \lmb)$, then for $k > 0$, $kX \sim IG(k\mu, k\lmb)$.
+
+\item If $X_i \stackrel{ind}{\sim} IG(\mu_0 w_i, \lmb_0 w_i^2)$, then $\dis\sum_{i=1}^n X_i \sim IG \left( \mu_0 \sum w_i, \lmb_0 \left( \sum w_i \right)^2 \right)$.
+
+\end{itemize}
+
+% LAPLACE/DOUBLE EXPONENTIAL
+\subsection{Laplace/Double Exponential Distribution}
+Let $X \sim \text{Laplace}(\mu, b)$, where $b > 0$ (scale).
+\begin{itemize}
+\item PDF $p(x) = \displaystyle\frac{1}{2b} \exp \left( - \frac{|x - \mu|}{b} \right)$. CDF $P(X \leq x) = \displaystyle\frac{1}{2} \exp \left( \frac{x - \mu}{b} \right)$ if $x < \mu$, $P(X \leq x) = 1 - \displaystyle\frac{1}{2} \exp \left( -\frac{x - \mu}{b} \right)$ if $x \geq \mu$.
+
+\item Mean, median and mode are all $\mu$. $\var X = 2b^2$. Skewness is 0, excess kurtosis is 3.
+
+\item MGF $\bbE[e^{tX}] = \displaystyle\frac{\exp(\mu t)}{1 - b^2 t^2}$ for $|t| < 1/b$. Characteristic function $\bbE [e^{itX}] = \displaystyle\frac{\exp(i \mu t)}{1 + b^2 t^2}$.
+
+\item Central moments $\bbE [(X-\mu)^n] = 0$ if $n$ is odd, $= b^n n!$ if $n$ is even.
+
+\item If $X \sim \text{Laplace}(\mu, b)$, then $kX + c \sim \text{Laplace}(k\mu + c, kb)$.
+
+\item If $X \sim \text{Laplace}(\mu, b)$, then $|X - \mu| \sim \text{Exp}(1/b)$ (rate).
+
+\item If $X, Y \sim \text{Exp}(\lmb)$, then $X - Y \sim \text{Laplace}(0, 1/\lmb)$.
+
+\item If $X_1, \dots, X_4 \stackrel{iid}{\sim} \calN(0,1)$, then $X_1 X_2 - X_3 X_4 \sim \text{Laplace}(0,1)$.
+
+\item If $X_1, \dots, X_n \stackrel{iid}{\sim} \text{Laplace}(\mu,b)$, then $\displaystyle\frac{2}{b}\sum_{i=1}^n |X_i - \mu| \sim \chi_{2n}^2$.
+
+\item If $X, Y \text{Laplace}(\mu, b)$, then $\displaystyle\frac{|X - \mu|}{|Y - \mu|} \sim F_{2,2}$.
+
+\item If $X, Y \sim \text{Unif}(0,1)$, then $\log (X / Y) \sim \text{Laplace}(0,1)$.
+
+\item If $X \sim \text{Exp}(\lmb)$ and $Y \sim \text{Bernoulli}(1/2)$, then $X(2Y - 1) \sim \text{Laplace}(0, 1/\lmb)$.
+
+\item If $X \sim \text{Exp}(\lmb)$ and $Y \sim \text{Exp}(\nu)$, then $\lmb X - \nu Y \sim \text{Laplace}(0,1)$.
+
+\item If $V \sim \text{Exp}(1)$ and $Z \sim \calN(0,1)$, then $X = \mu + b \sqrt{2V} Z \sim \text{Laplace}(\mu, b)$.
+
+\end{itemize}
+
+% LOGISTIC
+\subsection{Logistic Distribution}
+Let $X \sim \text{Logistic}(\mu, s)$. $\mu$ location parameter, $s > 0$ scale parameter.
+
+\begin{itemize}
+\item PDF $p(x) = \dis\frac{\exp \left(-\frac{x-\mu}{s} \right)}{s \left[1 + \exp \left(-\frac{x-\mu}{s} \right) \right]^2}$, CDF $P(X \leq x) = \dis\frac{1}{1 + \exp \left(-\frac{x-\mu}{s} \right)}$.
+
+\item Mean, median and mode are all $\mu$. $\var X = \dis\frac{s^2 \pi^2}{3}$.
+
+\item MGF $\bbE [e^{tX}] = e^{\mu t} B(1 - st, 1 + st)$ for $st \in (-1, 1)$, where $B$ is the beta function. Characteristic function $\bbE [e^{itX}] = e^{it \mu} \dis\frac{\pi st}{\text{sinh}(\pi st)}$.
+
+\item Central moments $\bbE [(X-\mu)^n] = s^n \pi^n (2^n - 2) \cdot |B_n|$, where $B_n$ is the $n^{th}$ Bernoulli number.
+
+\item If $X \sim \text{Logistic}(\mu, s)$, then $kX + c \sim \text{Logistic}(k\mu + c, ks)$.
+
+\item If $U \sim \text{Unif}(0,1)$, then $\mu + s[\log U - \log (1-U)] \sim \text{Logistic}(\mu, s)$.
+
+\item If $X, Y \sim \text{Gumbel}{\alpha, \beta}$, then $X - Y \sim \text{Logistic}(0, \beta)$.
+
+\item If $X \sim \text{Exp}(1)$, then $\mu + \beta \log(e^X - 1) \sim \text{Logistic}(\mu, \beta)$.
+
+\item If $X, Y \sim \text{Exp}(1)$, then $\mu - \beta \log \left(\dis\frac{X}{Y} \right) \sim \text{Logistic}(\mu, \beta)$.
+\end{itemize}
+
+% MULTINOMIAL DISTRIBUTION
+\subsection{Multinomial Distribution}
+Let $X \sim \text{Multinom}(n; p_1, \dots, p_s)$. $n$ objects belonging to $s$ classes, $p_1 + \dots + p_s = 1$.
+\begin{itemize}
+\item PMF $P(X_1 = x_1, \dots X_s = x_s) = \dis\frac{n!}{x_1! \dots x_s!} p_1^{x_1} \dots p_s^{x_s}$ (for $x_i$'s that sum up to $n$).
+
+\item $\bbE X_i = np_i$, $\var X_i = np_i(1-p_i)$, $\text{Cov}(X_i, X_j) = -np_i p_j$ for $i \neq j$. In matrix notation, $\var \mathbf{X} = n \left[ \text{diag}(\mathbf{p}) - \mathbf{pp^T} \right]$. (Proof: 310A HW1 Qn3.)
+
+\item MGF $\bbE [e^{t \cdot X}] = \left(\dis\sum_{i=1}^s p_i e^{t_i} \right)^n$. Characteristic function $\bbE [e^{it \cdot X}] = \left(\dis\sum_{j=1}^s p_j e^{it_j} \right)^n$.
+
+\item (TPE Eg 5.3 p24) $\text{Multinom}(n; p_1, \dots, p_s)$ is an $(s-1)$-dimensional exponential family.
+
+\item The $X_i$'s have marginal distribution $\text{Binom}(n, p_i)$.
+
+\item \textbf{Poisson-Multinomial connection:} Suppose $X_i$'s independent RVs with $X_i \sim \text{Pois}(\lmb_i)$. Let $S = X_1 + \dots + X_n$, $\lmb = \lmb_1 + \dots + \lmb_n$. Then
+\begin{equation*}
+(X_1, \dots, X_n) \mid S \sim \text{Multinom}\left( S, \left( \frac{\lmb_1}{\lmb}, \dots, \frac{\lmb_n}{\lmb} \right) \right).
+\end{equation*}
+
+Conversely, suppose that $N \sim \text{Pois}(\lmb)$ and conditional on $N = n$, $X = (X_1, \dots, X_k) \sim \text{Multinom}(n, (p_1, \dots, p_k))$. Then the $X_i$'s are marginally independent and Poisson-distributed with parameters $\lmb p_1, \dots, \lmb p_k$.
+
+\end{itemize}
+
+% NEGATIVE BINOMIAL
+\subsection{Negative Binomial Distribution}
+The negative binomial is parametrized in a number of ways.
+
+\subsubsection*{BDA3/305C Notes}
+Let $Y \sim \text{NegBin}(\alpha, \beta)$, where $\alpha > 0$ (shape), $\beta > 0$ (rate).
+\begin{itemize}
+\item PMF is $p(y) = \dis\binom{\alpha + y - 1}{y}\left(\frac{\beta}{\beta + 1}\right)^\alpha\left(\frac{1}{\beta + 1}\right)^y$, $y = 0, 1, \dots$.
+
+\item $\bbE Y = \dis\frac{\alpha}{\beta}$, $\var Y = \dis\frac{\alpha(\beta+1)}{\beta^2}$.
+
+\item The negative binomial is a mixture of Poisson distributions with rates which follow the gamma distribution (shape-rate):
+\begin{equation*}
+\text{NegBin}(y \mid \alpha, \beta) = \int \text{Pois}(y \mid \t) \text{Gamma}(\t \mid \alpha, \beta) d\t.
+\end{equation*}
+\end{itemize}
+
+\subsubsection*{TSH}
+Let $Y \sim \text{NegBin}(p,m)$, where $p$ is the probability of success, and $m$ is the number of successes to be obtained.
+\begin{itemize}
+\item If we let $m = \alpha$ and $p = \dis\frac{\beta}{\beta+1}$, we get BDA's parametrization.
+
+\item Interpretation: If $Y+m$ independent trials are needed to obtain $m$ successes (and each trial has success probability $p$), then $Y \sim \text{NegBin}(p,m)$.
+
+\item PMF is $p(y) = \dis\binom{m + y - 1}{y}p^m(1-p)^y$, $y = 0, 1, \dots$.
+
+\item $\bbE Y = \dis\frac{m(1-p)}{p}$, $\var Y = \dis\frac{m(1-p)}{p^2}$.
+
+\item MGF $\bbE[e^{tY}] = \left(\dis\frac{p}{1-(1-p)e^t}\right)^m$ for $t < - \log (1-p)$. Characteristic function $\bbE[e^{itY}] = \left(\dis\frac{p}{1-(1-p)e^{it}}\right)^m$.
+
+\item Fisher information: $\dis\frac{m}{p(1-p)^2}$.
+
+\item $Y$ is the sum of $m$ independent $\text{Geom}(p)$ random variables.
+\end{itemize}
+
+\subsubsection*{Agresti}
+Let $Y \sim \text{NegBin}(k, \mu)$ or $Y \sim \text{NegBin}(\gamma, \mu)$, where $\gamma = \dis\frac{1}{k}$ (dispersion parameter). $k > 0$, $\mu > 0$.
+\begin{itemize}
+\item If we let $\mu = \dis\frac{\alpha}{\beta}$ and $k = \alpha$, we get BDA's parametrization.
+
+\item PMF $p(y) = \dis\frac{\Gamma(y+k)}{\Gamma(k)\Gamma(y+1)}\left(\frac{k}{\mu + k}\right)^k\left(1-\frac{\mu}{\mu + k}\right)^y$, $y = 0, 1, \dots$.
+
+\item $\bbE Y = \mu$, $\var Y = \mu + \gamma \mu^2$.
+
+\item As $\gamma \goesto 0$, the negative binomial converges to the Poisson.
+\end{itemize}
+
+% NORMAL
+\subsection{Normal Distribution}
+Let $Z \sim \calN(\mu, \sg^2)$.
+\begin{itemize}
+\item PDF $p(z) = \displaystyle\frac{1}{\sqrt{2\pi \sg^2}} e^{-\frac{(z-\mu)^2}{2\sg^2}}$.
+
+\item MGF $\bbE \left[ e^{tZ} \right] = \exp \left[ \mu t + \frac{\sg^2 t^2}{2} \right]$. Characteristic function $\bbE \left[ e^{itZ} \right] = \exp \left[ i\mu t - \frac{\sg^2 t^2}{2} \right]$.
+
+\item Fisher information: $\begin{pmatrix} \frac{1}{\sg^2} & 0 \\ 0 & \frac{1}{2\sg^4}  \end{pmatrix}$.
+
+\item Central moments (i.e. $\mu = 0$): for non-negative integer $p$,
+\begin{equation*}
+\bbE [X^p] = \begin{cases} 0 &\text{if $p$ odd,} \\ \sg^p (p-1)!! &\text{if $p$ even.} \end{cases}
+\end{equation*}
+\begin{equation*}
+\bbE [|X|^p] = \sg^p (p-1)!! \cdot \begin{cases} \sqrt{\frac{2}{\pi}} &\text{if $p$ odd} \\ 1 &\text{if $p$ even} \end{cases} = \sg^p \cdot \frac{2^{p/2} \Gamma \left( \frac{p+1}{2} \right)}{\sqrt{\pi}}.
+\end{equation*}
+
+\item $\bbE \left[ \frac{1}{X}\right]$ does not exist.
+
+\item If $X$ and $Y$ are \textbf{jointly} normal, then uncorrelatedness is the same as independence.
+
+\item (TPE Eg 5.16 p31) \textbf{Stein's identity for the normal:} If $X \sim \calN(\mu, \sg^2)$ and $g$ a differentiable function with $\bbE |g'(X)| < \infty$, then $\bbE [g(X) (X-\mu)] = \sg^2 \bbE g'(X)$.
+
+\item \textbf{Variance stabilizing transformation:} If $X \dot{\sim} \calN(\t, \alpha \t(1-\t))$, then taking $Y = \dfrac{1}{\sqrt{\alpha}}\arcsin (2X - 1)$, we have $Y \dot{\sim} \calN \left(\dfrac{1}{\sqrt{\alpha}}\arcsin(2\t - 1), 1 \right)$.
+
+\item \textbf{Cram\'{e}r's decomposition theorem:} If $X_1$ and $X_2$ are independent and $X_1 + X_2$ is normally distributed, then both $X_1$ and $X_2$ must be normally distributed.
+
+\item \textbf{Marcinkiewicz theorem:} If a random variable $X$ has characteristic function of the form $\varphi_X(t) = e^{Q(t)}$ where $Q$ is a polynomial, then $Q$ can be at most a quadratic polynomial.
+
+\item If $X$ and $Y$ are independent $\calN(\mu, \sg^2)$ RVs, then $X+Y$ and $X-Y$ are independent and identically distributed. \textbf{Bernstein's theorem} asserts the converse: If $X$ and $Y$ are independent s.t. $X+Y$ and $X-Y$ are also independent, then $X$ and $Y$ must have normal distributions.
+
+\item \textbf{KL divergence:} If $X_1 \sim \calN(\mu_1, \sg_1^2)$ and $X_2 \sim \calN(\mu_2, \sg_2^2)$, then \[ D_{kl}(X_1 \parallel X_2) = \dfrac{(\mu_1 - \mu_2)^2}{2\sg_2^2} + \dfrac{1}{2}\left( \dfrac{\sg_1^2}{\sg_2^2} - 1 - \log \dfrac{\sg_1^2}{\sg_2^2}  \right). \]
+
+\item \textbf{Hellinger distance:} If $X_1 \sim \calN(\mu_1, \sg_1^2)$ and $X_2 \sim \calN(\mu_2, \sg_2^2)$, then 
+\[d_{hel}^2(X_1, X_2) = 1 - \sqrt{\dfrac{2\sg_1\sg_2}{\sg_1^2 + \sg_2^2}} \exp \left(-\dfrac{(\mu_1 - \mu_2)^2}{4(\sg_1^2 + \sg_2^2)} \right).\]
+
+\end{itemize}
+
+% STANDARD NORMAL
+\subsubsection{Standard Normal Distribution}
+
+\begin{itemize}
+\item For $Z \sim \calN(0,1)$, $\phi'(x) = -x \phi(x)$ for all $x \in \bbR$.
+
+\item If $Z_1, \dots, Z_n \stackrel{iid}{\sim} \calN(0,1)$, then $Z_1^2 + \dots + Z_n^2 \sim \chi_n^2$.
+
+\item $\bbE |Z| = \sqrt{\dis\frac{2}{\pi}}$.
+
+\item \textbf{Box-Muller method:} If $U, V \stackrel{iid}{\sim} U[0,1]$, then
+\begin{equation*}
+X = \sqrt{- 2 \log U} \cos (2 \pi V), \qquad Y = \sqrt{-2 \log U} \sin(2 \sin V)
+\end{equation*}
+are independent $\calN(0,1)$ random variables.
+
+\item (Owen Section 3.2.4) If $Z_1, \dots, Z_n \stackrel{iid}{\sim} \calN(\mu, \sg^2)$, then $\bar{Z}$ is independent of $Z_1 - \bar{Z}, \dots, Z_n - \bar{Z}$.
+
+\item (Dembo Ex 2.2.24, 310A Lec 9, 300C Lec 2) \textbf{Approximating tail of a Gaussian:} Let $Z \sim \calN(0,1)$. Then for any $x > 0$,
+\begin{equation*}
+\left( \frac{1}{x} - \frac{1}{x^3} \right) \frac{e^{-x^2/2}}{\sqrt{2\pi}} \leq P \{Z > x \} \leq \frac{1}{x} \frac{e^{-x^2/2}}{\sqrt{2\pi}}.
+\end{equation*}
+
+For large $x$, $1 - \Phi(x) \sim \displaystyle\frac{e^{-x^2/2}}{x\sqrt{2\pi}} = \displaystyle\frac{\varphi(x)}{x}$.
+
+\item (300C Lec 2) Holding $\alpha$ fixed, for large $n$,
+\begin{equation*}
+|z(\alpha / n)| \approx \sqrt{2 \log n} \left[1 - \frac{1}{4} \frac{\log \log n}{\log n} \right] \approx \sqrt{2 \log n}.
+\end{equation*}
+
+\item (Dembo Ex 2.2.24, 300C Lec 2) Let $Z_1, Z_2, \dots$ be independent $\calN(0,1)$ random variables. Then with probability 1,
+\begin{equation*}
+\lim_{n \goesto \infty} \frac{\max_{i \leq n} Z_i}{\sqrt{2 \log n}} = 1.
+\end{equation*}
+
+\item (300C, Lec 24) For large $\lmb$, 
+\begin{equation*}
+\bbE [Z^2 ; |Z| > \lmb] \approx 2 \lmb \phi(\lmb).
+\end{equation*}
+
+\item If $Z_1$ and $Z_2$ are standard normal variables, then $Z_1/Z_2$ has the standard Cauchy distribution.
+
+\item $\Phi(x)$ is log-concave (i.e. $\log \Phi(x)$ is concave), so $\dfrac{d}{dx} \log \Phi(x) = \dfrac{\phi(x)}{\Phi(x)}$ is decreasing in $x$.
+
+\item If $G_\t^k$ is the CDF of the truncated normal $Z \sim \calN(\t, 1) \mid Z \leq k$, then $G_\t^k(t)$ is a decreasing function of $\t$.
+\end{itemize}
+
+% MULTIVARIATE NORMAL
+\subsubsection{Multivariate Normal Distribution}
+Let $Z \sim \calN(\mu, \Sg)$, with $\mu \in \bbR^d$, $\Sg \in \bbR^{d \times d}$, and $\Sg$ positive semi-definite.
+
+\begin{itemize}
+\item Support $Z \in \mu + \text{span}(\Sg) \subseteq \bbR^d$.
+
+\item PDF exists only when $\Sg$ is positive definite: $p(z) = \displaystyle\frac{1}{\sqrt{(2\pi)^d |\Sg|}} \exp \left[ -\frac{1}{2}(z - \mu)^T \Sg^{-1} (z-\mu) \right]$.
+
+\item MGF $\bbE [e^{t \cdot Z}] = \exp \left( \mu^T t + \frac{1}{2}t^T \Sg t \right)$. Characteristic function $\bbE [e^{it \cdot Z}] = \exp \left( i\mu^T t - \frac{1}{2}t^T \Sg t \right)$.
+
+\item (Dembo Ex 3.5.20) A random vector $X$ has the multivariate normal distribution iff $\left( \sum_{i=1}^d a_{ji} X_i, j = 1, \dots, m \right)$ is a Gaussian random vector for any non-random coefficients $a_{11}, \dots, a_{md} \in \bbR$. (Also holds when $m = 1$.)
+
+\item Let $\begin{pmatrix} X_1 \\ X_2 \end{pmatrix} \sim \calN \left( \begin{pmatrix} \mu_1 \\ \mu_2 \end{pmatrix}, \begin{pmatrix} \Sg_{11} & \Sg_{12} \\ \Sg_{21} & \Sg_{22} \end{pmatrix} \right)$ ($X_1$ and $X_2$ can be vectors). Then the distribution of $X_1$ given $X_2 = a$ is multivariate normal:
+\begin{equation*}
+X_1 \mid X_2 = a \sim \calN \left( \mu_1 + \Sg_{12}\Sg_{22}^{-1} (a - \mu_2), \Sg_{11} - \Sg_{12}\Sg_{22}^{-1} \Sg_{21} \right).
+\end{equation*}
+
+The covariance matrix above is called the Schur complement of $\Sg_{22}$ in $\Sg$. Note that it does not depend on $a$. (In order to prove this result, we use the fact that $X_2$ and $X_1 - \Sg_{12}\Sg_{22}^{-1}X_2$ are independent.)
+
+\item Using the notation above, $X_1$ and $X_2$ are independent iff $\Sg_{12} = 0$. (Proof: Factor the characteristic function.)
+
+\item Suppose $Y \sim \calN(\mu, \Sg)$ and $\Sg^{-1}$ exists. Then $(Y - \mu)^T \Sg^{-1} (Y - \mu) \sim \chi_n^2$. (Proof: $\Sg = P^T \Lmb P$, $Z \sim \Lmb^{-1/2}P(Y - \mu)$. Then $Z \sim \calN(0, I_n)$.)
+
+\item Assume that $Z \sim \calN(0, \Sg)$ is $d$-dimensional. Then $Z^T \Sg^{-1} Z \sim \chi_d^2$. More generally, $(Z - \mu)^T \Sg^\dagger (Z - \mu) \sim \chi_{rank(\Sg)}^2$, where $\Sg^\dagger$ is the pseudo-inverse of $\Sg$.
+
+\item If $Z \sim \calN(0,I)$ and $Q$ orthogonal (i.e. $QQ^T = I$), then $QZ \sim \calN(0, I)$.
+
+\item If $\varphi$ is the density for $\calN(0, I)$, then $\partial_i \varphi(x - \mu) = -(x_i - \mu_i) \varphi(x - \mu)$.
+\end{itemize}
+
+\subsubsection{Bivariate Normal Distribution}
+\begin{itemize}
+\item In the bivariate normal case $Z = \begin{pmatrix} X \\ Y \end{pmatrix}$, letting $\rho$ be the correlation between $X$ and $Y$, we can write the PDF as
+\begin{equation*}
+p(x,y) = \frac{1}{2\pi \sg_X \sg_Y \sqrt{1 - \rho^2}} \exp \left( - \frac{1}{2(1-\rho^2)} \left[ \frac{(x - \mu_X)^2}{\sg_X^2} + \frac{(y - \mu_Y)^2}{\sg_Y^2} - \frac{2 \rho (x-\mu_X)(y - \mu_Y)}{\sg_X \sg_Y} \right] \right).
+\end{equation*}
+
+\item (300A Lec 16) Under $\rho = 0$ (i.e. independence), the sample correlation has $\displaystyle\frac{\sqrt{n-2} \hat{\rho}}{\sqrt{1 - \hat{\rho}^2}} \sim t_{n-2}$.
+
+\item Let $\begin{pmatrix} X \\ Y \end{pmatrix} \sim \calN \left( \begin{pmatrix} 0 \\ 0 \end{pmatrix}, \begin{pmatrix} 1 & \rho \\ \rho & 1 \end{pmatrix} \right)$. Then $Y = \rho X + \sqrt{1 - \rho^2} \eps$ for $\eps \sim \calN(0,1)$.
+\end{itemize}
+
+% PARETO
+\subsection{Pareto Distribution}
+Let $X \sim \text{Pareto}(a,b)$. $a > 0$ shape, $b > 0$ scale.
+\begin{itemize}
+\item PDF $p(x) = \dis\frac{ab^a}{x^{a+1}}$ for $x \geq b$. CDF $\bbP(X \leq x) = 1 - \left(\dis\frac{b}{x}\right)^a$.
+
+\item $\bbE X = \infty$ if $a \leq 1$, $\bbE X = \dis\frac{ab}{a-1}$ if $a > 1$. Median is $b\sqrt[a]{2}$, Mode is $b$.
+
+\item $\var X = \infty$ if $a \leq 2$, $\var X = \dis\frac{ab^2}{(a-1)^2(a-2)}$ if $a > 2$.
+
+\item MGF and characteristic function uses incomplete gamma function.
+
+\item Moments $\bbE [X^n] = \dis\frac{ab^n}{a-n}$ if $0 < n < a$, $= \infty$ if $n \geq a$.
+
+\item Fisher information: $\begin{pmatrix} \frac{a}{b^2} & -\frac{1}{b} \\ -\frac{1}{b} & \frac{1}{a^2}  \end{pmatrix}$.
+
+\item If $X \sim \text{Pareto}(a,b)$ and $c > 0$, then $cX \sim \text{Pareto}(a,bc)$.
+
+\item If $X \sim \text{Pareto}(a,b)$ and $n > 0$, then $X^n \sim \text{Pareto}(a/n,b^n)$.
+\end{itemize}
+
+% POISSON
+\subsection{Poisson Distribution}
+Let $X \sim \text{Pois}(\lmb)$.
+\begin{itemize}
+\item PMF $P(X = k) = \displaystyle\frac{\lmb^k e^{-\lmb}}{k!}$.
+
+\item $\bbE X = \lmb$, $\var X = \lmb$.
+
+\item MGF $\bbE [e^{tX}] = \exp \left[ \lmb(e^t - 1) \right]$. Characteristic function $\bbE [e^{itX}] = \exp \left[ \lmb (e^{it} - 1) \right]$.
+
+\item For $k = 1,2, \dots$, $\bbE [X(X-1)\dots (X - K + 1)] = \lmb^k$.
+
+\item Fisher information: $\displaystyle\frac{1}{\lmb}$.
+
+\item Let $X_1 \sim \text{Pois}(\lmb_1)$ and $X_2 \sim \text{Pois}(\lmb_2)$ be independent. $X_1 + X_2 \sim \text{Pois}(\lmb_1 + \lmb_2)$, and $X_1 \mid X_1 + X_2 = k \sim \text{Binom}\left(k, \displaystyle\frac{\lmb_1}{\lmb_1 + \lmb_2} \right)$.
+
+\item \textbf{Poisson-Multinomial connection:} Suppose $X_i$'s independent RVs with $X_i \sim \text{Pois}(\lmb_i)$. Let $S = X_1 + \dots + X_n$, $\lmb = \lmb_1 + \dots + \lmb_n$. Then
+\begin{equation*}
+(X_1, \dots, X_n) \mid S \sim \text{Multinom}\left( S, \left( \frac{\lmb_1}{\lmb}, \dots, \frac{\lmb_n}{\lmb} \right) \right).
+\end{equation*}
+
+Conversely, suppose that $N \sim \text{Pois}(\lmb)$ and conditional on $N = n$, $X = (X_1, \dots, X_k) \sim \text{Multinom}(n, (p_1, \dots, p_k))$. Then the $X_i$'s are marginally independent and Poisson-distributed with parameters $\lmb p_1, \dots, \lmb p_k$.
+
+\end{itemize}
+
+% T
+\subsection{T Distribution}
+Let $X \sim t_\nu$, $\nu > 0$. ($\nu$ can be any positive real number.)
+\begin{itemize}
+\item PDF $p(x) = \displaystyle\frac{\Gamma\left(\frac{\nu + 1}{2} \right)}{\sqrt{\nu \pi}\Gamma \left(\frac{\nu}{2} \right)} \left( 1 + \frac{x^2}{\nu} \right)^{\frac{\nu + 1}{2}}$.
+
+\item $\bbE X = 0$ (if $\nu > 1$, otherwise undefined), median and mean are 0. $\var X = \displaystyle\frac{\nu}{\nu-2}$ for $\nu > 2$, $\infty$ for $1 < \nu \leq 2$, undefined otherwise.
+
+\item MGF is undefined, characteristic function involves modified Bessel function of the second kind.
+
+\item When $\nu > 1$,
+\begin{equation*}
+\bbE [X^k] = \begin{cases} 0  &\text{if $k$ odd, $0 < k < \nu$,} \\ \displaystyle\frac{1}{\sqrt{\pi} \Gamma \left(\frac{\nu}{2} \right)} \left[ \Gamma \left(\frac{k+1}{2} \right)\Gamma \left( \frac{\nu - k}{2} \right) \right] &\text{if $k$ even, $0 < k < \nu$.} \end{cases}
+\end{equation*}
+
+Moments of order $\nu$ or higher don't exist.
+
+\item As $n \goesto \infty$, $t_n \goesto \calN(0,1)$.
+
+\item If $Z \sim \calN(0,1)$ and $X \sim \chi_n^2$ with $Z$ and $X$ independent, then $\displaystyle\frac{Z}{\sqrt{X / n}} \sim t_n$.
+
+\item Let $X_1, \dots, X_n \stackrel{iid}{\sim} \calN(\mu, \sg^2)$. Let $\bar{X}$ be the sample mean and $S^2 = \displaystyle\frac{1}{N-1} \sum_{i=1}^N (X_i - \bar{X})^2$ be the sample variance. Then $\displaystyle\frac{\bar{X} - \mu}{S / \sqrt{n}} \sim t_{n-1}$.
+
+\item $t_1 \stackrel{d}{=}$ standard Cauchy distribution.
+
+\item If $T \sim t_\nu$, then $T^2 \sim F_{1, \nu}$.
+\end{itemize}
+
+\subsubsection{Non-Central T Distribution}
+\begin{itemize}
+\item This is obtained by $t_n'(\lmb) = \displaystyle\frac{\calN(\lmb, 1)}{\sqrt{\chi_n^2 / n}}$.
+
+\item Non-central $t$-distribution is asymmetric unless $\mu = 0$. Right tail will be heavier than the left when $\mu > 0$ and vice versa.
+
+\item If $T \sim t_\nu'(\mu)$, then $T^2 \sim F_{1, \nu}'(\mu^2)$.
+
+\item As $n \goesto \infty$, $t_n'(\mu) \stackrel{d}{\goesto} \calN(\mu, 1)$.
+\end{itemize}
+
+% UNIFORM
+\subsection{Uniform Distribution}
+Let $U \sim \text{Unif}(a,b)$.
+\begin{itemize}
+\item PDF $p(x) = \displaystyle\frac{1}{b-a} 1_{x \in [a,b]}$. CDF $P (X \leq x) = \displaystyle\frac{x-a}{b-a}$ for $a \leq x \leq b$.
+
+\item $\bbE X = \text{Median} = \displaystyle\frac{a+b}{2}$, $\var X = \displaystyle\frac{(b-a)^2}{12}$.
+
+\item MGF $\bbE [e^{tU}] = \displaystyle\frac{e^{tb} - e^{ta}}{t(b-a)}$ for $t \neq 0$, $\bbE [e^{tU}] = 1$ if $t = 0$. Characteristic function $\bbE [e^{itU}] = \displaystyle\frac{e^{itb} - e^{ita}}{it(b-a)}$.
+
+\item If $X_1, \dots, X_n \stackrel{iid}{\sim} \text{Unif}(0,1)$, then the $k$th order statistic $X_{(k)} \sim \text{Beta}(k, n + 1 - k)$.
+
+\item $\text{Unif}(0,1) = \text{Beta}(1,1)$.
+
+\item If $U \sim \text{Unif}(0,1)$, then $U^n \sim \text{Beta}(1/n,1)$.
+
+\item Suppose $F$ is a distribution function for a probability distribution on $\bbR$, and $F^{-1}$ is the corresponding quantile function, i.e. $F^{-1}(u) = \inf \{ x: F(x) \geq u \}$. Then $X = F^{-1}(U)$ has distribution function $F$.
+
+\end{itemize}
+
+% WEIBULL
+\subsection{Weibull Distribution}
+Let $X \sim \text{Weibull}(\lmb, k)$, with $\lmb > 0$ (scale) and $k > 0$ (shape).
+
+\begin{itemize}
+\item Support is $x \geq 0$.
+
+\item PDF $p(x) = \displaystyle\frac{k}{\lmb}\left( \frac{x}{\lmb}\right)^{k-1} e^{-(x/\lmb)^k}$. CDF $P (X \leq x) = 1 - e^{-(x/\lmb)^k}$.
+
+\item $\bbE X = \lmb \Gamma(1 + 1/k)$, median $= \lmb \left( \log 2 \right)^{1/k}$, mode $= \lmb \left( \displaystyle\frac{k-1}{k} \right)^{1/k}$ if $k > 1$, 0 otherwise.
+
+\item $\var X = \lmb^2 \left[ \Gamma(1 + 2/k) - (\Gamma (1 + 1/k))^2 \right]$.
+
+\item MGF $\bbE [e^{tX}] = \displaystyle\sum_{n=0}^\infty\frac{t^n \lmb^n}{n!} \Gamma (1 + n/k)$ for $k \geq 1$. Characteristic function $\bbE [e^{itX}] = \displaystyle\sum_{n=0}^\infty\frac{(it)^n \lmb^n}{n!} \Gamma (1 + n/k)$.
+
+\item The Weibull is the distribution of a random variable $W$ such that $\left( \displaystyle\frac{W}{\lmb}\right)^k \sim \text{Exp}(1)$. Going in the other direction, if $X \sim \text{Exp}(1)$, then $\lmb X^{1/k} \sim \text{Weibull}(\lmb, k)$.
+
+\item If $U \sim \text{Unif}(0,1)$, $\lmb [- \log U]^{1/k} \sim \text{Weibull}(\lmb, k)$.
+
+\item As $k \goesto \infty$, $\text{Weibull}(\lmb, k)$ converges to a point mass at $\lmb$.
+\end{itemize}
+
+% ANALYSIS
+\section{Analysis Facts}
+
+\subsection{Basic Topology and Spaces}
+\begin{itemize}
+\item \textbf{Banach space}: A complete vector space with a norm.
+
+\item \textbf{Hilbert space}: A real or complex inner product space which is complete w.r.t. distance induced by the inner product.
+
+\item \textbf{Compact metric space}: A metric space $X$ is compact if every open cover of $X$ has a finite subcover.
+
+\item \textbf{Sequentially compact}: A metric space $X$ is sequentially compact if every sequence of points in $X$ has a convergent subsequence converging to a point in $X$.
+
+\item \textbf{Totally bounded}: A metric space $(M, d)$ is totally bounded iff for every $\eps > 0$, there exists a finite collection of open balls in $M$ of radius $\eps$ whose union covers $M$.
+
+\item \textbf{Heine-Borel Theorem for arbitrary metric space}: A subset of a metric space is compact iff it is complete and totally bounded.
+
+\item \textbf{Borel-Lebesgue Theorem}: For a metric space $(X, d)$, the following are equivalent:
+\begin{enumerate}
+\item $X$ is compact.
+\item Every collection of closed subsets of $X$ with the finite intersection property (i.e. every finite subcollection has non-empty intersection) has non-empty intersection.
+\item $X$ is sequentially compact.
+\item $X$ is complete and totally bounded.
+\end{enumerate}
+
+\item (Stein Thm 2.4) Every Hilbert space has an orthonormal basis.
+
+\item (Rudin Thm 2.35) Closed subsets of compact sets are compact. If $F$ is closed and $K$ is compact, then $F \cap K$ is compact.
+
+\item (Rudin Thm 4.19) If $f$ is a continuous mapping from compact metric space $X$ to metric space $Y$, then $f$ is uniformly continuous on $X$.
+
+\item If $T$ is a compact set and $f: T \mapsto \bbR$ is continuous, then $f$ is bounded.
+
+\item Over a compact subset of the real line, continuously differentiable $\implies$ Lipschitz-continuous $\implies$ $\alpha$-H\"{o}lder continuous ($\alpha > 0$) $\implies$ uniformly continuous $\implies$ continuous $\implies$ RCLL $\implies$ separable.
+
+\end{itemize}
+
+\subsection{Measure Theory, Integration and Differentiation}
+\begin{itemize}
+\item (Stein Cor 3.5) $G_\dlt$ sets are countable intersections of open sets, while $F_\sg$ sets are countable unions of closed sets. A subset $E \subset \bbR^d$ is (Lebesgue)-measurable (i) iff $E$ differs from a $G_\dlt$ by a set of measure zero, (ii) iff $E$ differs from an $F_\sg$ by a set of measure zero.
+
+\item (Stein Thm 4.4) \textbf{Egorov's Theorem}: Suppose $\{f_k \}$ is a sequence of measurable functions defined on a measurable set $E$ with $m(E) < \infty$, and assume $f_k \goesto f$ a.e. on $E$. Given $\eps > 0$, we can find closed set $A_\eps \subset E$ such that $m(E - A_\eps) < \eps$ and $f_k \goesto f$ uniformly on $A_\eps$.
+
+
+\item Suppose $f: \bbR^n \goesto \bbR^m$. The \textbf{Jacobian} is an $m \times n$ matrix with entries $J_{ij} = \displaystyle\frac{\partial f_i}{\partial x_j}$.
+
+\item \textbf{Change of variables}: See Ross p279.
+
+\item \textbf{Lebesgue Differentiation Theorem}: If $f$ is a measurable function, then for almost every $x$, $f(x) = \displaystyle\lim_{r \goesto 0}\frac{1}{r}\int_x^{x+r} f(y)dy$.
+
+\item \textbf{Mean Value Theorem}: If $f$ is continuous on $[a,b]$ and differentiable on $(a,b)$, then there exists $c \in (a,b)$ such that $f'(c) = \displaystyle\frac{f(b) - f(a)}{b-a}$ (i.e. $f(b) = f(a) + (b-a)f'(c)$).
+
+\item \textbf{Differentiation under integral sign}: Let $f(x,t)$ be such that $f(x,t)$ and its partial derivative $f_x(x,t)$ are continuous in $t$ and $x$ in some region of the $(x,t)$ plane, including $a(x) \leq x \leq b(x)$, $x_0 \leq x \leq x_1$. Also suppose that $a(x)$ and $b(x)$ are both continuous and both have continuous derivatives for $x_0 \leq x \leq x_1$. Then, for $x_0 \leq x \leq x_1$,
+\begin{align*}
+\frac{d}{dx} \left(\int_{a(x)}^{b(x)} f(x,t) dt \right) = f(x, b(x))\cdot \frac{d}{dx}b(x) - f(x, a(x))\cdot \frac{d}{dx}a(x) + \int_{a(x)}^{b(x)} \frac{\partial}{\partial x} f(x, t) dt.
+\end{align*}
+
+\item \textbf{Inverse Function Theorem}: For functions of a single variable, if $f$ is a continuously differentiable function with non-zero derivative at point $a$, then $f$ is invertible in a neighborhood of $a$, the inverse is continuously differentiable, and
+\begin{equation*}
+(f^{-1})'(f(a)) = \frac{1}{f'(a)}.
+\end{equation*}
+
+For functions of more than one variable: Let $f: \text{open set of } \bbR^n \goesto \bbR^n$. If $F$ is continuously differentiable and its total derivative of $F$ is invertible at a point $p$, then an inverse function to $F$ exists in some neighborhood of $F(p)$. $F^{-1}$ is also continuously differentiable, with
+\begin{equation*}
+J_{F^{-1}}(F(p)) = [J_F(p)]^{-1}.
+\end{equation*}
+
+\item If $f: \bbR^n \mapsto \bbR$ is $L$-Lipschitz, i.e. $|f(x) - f(y)| \leq L |x-y|$, and is differentiable, then for all $x \in \bbR^n$, $\| \nabla f(x) \| \leq L$.
+
+\item (Durrett Ex 1.4.4) \textbf{Riemann-Lebesgue Lemma:} If $g$ is integrable, then $\dis\lim_{n \goesto \infty}\int g(x) \cos (nx) dx = 0$.
+
+\end{itemize}
+
+\subsection{Approximations}
+\begin{itemize}
+\item \textbf{Stirling's Approximation for factorial}: $n! \sim \sqrt{2\pi n}\left(\displaystyle\frac{n}{e}\right)^n$ (i.e. ratio goes to 1 as $n \goesto \infty$).
+
+\item \textbf{Stirling's Approximation for gamma function:} $\Gamma(z) = \dis\sqrt{\frac{2\pi}{z}}\left(\frac{z}{e} \right)^z \left[1 + O \left(\frac{1}{z}\right) \right]$ for large $z$, i.e. $\Gamma(z + 1) \sim \sqrt{2\pi z} \left(\dfrac{z}{e} \right)^z$.
+
+\item \textbf{Volume of ball in $n$-dimensional space:} $\text{Volume of ball with radius $r$ in $n$-dimensional space} \sim \dfrac{1}{\sqrt{n\pi}}\left(\dfrac{2\pi e}{n} \right)^{n/2}r^n$.
+
+\item \textbf{Weierstrass Approximation Theorem}: If $h$ is continuous on $[0,1]$, then there exist polynomials $p_n$ such that $\displaystyle\sup_{x \in [0,1]} |h(x) - p_n(x)| \goesto 0$ as $n \goesto \infty$.
+
+\item (Rudin Thm 5.15) \textbf{Taylor's Theorem}: Suppose $f$ is a real function on $[a,b]$, $n$ a positive integer, $f^{(n-1)}$ continuous on $[a,b]$, $f^{(n)}(t)$ exists for every $t \in (a,b)$. Let $\alpha, \beta$ be distinct points of $[a,b]$. Then, there exists a point $x$ between $\alpha$ and $\beta$ such that
+\begin{equation*}
+f(\beta) = \sum_{k=0}^{n-1} \frac{f^{(k)}(\alpha)}{k!} (\beta - \alpha)^k + \frac{f^{(n)}(x)}{n!}(\beta - \alpha)^n.
+\end{equation*}
+
+\item \textbf{Newton's method:} Say we are trying to find the solution to $f(x) = 0$. If our current guess is $x_k$, one step of Newton's method gives us our next guess: $x_{k+1} = x_k - \dfrac{f(x_k)}{f'(x_k)}$.
+
+\item (310A Lec 9) For small $x$, $\log(1 - x) \sim -x$.
+
+\item As $n \goesto \infty$, $\dis\sum_{k=1}^n 2 \log (\sqrt{k} \log k) \sim n \log n$. (For proof, see 310A HW9.)
+
+\item (310B Lec 8) For large $N$, $\dis\sum_{k=j+1}^N \frac{1}{k-1} \approx \log \frac{N}{j}$.
+
+\end{itemize}
+
+\subsection{Convergence}
+\begin{itemize}
+\item (Rudin Thm 3.33) \textbf{Root test}: Given $\sum a_n$, let $\alpha = \displaystyle\limsup_{n \goesto \infty} \sqrt[n]{|a_n|}$. If $\alpha < 1$, $\sum a_n$ converges. If $\alpha > 1$, $\sum a_n$ diverges. If $\alpha = 1$, the test gives no information.
+
+\item (Rudin Thm 3.34) \textbf{Ratio test}: If $\displaystyle\limsup_{n \goesto \infty}\left|\frac{a_{n+1}}{a_n}\right| < 1$, the series $\sum a_n$ converges. If $\displaystyle\left|\frac{a_{n+1}}{a_n}\right| \geq 1$ for all large enough $n$, then $\sum a_n$ diverges. 
+
+\item \textbf{Convergence of infinite product:} Let $a_n$ be a sequence of positive numbers. Then $\dis\prod_{n=1}^\infty (1+a_n)$ and $\dis\prod_{n=1}^\infty (1-a_n)$ converge iff $\dis\sum_{n=1}^\infty a_n$ converges. (Proof takes logs and uses fact that $\log (1 + x) \sim x$ for small $x$.)
+
+\item (Rudin Thm 7.11) Suppose $f_n \goesto f$ uniformly on a set $E$ in a metric space. Let $x$ be a limit point of $E$ and suppose that $\displaystyle\lim_{t \goesto x} f_n(t) = A_n$. Then $\{ A_n\}$ converges, and $\displaystyle\lim_{t \goesto x} f(t) = \displaystyle\lim_{n \goesto \infty} A_n$.
+
+\item (Rudin Thm 7.12) If $\{ f_n\}$ is a sequence of continuous functions on $E$ and if $f_n \goesto f$ uniformly on $E$, then $f$ is continuous on $E$.
+
+\item (Rudin Thm 7.16) If $f_n \goesto f$ uniformly on $[a,b]$ and $f_n$ are integrable on $[a,b]$, then $f$ is integrable on $[a,b]$ and
+\begin{equation*}
+\int_a^b f(x) dx = \lim_{n \goesto \infty} \int_a^b f_n (x) dx.
+\end{equation*}
+
+\item (Rudin Thm 7.17) Suppose $\{f_n\}$ are differentiable on $[a,b]$ and that $\{ f_n(x_0)\}$ converges for some point $x_0 \in [a,b]$. If $\{f_n' \}$ converges uniformly on $[a,b]$, then $\{ f_n\}$ converges uniformly on $[a,b]$ to a function $f$, and for all $x \in [a,b]$,
+\begin{equation*}
+f'(x) = \lim_{n \goesto \infty} f_n'(x).
+\end{equation*}
+
+\item \textbf{Lusin's Theorem}: Let $A$ be a measurable subset of $\bbR$ with finite measure, and let $f: A \mapsto \bbR$ be measurable. Then for any $\eps > 0$, there is a compact set $K \subseteq A$ with $m(A \setminus K) > \eps$ such that the restriction of $f$ to $K$ is continuous.
+
+\item (Dembo Lem 2.2.11) Let $y_n$ be a sequence in a topological space. If every subsequence has a further subsequence which converges to $y$, then $y_n \goesto y$.
+
+\item (Dembo Lem 2.3.20) \textbf{Kronecker's Lemma}: Let $\{ x_n \}$ and $\{ b_n \}$ be 2 sequences of real numbers with $b_n > 0$ and $b_n \uparrow \infty$. If $\sum_n x_n/b_n$ converges, then $s_n / b_n \goesto 0$ for $s_n = x_1 + \dots + x_n$.
+
+\item (310A Lec 13) If $x_n \goesto x$, then $\displaystyle\frac{1}{n}\sum_{i=1}^n x_i \goesto x$.
+
+\item (310B Lec 10) If $x_n$ is a sequence of positive real numbers increasing to infinity, then $\dis\sum_{n=1}^\infty\frac{x_{n+1} - x_n}{x_{n+1}} = \infty$, and $\dis\sum_{n=1}^\infty \frac{x_{n+1} - x_n}{x_{n+1}^2} < \infty$.
+
+\item (310B Lec 19) \textbf{Subadditive Lemma:} Let $\{x_n\}$ be a sequence of real numbers such that $x_{n+m} \leq x_n + x_m$ for all $n, m$. Then $\dis\lim_{n \goesto \infty}\frac{x_n}{n}$ exists and is equal to $\dis\inf_{n \geq 1}\frac{x_n}{n}$.
+
+\item (Durrett Lem 3.1.1) If $c_j \goesto 0$, $a_j \goesto \infty$ and $a_j c_j \goesto \lmb$, then $(1+c_j)^{a_j} \goesto e^\lmb$. (Generalization in Ex 3.1.1.)
+
+\end{itemize}
+
+
+% LINEAR ALGEBRA
+\section{Linear Algebra Facts}
+\subsection{Properties of Matrices}
+\begin{itemize}
+\item Matrix multiplication as sum of inner products: If $\mathbf{A} \in \bbR^{m \times n}$, $\mathbf{B} \in \bbR^{n \times p}$, $A_1, \dots, A_n \in \bbR^{m \times 1}$ the columns of $\mathbf{A}$ and $B_1, \dots, B_n \in \bbR^{1 \times n}$ the rows of $\mathbf{B}$, then $\mathbf{AB} = \displaystyle\sum_{i=1}^n A_i B_i$.
+
+In particular, for the regression setting: Let $Z_1, \dots, Z_n$ be the column vectors corresponding to subject $1, \dots, n$. Let $Z$ be the usual design matrix (i.e. row $i$ belongs to subject $i$). Then we can write $Z^T Z = \dis\sum_{i=1}^n Z_i Z_i^T$.
+
+\item For matrices, $\text{Cov} (AX, BY) = A \text{Cov} (X, Y) B^T$, $\var (AX + b) = A \var (X) A^T$.
+
+\item $x^T A x = x^T \left( \displaystyle\frac{A + A^T}{2} \right) x$. Thus, when considering quadratic forms, we may assume $A$ is symmetric.
+
+\item If $\bbE Y = \mu \in \bbR^n$ and $\var Y = \Sg$, then for non-random matrix $A$, $\bbE [Y^T A Y] = \mu^T A \mu + \text{tr}(A \Sg)$.
+
+\item For any matrix $A$, the row space of $A$ and the column space of $A$ have the same rank. In addition, $\text{Rank}(A^T A) = \text{Rank}(A)$.
+
+\item $\text{rank}(AB) \leq \min (\text{rank}(A), \text{rank}(B))$.
+
+\item \textbf{Determinant:}
+\begin{itemize}
+\item $\text{det}(A) = \prod_i \lmb_i$.
+\item For square matrices $A$ and $B$ of equal size, $\text{det}(AB) = \text{det}(A)\text{det}(B)$.
+\item If $A$ is an $n \times n$ matrix, $\text{det}(cA) = c^n \text{det}(A)$.
+\item Considering a matrix in block form, we have
+\begin{equation*}
+\text{det } \begin{pmatrix} A & B \\ 0 & C \end{pmatrix} = (\text{det } A)(\text{det } C).
+\end{equation*}
+\item \textbf{Sylvester's theorem:} If $A \in \bbR^{m \times n}$ and $B \in \bbR^{n \times m}$, then $\text{det} (I_m + AB) = \text{det}(I_n + BA)$.
+\end{itemize}
+
+\item \textbf{Trace:} $\text{tr}(\mathbf{A}) = \displaystyle\sum_{i=1}^n a_{ii} = $ sum of eigenvalues.
+\begin{itemize}
+\item More generally, $\text{tr}(\mathbf{A}^k) = \sum_i \lmb_i^k$.
+\item Trace is a linear operator, and $\text{tr}(\mathbf{A}) = \text{tr}(\mathbf{A}^T)$.
+\item $\text{tr}(\mathbf{AB}) = \text{tr}(\mathbf{BA})$ (if the matrices $\mathbf{AB}$ and $\mathbf{BA}$ make sense). However, $\text{tr}(\mathbf{AB}) \neq \text{tr}(\mathbf{A})\text{tr}(\mathbf{B})$.
+\item Trace is invariant under cyclic permutations but not arbitrary permutations. (However, for 3 symmetric matrices, any permutation is ok.)
+\item If $P_X = X(X^T X)^{-1}X^T$ (projection matrix), then $\text{tr} (P_X) = \text{rank}(X)$. (Proof: Use cyclic permutations.)
+\item If $\lmb$ is an eigenvalue of $\mathbf{A}$, then $1/\lmb$ is an eigenvalue for $\mathbf{A}^{-1}$. So if the eigenvalues of $\mathbf{A}$ are $\lmb_i$'s, then $\text{tr}(\mathbf{A}^{-1}) = \sum_i 1/\lmb_i$.
+\end{itemize}
+
+\item \textbf{Inverses:}
+\begin{itemize}
+\item \textbf{Schur complement:} Writing a matrix in block form,
+\[ \begin{pmatrix} A & B \\ C & D \end{pmatrix}^{-1} = \begin{pmatrix} (A - BD^{-1}C)^{-1} & -(A - BD^{-1}C)^{-1}BD^{-1} \\ -D^{-1}C(A - BD^{-1}C)^{-1} & D^{-1} + D^{-1}C(A - BD^{-1}C)^{-1}BD^{-1} \end{pmatrix}. \]
+
+\item (305A Sec 14.3.2) \textbf{Sherman-Morrison Formula:} If $A \in \bbR^{n \times n}$ is invertible, $u, v \in \bbR^n$ and $1 + v^T A u \neq 0$, then $(A + uv^T)^{-1} = A^{-1} - \dis\frac{A^{-1}uv^T A^{-1}}{1 + v^T A^{-1}u}$.
+
+\item \textbf{Woodbury Formula:} $(A+UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1} + VA^{-1}U)^{-1} VA^{-1}$.
+\end{itemize}
+
+\item \textbf{Positive definite matrices:} $A \in \bbR^{n \times n}$ is PD ($A \succ 0$) if $\langle Ax, x\rangle > 0$ for all $x \in \bbR^n \setminus \{0\}$.
+\begin{itemize}
+\item If $A, B \succ 0$ and $t > 0$, then $A + B \succ 0$ and $tA \succ 0$.
+
+\item $A$ has positive eigenvalues. This also implies that it will have positive trace and determinant.
+
+\item $A$ has positive diagonal entries.
+
+\item $A$ is invertible.
+
+\item $A$ has a unique positive definite square root.
+
+\item (300B Lec 4) If $A$ is positive definite, then $\dis\sup_v \frac{(v^T u)^2}{v^T A v} = u^T A^{-1}u$ (with equality when $v = A^{-1}u$).
+\end{itemize}
+
+\item \textbf{Positive semi-definite matrices:} $A \in \bbR^{n \times n}$ is PSD ($A \succeq 0$) if $\langle Ax, x\rangle \geq 0$ for all $x \in \bbR^n \setminus \{0\}$. PSD matrices have corresponding properties of PD matrices as above. (PSD will have unique PSD square root.)
+\begin{itemize}
+\item If $A$'s smallest eigenvalue is $\lmb > 0$, then $A \succeq \lmb I$.
+
+\item If the smallest eigenvalue of $A$ is $\geq$ the largest eigenvalue of $B$, then $A \succeq B$.
+\end{itemize}
+
+\item \textbf{Perron-Frobenius Theorem:} Let $A$ be a positive matrix (i.e. all entries positive). Then the following hold:
+\begin{itemize}
+\item There is an $r > 0$ such that $r$ is an eigenvalue of $A$ and any other eigenvalue $\lmb$ must satisfy $|\lmb| < r$.
+
+\item $r$ is a simple root of the characteristic polynomial of $A$, and hence its eigenspace has dimension 1.
+
+\item There exists an eigenvector $v$ with all components positive such that $Av = rv$. (Respectively, there exists a positive left eigenvector $w$ with $w^T A = rw^T$.)
+
+\item There are no other non-negative eigenvectors except positive multiples of $v$. (Same for left eigenvectors.)
+
+\item $\dis\lim_{k \goesto \infty}A^k/r^k = vw^T$, where $v$ and $w$ are normalized so that $w^T v = 1$. Moreover, $vw^T$ is the projection onto the eigenspace corresponding to $r$. (This convergence is uniform.)
+
+\item $\dis\min_i \sum_j a_{ij} \leq r \leq \max_i \sum_j a_{ij}$.
+\end{itemize}
+
+\item (305C p11) \textbf{Perron-Frobenius Theorem v2:} Let $P \in [0, \infty)^{N \times N}$ be a matrix with (possibly complex) right eigenvalues $\lmb_1, \dots, \lmb_N$. Let $\rho = \dis\max_{1 \leq j \leq N} |\lmb_j|$. Then $P$ has an eigenvalue equal to $\rho$ with a corresponding eigenvector with all non-negative entries.
+
+\item \textbf{Computational cost:}
+\begin{itemize}
+\item Multiplying $n \times m$ matrix by $m \times p$ matrix: $O(nmp)$. Multiplying two $n \times n$ matrices: $O(n^{2.373})$.
+
+\item Inverting an $n \times n$ matrix: $O(n^{2.373})$.
+
+\item QR decomposition for $m \times n$ matrix: $O(mn^2)$.
+
+\item SVD decomposition for $m \times n$ matrix: $O(\min (mn^2, m^2n))$.
+
+\item Determinant of an $n \times n$ matrix: $O(n^{2.373})$.
+
+\item Back substitution for an $n \times n$ triangular matrix: $O(n^2)$.
+\end{itemize}
+
+\end{itemize}
+
+\subsection{Matrix Decompositions}
+\begin{itemize}
+\item Every real symmetric matrix $A$ can be decomposed as $A = Q \Lmb Q^T$, where $Q$ is a real orthogonal matrix (whose columns are eigenvectors of $A$), and $\Lmb$ is a real diagonal matrix (whose diagonal entries are the eigenvalues of $A$).
+
+\item \textbf{Singular Value Decomposition}: For any $M \in \bbR^{n \times p}$, we have the decomposition $M = U_{n \times n} \Sg_{n \times p} V_{p \times p}^T$, where $U$ and $V$ are orthogonal, $\Sg = \text{diag}(\sg_1, \dots, \sg_k)$ with $k = \min (n, p)$ and $\sg_1 \geq \dots \geq \sg_k \geq 0$.
+
+\item \textbf{QR Decomposition:} Any real square matrix $A$ may be decomposed as $A = QR$, where $Q$ is an orthonormal matrix and $R$ is an upper triangular matrix. (If $A$ is invertible, then the factorization is unique if we require the diagonal elements of $R$ to be positive.)
+
+\item \textbf{Cholesky Decomposition:} For any real symmetric positive semi-definite matrix $A$, there is a lower triangular $L$ such that $A = LL^T$.
+\end{itemize}
+
+\subsection{General Vector Spaces}
+\begin{itemize}
+\item \textbf{Operator norm}: 
+\begin{equation*} \|A\|_{op} = \inf \{ c \geq 0: \|Av\| \leq c\|v\| \text{ for all } v \} = \sup \{ \|Av \|: \| v\| = 1 \}.
+\end{equation*}
+
+The spectral radius of $A$ (i.e. largest absolute value of its eigenvalues) is always bounded above by $\|A\|_{op}$.
+
+\item (Dembo Ex 4.3.6) \textbf{Parallelogram Law}: Let $\bbH$ be a linear vector space with an inner product. Then for any $u, v \in \bbH$, $\|u+v\|^2 + \|u-v\|^2 = 2\|u\|^2 + 2\|v\|^2$.
+
+\item (Hoffman \& Kunze Eqn 8-3) \textbf{Polarization Identity}: For an inner product space, $\langle u, v \rangle = \frac{1}{4}\| u + v \|^2 - \frac{1}{4}\| u - v \|^2$.
+
+\item (Hoffman \& Kunze Thm 3.2) \textbf{Rank-Nullity Theorem}: Let $T$ be a linear transformation from $V$ into $W$. Suppose that $V$ is finite-dimensional. Then $\text{rank} (T) + \text{nullity}(T) = \text{dim } V$.
+
+\item (Hoffman \& Kunze Eqn 8-8): In an inner product space, if $v$ is a linear combintion of an orthogonal sequence of non-zero vectors $u_1, \dots, u_m$, then
+\begin{equation*}
+v = \sum_{k=1}^m \frac{\langle v, u_k \rangle}{\| u_k \|^2} u_k.
+\end{equation*}
+
+\item (Hoffman \& Kunze Cor on p287) \textbf{Bessel's Inequality}: Let $\{ a_1, \dots, a_n\}$ be an orthogonal set of non-zero vectors in an inner product space $V$. If $b$ is any vector in $V$, then
+\begin{equation*}
+\sum_{k=1}^n \frac{|\langle b, a_k \rangle|^2}{\| a_k \|^2} \leq \| b \|^2.
+\end{equation*}
+
+\end{itemize}
+
+% USEFUL INEQUALITIES
+\section{Useful Inequalities}
+\begin{itemize}
+\item $e^x \geq 1 + x$ and $1 - e^{-x} \leq x \wedge 1$ for all $x \in \bbR$.
+
+\item For any $a > 0$, $x \mapsto e^{ax} + e^{-ax}$ is an increasing function.
+
+\item $e^{|x|} \leq e^x + e^{-x}$.
+
+\item For all $x \in \bbR$, $\cosh x = \displaystyle\frac{e^x + e^{-x}}{2} \leq e^{x^2/2}$. (Proof in 310A HW2 Q5.)
+
+\item For positive $x$, $\log \left(\dfrac{1 + e^{-x}}{2} \right) \geq -x$.
+
+\item For any $k \geq 2$, $\Gamma(k/2) \leq (k/2)^{k/2}$ and $k^{1/k} \leq e^{1/e}$.
+
+\item $e \left(\dfrac{n}{e}\right)^n \leq n! \leq e \left(\dfrac{n+1}{e}\right)^{n+1}$. $\sqrt{2\pi n} \left(\dfrac{n}{e}\right)^n < n! < \sqrt{2\pi n} \left(\dfrac{n}{e}\right)^n e^{\frac{1}{12n}}$.
+
+\item $\dis\int_0^\dlt \sqrt{\log \left( 1 + \frac{2\dlt}{\eps}\right)} d\eps \leq 2\sqrt{2}\dlt$. (Proof: Use $\log (1+x) \leq x$.)
+
+\item For any integer $\ell \geq 1$, $|x^\ell - y^\ell| \leq \ell |x-y| \max (|x|, |y|)^{\ell - 1}$.
+
+\item There is some constant $c > 0$ such that $|\cos x| \leq 1 - cx^2$ for all $x \in [-\pi/2, \pi/2]$.
+
+\item \textbf{Reverse triangle inequality}: For all $x, y \in \bbR$, $|x - y| \geq \bigg| |x| - |y| \bigg|$.
+
+\item (Durrett Ex 1.6.6) Let $Y \geq 0$ with $\bbE Y^2 < \infty$. Then $\bbP(Y > 0) \geq \dfrac{(\bbE Y)^2}{\bbE Y^2}$. (Proof uses Cauch-Schwarz on $Y1_{\{Y > 0\}}$.)
+
+\item \textbf{Cauchy-Schwarz inequality}: For any 2 random variables $X$ and $Y$, $(\bbE [XY])^2 \leq \bbE[X^2] \bbE [Y^2]$, with equality iff $X = aY$ for some constant $a \in \bbR$.
+
+\item \textbf{Jensen's inequality:} Let $X$ be a random variable and $g$ a convex function such that $\bbE [g(X)]$ and $g(\bbE X)$ are finite. Then $\bbE [g(X)] \geq g(\bbE X)$, with equality holding iff $X$ is constant, or $g$ is linear, or there is a set $A$ s.t. $\bbP (X \in A) = 1$ and $g$ is linear over $A$ (i.e. there are $a$ and $b$ such that $g(x) = ax + b$ for all $x \in A$).
+
+\item \textbf{Correlation inequality}: For any real-valued random variable $X$ and increasing functions $g$ and $h$, $\text{Cor} (g(Y), h(Y)) \geq 0$.
+
+\item (300B HW5) \textbf{Marcinkiewicz-Zygmund inequality:} Let $X_i$ be independent mean-zero random variables with $\bbE [|X_i|^k] < \infty$ for some $k \geq 1$. Then there are constants $A_k$ and $B_k$ which depend only on $k$ such that $A_k \bbE \left[ \left( \dis\sum_{i=1}^n X_i^2 \right)^{k/2} \right] \leq \bbE \left[ \left| \dis\sum_{i=1}^n X_i \right|^k \right] \leq B_k \bbE \left[ \left( \dis\sum_{i=1}^n X_i^2 \right)^{k/2} \right]$. (When $k = 2$, we may take $A_2 = B_2 = 1$.)
+
+\item (300B HW8) Let $V \in \bbR$ be a random variable such that $|V| \leq D$ w.p. 1. Let $\bbE [V^2] = \sg^2$. Then for all $c \in [0, \sg]$, $\bbP (|V| \geq c) \geq \dfrac{\sg^2 - c^2}{D^2 - c^2}$.
+
+\item (Sub-G p18) \textbf{Bounding of sub-Gaussian moments:} If $X$ is such that $\bbP (|X| > t) \leq 2 \exp \left(-\dfrac{t^2}{2\sg^2}\right)$, then for any positive integer $k$, $\bbE [|X|^k] \leq (2\sg^2)^{k/2} k\Gamma(k/2)$. In particular, for $k \geq 2$ we have $(\bbE[|X|^k])^{1/k} \leq \sg e^{1/e}\sqrt{k}$.
+
+\end{itemize}
+
+% USEFUL INTEGRALS
+\section{Useful Integrals}
+\begin{itemize}
+\item $\displaystyle\int_0^\infty e^{-x^2}dx = \frac{\sqrt{\pi}}{2}$.
+
+\item $\displaystyle\int_0^\infty\frac{\sin x}{x}dx = \frac{\pi}{2}$.
+
+\item $\dis\int_{-\pi/2}^{3\pi/2} e^{itx} dt = 2\pi$ if $x = 0$, 0 otherwise.
+
+\item $\dis\int xe^x dx = e^x(x-1) + C$.
+
+\item $\dis\int x^2e^x dx = e^x(x-2x+2) + C$.
+
+\item $\dis\int xe^{-x} dx = -e^{-x}(x+1) + C$.
+
+\item $\dis\int x^2 e^{-x} dx = -e^{-x}(x^2+2x+2) + C$.
+
+\item $\dis\int e^{-x}(1-e^{-nx})dx = \dis\frac{e^{-(n+1)x}[1 - (n+1)e^{nx}]}{n+1} + C$.
+\end{itemize}
+
+
+\section{Other Basic Facts}
+\begin{itemize}
+\item $\sin x = x - \dis\frac{x^3}{3!} + \dis\frac{x^5}{5!} - \dis\frac{x^7}{7!} + \dots$
+
+\item $\cos x = 1 - \dis\frac{x^2}{2!} + \dis\frac{x^4}{4!} - \dis\frac{x^6}{6!} + \dots$
+
+\item $\tan x = x + \dis\frac{x^3}{3} + \dis\frac{2x^5}{15} + \dis\frac{17x^7}{315} + \dots$
+
+\item $\log (1 + x) = x - \dis\frac{x^2}{2} + \dis\frac{x^3}{3} - \dis\frac{x^4}{4} + \dots$
+
+\item $|x-y| =  x + y - 2 \min(x,y)$.
+
+\item The function $f(x) = xe^{-x}$ attains its maximum value $1/e$ uniquely at $x = 1$.
+
+\item (Agresti p52) Conditional independence does not imply marginal independence.
+
+\item (Agresti Prob 9.19, 305B HW3) Assume $X$, $Y$ and $Z$ are categorical variables.
+\begin{itemize}
+\item If $Y$ is jointly independent of $X$ and $Z$, then $X$ and $Y$ are conditionally independent given $Z$.
+
+\item Mutual independence of $X$, $Y$ and $Z$ implies that $X$ and $Y$ are both marginally and conditionally independent.
+
+\item If $X \perp Y$ and $Y \perp Z$, it is not necessarily the case that $X \perp Z$.
+\end{itemize}
+
+\end{itemize}
+
+\end{document}

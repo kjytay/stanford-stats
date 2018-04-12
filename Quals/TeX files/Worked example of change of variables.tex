@@ -1,0 +1,113 @@
+\documentclass{article}
+\setlength{\textheight}{9in}
+\setlength{\topmargin}{-0.5in}
+\setlength{\textwidth}{7in}
+\setlength{\evensidemargin}{-0.25in}
+\setlength{\oddsidemargin}{-0.25in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}             % needed to include these graphics
+%\graphicspath{{./Pictures/}}      % only in case you want to keep the pictures in a separate
+                                  % subdirectory; also see the appropriate line below
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\newcounter{temp}
+\newcommand{\dis}{\displaystyle}
+\newcommand{\dlim}{\dis\lim}
+\newcommand{\dsum}{\dis\sum}
+\newcommand{\dint}{\dis\int}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\pd}{\partial}
+\newcommand{\Sg}{\Sigma}
+\renewcommand{\labelenumi}{{\normalfont \arabic{enumi}.}}
+\renewcommand{\labelenumii}{{\normalfont \alph{enumii}.}}
+\renewcommand{\labelenumiii}{{\normalfont \roman{enumiii}.}}
+\font \bggbf cmbx18 scaled \magstep2
+\font \bgbf cmbx10 scaled \magstep2
+\begin{document}
+\title{Worked Example of Change of Variables}
+\author{Kenneth Tay}
+\date{\vspace{-3ex}}
+\maketitle
+
+Assume that we have random variables $X_1, \dots, X_n \in \bbR$ with joint density $f$. Assume that we have $(U_1, \dots, U_n) = g(X_1, \dots, X_n)$, where $g$ is bijective and differentiable. We wish to find the joint density of $U_1, \dots, U_n$. To do so:
+
+\begin{enumerate}
+\item Derive the inverse functions $h_1, \dots, h_n$, i.e. $X_i = h_i(U_1, \dots, U_n)$.
+
+\item Compute the Jacobian $J$, where $J_{ij} = \dis\frac{\pd h_i}{\pd u_j}$.
+
+\item The joint density $p$ of $U_1, \dots, U_n$ is given by \begin{align*}
+p(u_1, \dots, u_n) &= f(x_1, \dots, x_n) \cdot |\text{det } J| \\ 
+&= f \left[ h_1(u_1, \dots, u_n), \dots, h_n(u_1, \dots, u_n) \right] \cdot |\text{det } J|.
+\end{align*}
+\end{enumerate}
+
+\section*{Worked Example 1}
+Assume that $X_i$ ($i = 1, 2, 3$) are independent $\text{Gamma}(\alpha_i, 1)$. We wish to find the joint density of $S = X_1 + X_2 + X_3$, $p_1 = \dis\frac{X_1}{S}$ and $p_2 = \dis\frac{X_2}{S}$.
+
+\begin{enumerate}
+\item \textbf{Derive inverse functions.} We have $X_1 = S p_1$, $X_2 = S p_2$ and $X_3 = S - S p_1 - S p_2$.
+
+\item \textbf{Compute Jacobian.} We have
+\begin{equation*}
+J = \begin{pmatrix} p_1 & S & 0 \\ p_2 & 0 & S \\ 1 - p_1 - p_2 & -S & -S  \end{pmatrix}.
+\end{equation*}
+
+\item \textbf{Plug into the change of variables formula.} Compute the determinant of the Jacobian:
+\begin{align*}
+\text{det } J &= p_1 \begin{vmatrix} 0 & S \\ -S & -S \end{vmatrix} - S \begin{vmatrix} p_2 & S \\ 1-p_1-p_2 & -S \end{vmatrix} \\ 
+&= p_1 S^2 - S [- Sp_2 - S(1 - p_1 - p_2)] \\ 
+&= S^2.
+\end{align*}
+
+
+Since each $X_i$ has density $\dis\frac{1}{\Gamma(\alpha_i)} x^{\alpha_i - 1} e^{-x}$, we have
+\begin{align*}
+f_{S, p_1, p_2} (a,b,c) &= f(ab, ac, a-ab-ac) \cdot a^2 \\ 
+&= \frac{1}{\Gamma(\alpha_1)} (ab)^{\alpha_1 - 1} e^{-ab} \frac{1}{\Gamma(\alpha_2)} (ac)^{\alpha_2 - 1} e^{-x} \frac{1}{\Gamma(\alpha_3)} (a - ab - ac)^{\alpha_3 - 1} e^{-(a - ab - ac)} \cdot a^2 \\ 
+&= \left[ \frac{1}{\Gamma(\alpha_1 + \alpha_2 + \alpha_3)} a^{\alpha_1 + \alpha_2 + \alpha_3 - 1} e^{-a} \right] \cdot \frac{\Gamma(\alpha_1 + \alpha_2 + \alpha_3)}{\Gamma(\alpha_1)\Gamma(\alpha_2)\Gamma(\alpha_3)} b^{\alpha_1 - 1} c^{\alpha_2 - 1} (1-b-c)^{\alpha_3 - 1}.
+\end{align*}
+
+Thus, if we let $p_3 = \dis\frac{X_3}{S}$, the above tells us that $S \sim \text{Gamma}(\alpha_1 + \alpha_2 + \alpha_3, 1)$, $(p_1, p_2, p_3) \sim \text{Dirichlet}(\alpha_1, \alpha_2, \alpha_3)$, and $S$ is independent of $(p_1, p_2, p_3)$.
+
+\end{enumerate}
+
+\section*{Worked Example 2}
+Assume that $Z \sim \calN(0, I_n)$. We wish to find the density of $X = AZ + \mu$, where $A$ is an invertible $n \times n$ matrix.
+
+Recall that the density of $Z$ is $f(z) = (2\pi)^{-n/2} \exp \left[ -\dfrac{z^Tz}{2}\right]$.
+
+\begin{enumerate}
+\item \textbf{Derive inverse functions.} We have $Z = A^{-1}(X-\mu)$.
+
+\item \textbf{Compute Jacobian.} We have
+\begin{equation*}
+J = \frac{\pd Z}{\pd X} = A^{-1}.
+\end{equation*}
+
+\item \textbf{Plug into the change of variables formula.} Compute the determinant of the Jacobian:
+\begin{equation*}
+\text{det } J = \text{det } (A^{-1}) = \frac{1}{\text{det } A}.
+\end{equation*}
+
+Thus, we have
+\begin{align*}
+f_X (x) &= f_Z[A^{-1}(x-\mu)] \cdot \left| \frac{1}{\text{det } A} \right| \\ 
+&= (2\pi)^{-n/2} \exp \left[ -\frac{[A^{-1}(x-\mu)]^T A^{-1}(x-\mu)}{2}\right] \cdot \left| \frac{1}{\text{det } A} \right| \\ 
+&= \frac{1}{(2\pi)^{n/2} |\text{det } A|} \exp \left[ -\frac{(x-\mu)^T (A^{-1})^T A^{-1}(x-\mu)}{2}\right].
+\end{align*}
+
+\end{enumerate}
+
+
+\end{document}

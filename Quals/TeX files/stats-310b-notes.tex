@@ -1,0 +1,566 @@
+\documentclass[twoside]{article}
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,amssymb,graphicx,mathtools,flexisym, float, enumitem}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+
+%
+% Macros for shortcuts
+%
+\newcommand{\dis}{\displaystyle}
+\def\lc{\left\lceil}   
+\def\rc{\right\rceil}
+\def\lf{\left\lfloor}   
+\def\rf{\right\rfloor}
+\newcommand\bbC{\mathbb{C}}
+\newcommand\bbE{\mathbb{E}}
+\newcommand\bbN{\mathbb{N}}
+\newcommand\bbP{\mathbb{P}}
+\newcommand\bbQ{\mathbb{Q}}
+\newcommand\bbR{\mathbb{R}}
+\newcommand\bbZ{\mathbb{Z}}
+\newcommand\calA{\mathcal{A}}
+\newcommand\calB{\mathcal{B}}
+\newcommand\calC{\mathcal{C}}
+\newcommand\calF{\mathcal{F}}
+\newcommand\calG{\mathcal{G}}
+\newcommand\calH{\mathcal{H}}
+\newcommand\calL{\mathcal{L}}
+\newcommand\calM{\mathcal{M}}
+\newcommand\calN{\mathcal{N}}
+\newcommand\calP{\mathcal{P}}
+\newcommand\calR{\mathcal{R}}
+\newcommand\calS{\mathcal{S}}
+\newcommand\calU{\mathcal{U}}
+\newcommand\calX{\mathcal{X}}
+\newcommand\calY{\mathcal{Y}}
+\newcommand\dlt{\delta}
+\newcommand\Dlt{\Delta}
+\def\eps{\varepsilon}
+\newcommand\lmb{\lambda}
+\newcommand\Lmb{\Lambda}
+\newcommand\om{\omega}
+\newcommand\Om{\Omega}
+\newcommand\sg{\sigma}
+\newcommand\Sg{\Sigma}
+\def\t{\theta}
+\newcommand\T{\Theta}
+\newcommand\vp{\varphi}
+\newcommand\equivto{\Leftrightarrow}
+\newcommand\goesto{\rightarrow}
+\newcommand\var{\text{Var }}
+
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+\begin{document}
+\title{STATS 310B Notes}
+\author{Kenneth Tay}
+\date{\vspace{-3ex}}
+\maketitle
+
+% Conditional expectation
+\section*{Conditional expectation (Lec 1-2)}
+\begin{itemize}
+\item (Lec 1) $L^2(\Om, \calF, P)$ is complete.
+
+\item (Lec 1) For $X \in L^2(\Om, \calF, P)$, the \textbf{conditional expectation} of $X$ given $\calG$ is the $\calG$-measurable random variable in $L^2$ such that $\bbE XZ = \bbE [\bbE[X \mid \calG] Z]$ for all $Z \in L^2(\Om, \calG, P)$. Conditional expectation is unique, and is the orthogonal projection of $X$ onto $L^2(\Om, \calG, P)$.
+
+\item (Lec 2) For $X \in L^1(\Om, \calF, P)$, the \textbf{conditional expectation} of $X$ given $\calG$ is the unique $\calG$-measurable random variable in $L^1$ such that for all $A \in \calG$, $\bbE [X; A] = \bbE [\bbE[X \mid \calG]; A]$, where $\bbE [X;A] = \bbE [X1_A]$.
+
+\item (Lec 2) If $\calH$ independent of $\sg(X, \calG)$, then $\bbE [X \mid \sg(\calH, \calG)] = \bbE [X \mid \calG]$.
+
+\item (Lec 2) \textbf{Conditional Jensen's inequality:} If $\phi: \bbR \mapsto \bbR$ convex, and $\phi(X)$ and $X$ both integrable, then $\bbE[\phi(X) \mid \calG] \geq \phi(\bbE[X \mid \calG])$ a.s.
+
+\item For $p \in [1, \infty]$ and any sub-$\sg$-algebra $\calG$, $\|\bbE[X \mid \calG]\|_p \leq \|X\|_p$.
+
+\item (Dembo Prop 4.2.33) For any $X \in L^1(\Om, \calF, P)$, the collection $\{ \bbE [X \mid \calH], \calH \subseteq \calF \text{ is a $\sg$-algebra} \}$ is U.I.
+\end{itemize}
+
+% Martingales
+\section*{Martingales (Lec 3-11)}
+\begin{itemize}
+\item \textbf{Examples of martingales:}
+\begin{itemize}
+\item (Lec 3) Let $Y_1, Y_2, \dots$ be independent (integrable) random variables with $\bbE Y_i = \mu_i$, and let $\calF_n = \sg(Y_1, \dots, Y_n)$. Then $S_n = \dis\sum_{i=1}^n (Y_i - \mu_i)$ is a martingale.
+
+\item (Lec 3) Same setting as above, assume further that $\text{Var} (Y_i) = \sg_i^2 < \infty$. Then $Z_n = S_n^2 - \dis\sum_{i=1}^n \sg_i^2$ is a martingale.
+
+\item (Lec 3) Let $Y_1, Y_2, \dots$ be independent non-negative random variables with $\bbE Y_i = 1$ for all $i$. Then $Z_n = \dis\prod_{i=1}^n Y_i$ is a martingale.
+
+\item (Lec 3) If $X_1, X_2, \dots$ i.i.d. and $M(\t) = \bbE [e^{\t X_i}] < \infty$ for some $\t$, then $Z_n = \dis\frac{e^{\t \sum_{i=1}^n X_i}}{M(\t)^n}$ is a martingale. ($\t$ is usually chosen such that $M(\t) = 1$ and $\t \neq 0$.)
+\end{itemize}
+
+\item \textbf{Uncorrelated differences:} For any martingale $\{ X_n \}$, $X_i - X_{i-1}$ and $X_j - X_{j-1}$ are uncorrelated for $i \neq j$, i.e. $\bbE[(X_i - X_{i-1})(X_j - X_{j-1})] = 0$.
+
+\item (HW3) If $\{X_n\}$ is a martingale with $\dis\sup_n \bbE|X_n| < \infty$, we can write it as the difference of two non-negative martingales.
+
+\item (Lec 3) \textbf{Stopping time:} A random variable $T : \Om \mapsto \{1, 2, \dots \} \cup \{ \infty \}$ is a \textbf{stopping time adapted to $\{\calF_n \}$} if $\{ T = n \} \in \calF_n$ for all $n$.
+
+\item (Lec 3) If $T$ is a stopping time, then $\{ T \leq n\} \in \calF_n$ and $\{ T \geq n \} \in \calF_{n-1}$. For any integer $n$, $T \wedge n$ is also a stopping time.
+
+\item (Lec 3) \textbf{Stopped $\sg$-algebra}: $\calF_T$ is the set of all $A \in \calF$ such that for all $n \in \bbN$, $A \cap \{ T = n \} \in \calF_n$. (You can think of $\calF_T$ as ``all events that are dependent only on information up to the stopping time". It is \textbf{not} the same as the $\sg$-algebra generated by $T$.)
+
+\item (Lec 3) \textbf{Stopped random variable:} $Z_T$ is defined as $Z_T (\om) := Z_{T(\om)} (\om)$,
+that is, $Z_T = \dis\sum_{n=1}^\infty Z_n 1_{\{T = n\}}$. (Note: $Z_T$ is always $\calF_T$-measurable.)
+
+\item (Lec 4) The convex transformation of a martingale is a submartingale. The convex \textbf{and} non-decreasing transformation of a submartingale is a submartingale.
+
+\item (Lec 5) \textbf{Uniform integrability:} A sequence of random variables $\{ X_n \}$ is \textbf{uniformly integrable} if (i) each $X_n$ is integrable, and (ii) $\dis\lim_{a \rightarrow \infty} \sup_n \bbE (|X_n|; |X_n| \geq a) = 0$. A single integrable $X$ is U.I.
+
+\item (Lec 6) $\{ X_n \}$ is U.I. iff for all $\eps > 0$, there is $\dlt > 0$ such that 
+\begin{equation*} A \in \calF \text{ with } P(A) < \dlt \quad \Rightarrow \quad \bbE (|X_n|; A) < \eps \text{ for all } n. \end{equation*}
+
+\item (Dembo Prop 4.2.33) For any $X \in L^1(\Om, \calF, P)$, the collection $\{ \bbE [X \mid \calH], \calH \subseteq \calF \text{ is a $\sg$-algebra} \}$ is U.I.
+
+\item (Dembo Prop 5.4.4) Suppose $\{ Y_n\}$ integrable and $\tau$ a stopping time for filtration $\{\calF_n\}$. Then  $\{ Y_{n \wedge \tau}\}$ is U.I. if any one of the following hold:
+\begin{enumerate}
+\item $\bbE \tau < \infty$ and a.s. $\bbE [|Y_n - Y_{n-1}| \mid \calF_{n-1}] \leq c$ for some finite, non-random $c$.
+\item $\{Y_n I_{\tau > n} \}$ is U.I. and $Y_\tau I_{\tau < \infty}$ is integrable.
+\item $(Y_n, \calF_n)$ is a U.I. submartingale (or supermartingale).
+\end{enumerate}
+
+\item If a collection $\{ X_\alpha\}$ is dominated by an integrable random variable, then it is U.I.
+
+\item (Lec 5) If $\{ X_n \}$ U.I., then $\dis\sup_n \bbE |X_n| < \infty$.
+
+\item (Lec 6) If $\{X_n \}$ is U.I. and $X_n \stackrel{P}{\rightarrow} X$, then $X_n \stackrel{L^1}{\rightarrow} X$.
+
+\item (Dembo Dfn 5.3.13) For integrable $X$, the sequence $X_n = \bbE [X \mid \calF_n]$ is called the \textbf{Doob martingale} of $X$ w.r.t. $\{\calF_n \}$.
+
+\item (Dembo Cor 5.3.14) A martingale $\{X_n\}$ is U.I. iff $X_n = \bbE [X_\infty \mid \calF_n]$ is a Doob's martingale, or equivalently iff $X_n \goesto X_\infty$ in $L^1$.
+
+\item (Durrett Thm 5.7.1) If $X_n$ is a U.I. submartingale, then for any stopping time $N$, $X_{n \wedge N}$ is a U.I. submartingale as well.
+
+
+
+\item (Lec 6) \textbf{Definition of absolutely continuous:} Let $P$ and $Q$ be two probability measures on measurable space $(\Om, \calF)$. We say that \textbf{$Q$ is absolutely continuous w.r.t. $P$}, and write $Q << P$, if $P(A) = 0 \quad \Rightarrow \quad Q(A) = 0$.
+
+\item (Lec 6) Assume that $Q << P$. Then for all $\eps > 0$, there exists $\dlt > 0$ such that $P(A) < \dlt \Rightarrow Q(A) < \eps$.
+
+\item (Lec 6) \textbf{Radon-Nikodym Theorem:} Let $(\Om, \calF)$ be a measurable space and suppose that $\calF$ is countably generated. Let $P$ and $Q$ be two probability measures on this space such that $Q << P$.
+
+Then, there exists a non-negative random variable $L$ on this space such that for all $A \in \calF$, $Q(A) = \dis\int_A dQ = \dis\int_A L dP$. We write $L := \dis\frac{dQ}{dP}$.
+
+\item (Lec 7) \textbf{Dynamic Programming:} Let $\{ X_n\}_{1 \leq n \leq N}$ be an $\calF_n$-measurable sequence of integrable random variables. We want to maximize $\bbE X_T$ over all stopping times $T$.
+
+Define adapted $\{ V_n \}$ by $V_N = X_N$, and $V_n = \max \{  X_n, \bbE[V_{n+1} \mid \calF_n] \}$, and let $\tau = \inf \{ X_k = V_k\}$. Then $\tau$ is the solution. (Note that $\{V_n\}$ is a supermartingale.)
+
+\item (Lec 9) \textbf{L\'{e}vy's form of the Borel-Cantelli Lemma:} Let $\{ \calF_n\}_{n \geq 1}$ be a filtration and events $A_n \in \calF_n$ for all $n$. Then 
+\[ \sum_{n = 1}^\infty 1_{A_n} = \infty \text{\: if and only if (a.s.) \:} \sum_{n = 1}^\infty P (A_n \mid \calF_{n-1}) = \infty. \]
+
+\item (Lec 9) \textbf{Almost supermartingales:} Let $Z_n$ be a sequence of $\calF_n$-measurable, non-negative, integrable random variables. $Z_n$ is an \textbf{almost supermartingale} if there are 2 other non-negative, integrable, adapted sequences $\xi_n$ and $\zeta_n$ such that $\bbE [Z_{n+1} \mid \calF_n] \leq Z_n + \xi_n - \zeta_n$ a.s. for all $n$.
+
+\item (Lec 9) If $Z_n$ is an almost supermartingale, then $Y_n = Z_n - \dis\sum_{k=1}^{n-1} (\xi_k - \zeta_k)$ is a supermartingale.
+
+\item (Lec 9) \textbf{Stochastic gradient descent:} Assume that we have a measurable function $y = M(x)$ with the following conditions: 
+\begin{itemize}
+\item $M(x)$ is positive if $x > \t$,  $M(x)$ negative if $x < \t$, 
+\item $|M(x)| \leq m$ for all $x$,
+\item For all $\eps > 0$, $\inf_{\eps < x < 1/\eps} M(x + \t) > 0$ and $\sup_{-1/\eps < x < -\eps} M(x + \t) < 0$.
+\item Given $x$, we can't generate $M(x)$ exactly, but we can generate a random variable $Y$ with mean $M(x)$ and variance $\leq \sg^2$.
+\end{itemize}
+
+Consider the following procedure:
+\begin{enumerate}
+\item Choose a sequence of predetermined non-negative real numbers $\{ a_n \}$ and some arbitrary $X_1$.
+\item (Loop) Given $X_n$, generate $Y_n$ with mean $M(X_n)$ and variance $\leq \sg^2$. Set $X_{n+1} = X_n - a_n Y_n$.
+\end{enumerate}
+
+If $\sum a_n = \infty$ and $\sum a_n^2 < \infty$, then $\dis\lim_{n \rightarrow \infty} X_n = \t$ a.s. 
+
+\item (Lec 10) A martingale $Z_n$ is \textbf{square-integrable} if $\bbE Z_n^2 < \infty$ for all $n$.
+
+\item (Lec 10) A sequence $\{ Y_n \}$ is a \textbf{predictable process} if $Y_n$ is $\calF_{n-1}$-measurable for all $n$.
+
+\item (Lec 10) Let $Z_n$ be a square-integrable martingale. Define $\sg_n^2 = \bbE [(Z_n - Z_{n-1})^2 \mid \calF_{n-1}]$. It can be checked that $Z_n^2 - \displaystyle\sum_{i=1}^n \sg_i^2$ is a martingale.
+
+$\left\{ \displaystyle\sum_{i=1}^n (Z_i - Z_{i-1})^2 \right\}$ is called the \textbf{quadratic variation} of $\{ Z_n \}$.
+
+$\{ A_n \} := \left\{ \displaystyle\sum_{i=1}^n \sg_i^2 \right\}$ is called the \textbf{predictable quadratic variation} of $\{ Z_n \}$. (Also called \textbf{square variation}, sometimes denoted $\langle Z\rangle_n$. Note that $\bbE [\langle Z\rangle_n] = \var (Z_n - Z_0)$.)
+
+\item (Lec 11) \textbf{Doob decomposition:} For a submartingale $\{ Y_n \}$, let $A_n = \dis\sum_{j=1}^n \bbE [Y_j - Y_{j-1} \mid \calF_{j-1}]$. $A_n$ is a non-negative, increasing predictable process and $Y_n - A_n$ is a martingale. $Y_n = (Y_n - A_n) + A_n$ is the \textbf{Doob decomposition} of $Y_n$. (Every submartingale can be decomposed into the sum of a martingale and a non-negative increasing predictable process.)
+
+\item (Dembo Thm 5.2.6) \textbf{Doob's Inequality:} For any submartingale $\{X_n\}$ and $x > 0$, let $\tau_x = \min\{k \geq 0: X_k \geq x\}$. Then for any finite $n \geq 0$,
+\[ \bbP \left( \max_{0 \leq k \leq n} X_k \geq x \right)  \leq \frac{1}{x} \bbE \left[ X_n 1_{\{ \tau_x \leq n\}} \right] \leq \frac{1}{x}\bbE [(X_n)_+]. \] 
+
+\item (Dembo Cor 5.2.13) \textbf{Doob's $L^p$ inequality:} If $X_n$ is a submartingale then for any $n$ and $p > 1$, $\bbE \left[\left(\dis\max_{k \leq n} X_k \right)_+^p \right] \leq q^p \bbE [(X_n)_+^p]$, where $q = p/(p-1)$.
+
+If $X_n$ is in fact a martingale, then we also have $\bbE \left[ \left(\dis\max_{k \leq n} |X_k| \right)^p \right] \leq q^p \bbE [|X_n|^p]$.
+
+\item (Dembo Dfn 5.1.27) \textbf{Martingale transform:} Let $\{V_n\}$ be a predictable sequence and let $\{X_n\}$ be a sub or supermartingale. The martingale transform of $\{V_n\}$ w.r.t. $\{X_n\}$ is $Y_0 = 0$, $Y_n = \dis\sum_{k=1}^n V_k(X_k - X_{k-1})$.
+
+\item (Dembo Thm 5.1.28) In the setting above,
+\begin{enumerate}
+\item If $Y_n$ integrable and $X_n$ a martingale, then $Y_n$ is also a martingale.
+\item If $Y_n$ integrable, $V_n \geq 0$ and $X_n$ a submartingale (or supermartingale), then $Y_n$ is also a submartingale (or supermartingale).
+\item To have $Y_n$ integrable, it suffices to have $|V_n|\leq c_n$ for non-random finite constants $c_n$, or to have $V_n \in L^q$ and $X_n \in L^p$ for all $n$ and some $p,q > 1$ with $\frac{1}{p} + \frac{1}{q} = 1$.
+\end{enumerate}
+
+\end{itemize}
+
+\subsection*{Optional sampling theorems}
+\begin{itemize}
+\item (Lec 3) \textbf{Wald's Lemma for bounded stopping times:} Let $\{\calF_n \}$ be a filtration, $\{ Z_n \}$ a martingale adapted to this filtration, $T$ a stopping time w.r.t. this filtration. Suppose that there exists some $N \in \bbN$ such that $T \leq N$ a.s. Then $\bbE Z_T = \bbE Z_1$.
+
+\item (Durrett Thm 4.1.5) \textbf{Wald's equation:} Let $X_1, X_2, \dots$ be i.i.d. with $\bbE |X_i| < \infty$. If $N$ is an integrable stopping time, then $\bbE S_N = \bbE X_1 \cdot \bbE N$.
+
+\item (Durrett Thm 4.1.6) \textbf{Wald's second equation:} Let $X_1, X_2, \dots$ be i.i.d. with mean 0 and $\bbE X_n^2 = \sg^2 < \infty$. If $T$ is an integrable stopping time, then $\bbE S_T^2 = \sg^2 \bbE T$.
+
+\item \textbf{Optional Sampling Theorem:} Let $\{X_n\}$ be a supermartingale, and let $\sg \leq \tau$ be two stopping times.
+\begin{enumerate}
+\item Assume there is a constant $T$ s.t. $\tau \leq T$. Then $X_\sg \geq \bbE [X_\tau \mid \calF_\sg]$, and in particular, $\bbE [X_\sg] \geq \bbE [X_\tau]$. If $X$ is a martingale, then equality holds.
+
+\item If $X$ is non-negative and $\tau < \infty$ a.s., then $\bbE [X_\tau] \leq \bbE[X_0] < \infty$, $\bbE [X_\sg] \leq \bbE[X_0] < \infty$, and $X_\sg \geq \bbE [X_\tau \mid \calF_\sg]$.
+
+\item If $X$ is only adapted and integrable, then $X$ is a martingale iff $\bbE [X_\tau] = \bbE [X_0]$ for any bounded stopping time $\tau$.
+\end{enumerate}
+
+\item \textbf{Martingale subsequences:} If $\tau_n$ is a monotonically increasing sequence of bounded stopping times and $X$ is a martingale, then $\{ X_{\tau_n}\}$ is a martingale w.r.t. $\{\calF_{\tau_n} \}$.
+
+\item (Lec 8) \textbf{Stopped processes:} If $Z_n$ is a martingale and $\tau$ is any stopping time, then $Z_{\tau \wedge n}$ is a martingale as well. (Same applies for submartingales and supermartingales.)
+
+\item Let $\{X_n\}$ be a U.I. martingale (sub-martingale resp.) and $\sg \leq \tau$ be finite stopping times. Then $\bbE [|X_\tau|] < \infty$ and $X_\sg = \bbE [X_\tau \mid \calF_\sg]$ ($X_\sg \geq \bbE [X_\tau \mid \calF_\sg]$ resp.).
+
+\item \textbf{Optional sampling in infinite time:} Let $\tau$ be a stopping time and $X$ a martingale. Then $X_\tau$ is integrable and $\bbE [X_\tau] = \bbE [X_0]$ if one of the following conditions hold:
+\begin{enumerate}
+\item $\tau$ is bounded.
+\item $\{X_{n \wedge \tau}\}$ is dominated by an integrable random variable $Z$, i.e. $|X_{n \wedge \tau}| \leq Z$ a.s.
+\item $\bbE [\tau] < \infty$ and there exists $K \geq 0$ such that $\sup_n |X_n - X_{n-1}| \leq K$.
+\end{enumerate}
+
+\end{itemize}
+
+
+
+\subsection*{Convergence of martingales}
+\begin{itemize}
+\item (Lec 5) \textbf{(Sub)martingale Convergence Theorem}: Let $\{Z_n, \calF_n \}_{n=1}^\infty$ be a submartingale. Suppose $\dis\sup_n \bbE Z_n^+ < \infty$. Then there is a random variable $Z$ taking values in $[-\infty, \infty)$ such that $Z_n \goesto Z$ a.s.
+
+\item (Lec 6) If $\{ Z_n, \calF_n \}$ is a U.I. martingale (or sub/super-martingale), then there is a random variable $Z$ which is finite a.s. and $Z_n \rightarrow Z$ a.s. and in $L^1$.
+
+\item (Lec 6) \textbf{L\'{e}vy's Upward Convergence Theorem:} Let $\{ \calF_ n \}$ be a filtration and $\calF_\infty = \sg \left( \dis\bigcup_{n=1}^\infty \calF_n \right)$. Let $Y$ be an integrable random variable. Then $\bbE (Y \mid \calF_n) \goesto \bbE (Y \mid \calF_\infty)$ a.s. and in $L^1$.
+
+\item (Lec 8) If $Z_n$ is a supermartingale with $\bbE|Z_1| < \infty$ that is uniformly bounded below by a constant, then $\lim Z_n$ exists and is finite a.s. (Same for submartingale bounded above by a constant.)
+
+\item (Lec 9) \textbf{Convergence for martingales with bounded increments:} Let $Z_n$ be a martingale with bounded increments, i.e. there is a constant $c$ such that for all $n$, $|Z_n - Z_{n-1}| \leq c$ a.s. With probability 1, either $\lim Z_n$ exists and is finite, or $\limsup Z_n = \infty$ and $\liminf Z_n = -\infty$.
+
+\item (HW4) If $M_n$ is a martingale with bounded increments, then $\dis\frac{M_n}{n} \stackrel{a.s.}{\goesto} 0$. (See Dembo Ex 5.3.41 for generalization.)
+
+\item (HW4) If $\{ Z_n\}$ is a supermartingale with bounded increments, then $\dis\limsup_{n \goesto \infty} \frac{Z_n}{n} \leq 0$ a.s.
+
+\item (Lec 9) \textbf{Convergence for almost supermartingales:} On the set $\dis\left\{ \sum_{n=1}^\infty \xi_n < \infty \right\}$, $\lim Z_n$ exists and is finite and $\dis\sum \zeta_n < \infty$ a.s.
+
+\item (Lec 10) \textbf{Martingale SLLN:} Let 
+\begin{itemize}
+\item $\{ S_n, \calF_n\}_{n \geq 1}$ be a martingale with mean 0, 
+\item $X_n = S_n - S_{n-1}$ (where $S_0 = 0$), with the assumption that $\bbE[X_n^2] < \infty$ for all $n$,
+\item $\sg_n^2 = \bbE [X_n^2 \mid \calF_{n-1}]$,
+\item $c_n$ an $\calF_{n-1}$-measurable random variable, with the assumption that $c_n > 0$ and increasing.
+\end{itemize}
+
+Then, on the set $\left\{ \displaystyle\sum_{n= 1}^\infty \frac{\sg_n^2}{c_n^2} < \infty \text{ and } \lim_{n \rightarrow \infty} c_n = \infty \right\}$, $\displaystyle\frac{S_n}{c_n} \rightarrow 0$ a.s.
+
+\item (Lec 10) Let $X_n \in \{0, 1 \}$ for all $n$, $X_n$ $\calF_n$-measurable. Let $S_n = \dis\sum_{i=1}^n X_i$, and $p_n = P (X_n = 1 \mid \calF_{n-1})$. Then on the set $\left\{ \dis\sum_{i=1}^\infty p_i = \infty \right\}$, $\dis\lim_{n \rightarrow \infty} \frac{S_n}{\sum_{i=1}^n p_i} = 1$.
+
+\item (Lec 10) \textbf{Convergence of square-integrable martingales:} If $\{ Z_n \}$ is a square-integrable martingale and $\dis\sup_n \bbE Z_n^2 < \infty$, then there exists $Z$ such that $Z_n \rightarrow Z$ a.s. and in $L^2$.
+
+\item (Lec 10) For a square-integrable martingale $\{ Z_n \}$, $\lim Z_n$ exists and is finite a.s. on the set $\left\{ \displaystyle\sum_{n=1}^\infty \sg_n^2 < \infty \right\}$.
+
+
+\end{itemize}
+
+% Ergodic theory
+\section*{Ergodic theory (Lec 11-13)}
+\begin{itemize}
+\item (Lec 11) Let $(\Om, \calF, P)$ be a probability space. A measurable map $\varphi: \Om \mapsto \Om$ is called a \textbf{measure-preserving transform} if $P (\varphi^{-1}(A)) = P(A)$ for all $A \in \calF$.
+
+\item (Lec 12) If $\vp$ is measure-preserving, $\dis\int Y dP = \int Y \circ \vp dP$ for all $Y$.
+
+\item (Lec 11) Examples of measure-preserving transforms:
+\begin{itemize}
+\item $(\Om, \calF, P) = ([0, 1), \text{Borel}, \text{Leb})$, $\t \in \Om$, and let $\varphi(x) = x + \t \:(\mod 1)$. This is ergodic iff $\t$ is irrational.
+
+\item Probability space as above, $\varphi(x) = 2x \:(\mod 1)$.
+
+\item \textbf{Bernoulli shift:} $\Om = \{ 0, 1\}^\bbN$ (where $\bbN = \{ 0, 1, \dots \}$), $\calF$ the product $\sg$-algebra (i.e. the smallest $\sg$-algebra under which all coordinate maps are measurable), $P$ be the law of an infinite i.i.d. $\text{Bernoulli}(1/2)$ sequence, $\varphi((\om_0, \om_1, \dots)) := (\om_1, \om_2, \dots)$. This is ergodic.
+\end{itemize}
+
+\item (Lec 11) Let $\varphi$ be measure-preserving on $(\Om, \calF, P)$. Let $\mathcal{I} = \{ A \in \calF: \varphi^{-1}(A) = A \}$. Then $\mathcal{I}$ is a $\sg$-algebra, and is called the \textbf{invariant $\sg$-algebra of $\varphi$}.
+
+\item (HW5) For $A \in \mathcal{I}$, $1_A \circ \varphi = 1_A$, and for $\mathcal{I}$-measurable $Y$, $Y \circ \vp = Y$ a.s.
+
+\item (Lec 11) A measure-preserving transform $\varphi$ is called \textbf{ergodic} if for all $A \in \mathcal{I}$, $P(A) = 0$ or 1.
+
+\item (Lec 12) \textbf{Maximal Ergodic Theorem:} Let $(\Om, \calF, P)$ be a probability space, $\vp$ a measure-preserving transform with invariant $\sg$-algebra $\mathcal{I}$, and $X$ a random variable in $L^1$.
+
+Let $X_j(\om) := X(\vp^j (\om))$, $S_k = X_0 + X_1 + \dots + X_k$, and $M_k = \max \{ 0, S_0, S_1, \dots, S_k\}$.
+
+Then $\bbE [X; M_k > 0] \geq 0$.
+
+\item (Lec 12) \textbf{Birkhoff's Ergodic Theorem:} Let $(\Om, \calF, P)$ be a probability space, $\vp$ a measure-preserving transform with invariant $\sg$-algebra $\mathcal{I}$, and $X$ a random variable in $L^1$. Then $\dis\frac{1}{n} \sum_{m=0}^{n-1} X(\vp^m (\om)) \goesto \bbE [X \mid \mathcal{I}]$ a.s. and in $L^1$.
+
+In particular, if $\vp$ is ergodic, then $\dis\frac{1}{n} \sum_{m=0}^{n-1} X(\vp^m (\om)) \goesto \bbE X$ a.s. and in $L^1$ (``space average is equal to time average").
+
+\item (Lec 13) Let $\Om = [0, 1)$, $\vp(x) = x + \t \;(\mod 1)$, where $\t$ is irrational. Take any subinterval $[a,b)$ of $[0, 1)$. Then, for any $x \in [0, 1)$, $\dis\frac{1}{n}\sum_{m = 0}^{n-1} 1 \{ \vp^m (x) \in [a, b) \} \goesto b - a$.
+
+\item (Lec 13) \textbf{von Neumann's Ergodic Theorem:} Same as Birkhoff's, except $X \in L^2$ and the convergence is in $L^2$.
+
+\end{itemize}
+
+% Markov chains
+\section*{Markov chains (Lec 14-18)}
+Set-up: $(\Om, \calF, P)$ a probability space, $\{\calF_n\}$ a filtration, $\{X_n\}$ an adapted sequence of random variables taking values in $(S, \calS)$.
+
+\begin{itemize}
+\item (Lec 14) \textbf{Transition probabilities:} $p_n(x, y) = P(X_{n+1} = y \mid X_n = x)$.
+
+\item (Lec 14) \textbf{Chapman-Kolmogorov equations:} Let $P_n = \Bigg( p_k(x, y)\Bigg)_{x, y \in S}$, and $P^{(n)} = P_0 P_1 \dots P_{n-1}$. Then $P(X_n = y \mid X_0 = x) = P^{(n)}(x, y)$.
+
+\item (Lec 14) \textbf{Time-homogeneous:} The transition probabilities are the same at each time step. In this case, the transition probability matrix is $P$ with entries $P_{ij} = P(X_{n+1} = j \mid X_n = i)$.
+\begin{itemize}
+\item If $p_0$ is the initial distribution of $X_0$ (row vector), then the distribution of $X_n$ is $p_0 P^n$.
+
+\item $P^n f$ is the conditional expectation of $f(X_{i+n})$ given $X_i$. Thus, given an initial distribution $p_0$, we have $\bbE [f(X_n)] = p_0 P^n f$.
+\end{itemize}
+
+\item (Lec 14) \textbf{Markov property:} Given a function $f: S \times S \times \dots \rightarrow \bbR$ which is measurable w.r.t. the product $\sg$-algebra, let $g(x) = \bbE [f(X_0, X_1, X_2, \dots ) \mid X_0 = x] =: \bbE_x [f(X_0, X_1, X_2, \dots)]$. Then, for any $n$, $\bbE [f(X_n, X_{n+1}, X_{n+2}, \dots) \mid X_n = x] = g(x)$.
+
+\item (Lec 14) \textbf{Strong Markov property:} Let $T$ is a stopping time w.r.t. $\{ \calF_n \}_{n \geq 0}$. Then, on the set $\{ T < \infty \}$, $\bbE [f(X_T, X_{T+1}, \dots) \mid \calF_T] = g(X_T)$.
+
+\item (Lec 14) Every discrete-time Markov chain has the Markov property and strong Markov property.
+\end{itemize}
+
+From here on, assume that the Markov chain is time-homogeneous and takes values on a countable state space $S$.
+
+\begin{itemize}
+\item (Lec 15) \textbf{Hitting time:} For $x \in S$, the \textbf{first hitting time} of $x$ is $T_x := \inf \{ n \geq 1: X_n = x \}$. (Note: Time 0 doesn't count.)
+
+\item (Lec 15) Let $\rho_{xy} := P(T_y < \infty \mid X_0 = x)$. In particular, $\rho_{xx}$ is the probability of ever returning to $x$ given that the chain starts at $x$. A state $x$ is \textbf{recurrent} if $\rho_{xx} = 1$, and is \textbf{transient} otherwise.
+
+\item (Lec 15) Notation: Let $N(x) = \displaystyle\sum_{n=1}^\infty 1_{\{ X_n = x \}}$, i.e. the number of visits to $x$ (except time 0).
+
+Let $p_{xy}^{(n)} := P(X_n = y \mid X_0 = x)$.
+
+\item (Lec 15) \textbf{Theorem for recurrence:}  The following are equivalent:
+\begin{enumerate}[label=(\alph*)]
+\item $x$ is recurrent (i.e. $\rho_{xx} = 1$).
+\item $\bbE_x N(x) = \infty$, where $\bbE_x$ means $\bbE [\cdot \mid X_0 = x]$.
+\item $P_x( N(x) = \infty) = 1$.
+\item $\dis\sum_{n=1}^\infty p_{xx}^{(n)} = \infty$.
+\end{enumerate}
+
+\item (Lec 16) A state $y$ is \textbf{accessible} from a state $x$ if $p_{xy}^{(n)} > 0$ for some $n \geq 0$. If so, we write $x \rightarrow y$. Two states $x$ and $y$ are \textbf{communicating} if $x \rightarrow y$ and $y \rightarrow x$. We write $x \leftrightarrow y$.
+
+\item (Lec 16) The Markov chain is said to be \textbf{irreducible} if the number of equivalence classes is 1.
+
+\item (Lec 16) Recurrence (and therefore, transience) is a class property.
+
+\item (Lec 16) If the state space $S$ is finite, then there exists at least one recurrent state. Hence, if the Markov chain is irreducible and state space is finite, then all states are recurrent.
+
+\item (Lec 16) The \textbf{period} of a state $x$ is the greatest common divisor of all $n \geq 1$ such that $p_{xx}^{(n)} > 0$. It is denoted by $d(x)$. A state is said to be \textbf{aperiodic} if its period is 1. States that communicate have the same period.
+
+\item (Lec 16) For any recurrent state $x$, let $\mu_{xx} :=$ expected time of first return to $x$ starting from $x$. A recurrent state $x$ is called \textbf{positive recurrent} if $\mu_{xx} < \infty$. If $\mu_{xx} = \infty$, it is called \textbf{null recurrent}.
+
+\item (Lec 17) If $x$ is a recurrent state, then 
+$\dis\lim_{n \goesto \infty} \frac{1}{n} \sum_{m=1}^n p_{xx}^{(m)} = \frac{1}{\mu_{xx}}$.
+
+\item (Lec 17) If $x$ and $y$ communicate and are recurrent, then $\dis\lim_{n \goesto \infty} \frac{1}{n} \sum_{m=1}^n p_{yx}^{(m)} = \frac{1}{\mu_{xx}}$.
+
+\item (Lec 18) Positive recurrence and null recurrence are also class properties.
+
+\item (Lec 18) A Markov chain with finite state space cannot have a null recurrent state.
+
+\item (Lec 18) If $S'$ is a positive recurrent equivalence class and $|S'| < \infty$, then $\dis\sum_{y \in S'} \frac{1}{\mu_{yy}} = 1$.
+
+In particular, if $S$ is finite and the chain is irreducible (i.e. $|S| = |S'|$), then $\dis\sum_{x \in S} \frac{1}{\mu_{xx}} = 1$.
+
+\item (Lec 18) \textbf{Stationary distribution:} A probability measure $\pi$ on $S$ is called a \textbf{stationary distribution/invariant measure} for the chain if, for all $y \in S$, $\dis\sum_{x} \pi_x p_{xy} = \pi_y$.
+
+\item (Lec 18) If $S$ is finite and the chain is irreducible, then $\pi_x = \dis\frac{1}{\mu_{xx}}$ is the unique stationary distribution.
+
+\item (Lec 18) If $S$ is finite and the chain is irreducible and aperiodic, then $\pi_x = \dis\frac{1}{\mu_{xx}}$ is the unique stationary distribution. Moreover, $\dis\lim_{n \rightarrow \infty} p_{xy}^{(n)} = \frac{1}{\mu_{yy}}$.
+
+\item (305C) If $S$ is finite, then there exists at least one stationary distribution. (This is a corollary of Perron-Frobenius Theorem v2.)
+
+\item (305C) If $S$ finite, irreducible, aperiodic and has stationary distribution $\pi$, then for all starting points $\om_0$, $\dis\lim_{n \goesto \infty} \bbP_{\om_0}(X_n = \om) = \pi(\om)$ for all $\om$. Also,
+\begin{equation*}
+\bbP_{\om_0} \left(\lim_{n \goesto \infty} \frac{1}{n}\sum_{i=1}^n f(X_i) = \sum_\om \pi(\om) f(\om) \right) = 1.
+\end{equation*}
+
+\end{itemize}
+
+% Renewal theory
+\section*{Renewal theory (Lec 17)}
+Set-up: $X_1, X_2, \dots$ i.i.d. non-negative random variables with $P(X_1 = 0) < 1$. $\mu := \bbE X_1$ (possibly infinite), $S_n = \dis\sum_{i=1}^n X_i$ with $S_0 = 0$.
+
+\begin{itemize}
+\item (Lec 17) For real number $t \geq 0$, let $N(t) := \sup \{ n: S_n \leq t \}$. Then $\{ N(t): t \geq 0 \}$ is called a \textbf{renewal process}. (We can think of this process as replacing lightbulbs, $X_i$ is the lifetime of the $i^{th}$ lightbulb, and when it dies, we replace it with a new lightbulb. $S_n$ can be thought of as the time till the $n^{th}$ lightbulb goes off.)
+
+\item (Lec 17) \textbf{Renewal function:} $m(t) := \bbE[N(t)]$. For all $t$, $m(t) < \infty$.
+
+\item (Lec 17) \textbf{Elementary renewal theorem:} $\dis\lim_{t \goesto \infty} \frac{m(t)}{t} = \frac{1}{\mu}.$
+
+\end{itemize}
+
+% First-passage percolation
+\section*{First-Passage Percolation (Lec 19)}
+Set-up: We have the lattice $\bbZ^d$.
+\begin{itemize}
+\item On each edge $e$, we have a non-negative random variable $X_e$, called the weight of the edge. Assume that the $X_e$ are i.i.d.
+\item The weight of a path is equal to the sum of edge weights along the path.
+\item The \textbf{first-passage time} from $x$ to $y$, denoted $T_{xy}$, is the minimum of the weights of all paths from $x$ to $y$.
+\item Let $T_n = T_{0, ne_1}$, where $e_1 = (1,0, \dots, 0)$.
+\end{itemize}
+
+\begin{itemize}
+\item Assume that there exist $0 < a < b$ such that $\bbP(a \leq X_e \leq b) = 1$. Then $\var T_n \leq Cn$, where $C$ depends only on $a$, $b$ and $d$. (We can take $C = b^3/a$.)
+
+\item Assume that $\bbE X_e < \infty$. Then $\mu = \dis\lim_{n \rightarrow \infty} \frac{\bbE T_n}{n}$ exists. Moreover, if $P(X_e = 0) = 0$, then $\mu > 0$.
+
+\end{itemize}
+
+% Concentration inequalities
+\section*{Concentration inequalities (Lec 19-20)}
+\begin{itemize}
+\item (Lec 19) \textbf{Efron-Stein Inequality:} Let $X_1, \dots, X_n$ be independent random variables. Let $X_1', \dots, X_n'$ be another set of independent random variables, independent of $X_1, \dots, X_n$, such that $X_i'$ has the same distribution as $X_i$ for all $i$. Let $f: \bbR^n \mapsto \bbR$ be a measurable function such that $\bbE [W^2] < \infty$, where $W = f(X_1, \dots, X_n)$. Then,
+\begin{equation*} 
+\var W \leq \frac{1}{2} \sum_{i=1}^n \bbE \left[ (\Dlt_i f)^2 \right] = \sum_{i=1}^n \bbE \left[ (f(X_1, \dots, X_n) - f(X_1, \dots, X_i', \dots, X_n))^2 \right].
+\end{equation*}
+
+\item (Lec 20) \textbf{Azuma-Hoeffding Inequality:} Let $\{ M_k\}_{0 \leq k \leq n}$ be a martingale adapted to some filtration. Let $X_k = M_k - M_{k-1}$. Suppose that $|X_k| \leq c_k$ a.s. for each $k$, where $c_1, \dots, c_n$ are constants. Then for all $t > 0$,
+\[P(M_n - M_0 \geq t) \leq \exp \left( - \frac{t^2}{2 \sum c_k^2} \right), \qquad
+P(M_n - M_0 \leq -t) \leq \exp \left( - \frac{t^2}{2 \sum c_k^2} \right).\]
+
+\item (Lec 20) \textbf{Bounded Difference Inequality:} Let $X_1, \dots, X_n$ be independent random variables. Let $f: \bbR^n \mapsto \bbR$ be a measurable function such that there exist $c_1, \dots, c_n$ with the property that for all $x_1, \dots, x_n$, $x_1', \dots, x_n'$,
+$|f(x_1, \dots, x_n) - f(x_1, \dots, x_i', \dots, x_n)| \leq c_i$.
+
+Let $W = f(X_1, \dots, X_n)$. Then for all $t > 0$,
+\[P (W - \bbE W \geq t) \leq \exp \left( - \frac{2t^2}{ \sum_{i=1}^n c_i^2} \right), \qquad P (W - \bbE W \leq -t) \leq \exp \left( - \frac{2t^2}{ \sum_{i=1}^n c_i^2} \right).\]
+
+\end{itemize}
+
+\section*{Other Stuff}
+\subsection*{General random walks}
+Let $X_1, X_2, \dots$ be iid, and $S_n = X_1 + \dots + X_n$. $\{S_n\}$ is a random walk.
+
+\begin{itemize}
+\item (Durrett Thm 4.1.2) For a random walk on $\bbR$, there are only 4 possibilities, one of which has probability 1: (i) $S_n = 0$ for all $n$, (ii) $S_n \goesto \infty$, (iii) $S_n \goesto -\infty$, and (iv) $\liminf S_n = -\infty$ and $\limsup S_n = \infty$.
+
+\item If $\bbE X_i > 0$, then $S_n \stackrel{a.s.}{\goesto} \infty$. If $\bbE X_i < 0$, then $S_n \stackrel{a.s.}{\goesto} -\infty$. If $\bbE X_i = 0$ and $P(X_i = 0) < 1$, then $\limsup S_n = \infty$ with probability 1 and $\liminf S_n = -\infty$ with probability 1.
+
+\item (HW5) Let $M_n = \dis\max_{0 \leq k \leq n} S_k$. If $X_i$'s have finite mean, then $\bbE M_n = \dis\sum_{k=1}^n \frac{\bbE [S_k^+]}{k}$.
+
+\item (Durrett Thm 6.3.5) \textbf{Reflection principle:} Assume that the $X_i$'s have a distribution symmetric about 0. Then if $a > 0$, we have $P \left(\dis\sup_{m \leq n} S_m > a \right) \leq 2 P(S_n > a)$. (Still holds if $>$s replaced with $\geq$s.)
+
+\end{itemize}
+
+\subsection*{Simple symmetric random walks on $\bbZ^d$}
+\begin{itemize}
+\item (310B Lec 15) For simple symmetric walk on $\bbZ^d$, 0 (or any other state) is recurrent if $d = 1, 2$, and transient if $d \geq 3$.
+\end{itemize}
+
+\subsection*{Simple symmetric random walk on $\bbZ$}
+$X_i = 1$ or $-1$, each with probability $1/2$.
+\begin{itemize}
+\item (310B Lec 3) $\{ S_n^2 - n\}$ is a martingale.
+
+\item (310B HW2) $\{ S_n^4 - 6nS_n^2 +3n^2 + 2n \}$ is a martingale.
+
+\item (310B Lec 3 \& 4) Let $T = \inf \{ k: S_k = a \text{ or } b\}$, where $a < 0 < b$ are 2 integers. Then $T$ is finite a.s., $\bbE T = ab$, and $P(S_T = a) = \dis\frac{b}{b-a}$.
+
+\item (310B Lec 16) Let $T = \inf\{ n \geq 1: S_n = 0\}$. Then $\bbE T = \infty$, i.e. 0 is null recurrent.
+
+\item (Durrett Thm 3.1.2) If $2k / \sqrt{2n} \goesto x$, then $P(S_{2n} = 2k) \sim (\pi n)^{-1/2} e^{-x^2/2}$.
+
+\item (Durrett Thm 3.1.3) \textbf{De Moivre-Laplace Theorem:} If $a < b$, then as $m \goesto \infty$, $P \left(a \leq \dfrac{S_m}{\sqrt{m}} \leq b \right) \goesto \dis\int_a^b \dfrac{1}{\sqrt{2\pi}} e^{-x^2/2} dx$.
+
+\item (Durrett Thm 4.1.7) Let $X_i$ be i.i.d. with mean 0 variance 1, and let $T_c = \inf \{ n \geq 1: |S_n| > c\sqrt{n}\}$. Then $\bbE T_c$ is finite for $c < 1$, and infinite for $c \geq 1$.
+
+\end{itemize}
+
+
+
+\subsection*{Biased random walk on $\bbZ$}
+Here, $S_n$ increments by 1 with probability $p$, and decrements by 1 with probability $q = 1- p$. Let $\varphi(x) = (q/p)^x$.
+
+\begin{itemize}
+\item (310B Lec 4) $\varphi(S_n) = \left( \dis\frac{q}{p} \right)^{S_n}$ is a martingale.
+
+\item (Durrett Thm 5.7.7 proof) $\{ S_n - (p-q)n \}$ is a martingale.
+
+\item (310B Lec 4) Let $T = \inf \{ k: S_k = a \text{ or } b\}$, where $a < 0 < b$ are 2 integers. Then $T$ is finite a.s. and $P(S_T = a) = \dis\frac{1 - (q/p)^b}{(q/p)^a - (q/p)^b}$.
+
+\item (Durrett Thm 5.7.7) Let $T_x = \inf \{ n: S_n = x\}$. Assume $p > 1/2$. 
+\begin{itemize}
+\item If $a < 0$, then $P\left(\dis\min_n S_n \leq a \right) = P(T_a < \infty) = (q/p)^{-a}$.
+
+\item If $b > 0$, then $P(T_b < \infty) = 1$ and $\bbE T_n = \dfrac{b}{2p-1}$.
+\end{itemize}
+
+\end{itemize}
+
+\subsection*{Other}
+\begin{itemize}
+\item (Dembo Lem 5.2.7) \textbf{Lenglart's bound:} Let $(Z_n, \calF_n)$ be a non-negative submartingale with $Z_0 = 0$. Let $V_n = \dis\max_{0 \leq k \leq n} Z_k$ and let $A_n$ be the $\calF_n$-predictable sequence in Doob's decomposition of $Z_n$. Then, for any $\calF_n$-stopping time $\tau$ and all $x, y > 0$,
+\[ \bbP(V_\tau \geq x, A_\tau \leq y) \leq \frac{\bbE [A_\tau \wedge y]}{x}. \]
+
+Fruther, in this case $\bbE [V_\tau^p] \leq \left[1 + \dfrac{1}{1-p} \right] \cdot \bbE [A_\tau^p]$ for any $p \in (0,1)$.
+
+\end{itemize}
+
+
+
+
+
+\end{document}
